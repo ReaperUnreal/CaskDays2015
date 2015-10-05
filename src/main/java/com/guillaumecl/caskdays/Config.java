@@ -1,6 +1,7 @@
 package com.guillaumecl.caskdays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.guillaumecl.caskdays.external.BeerListParser;
 import java.util.Properties;
 
 /**
@@ -34,6 +35,11 @@ public class Config {
 	 * The Jackson object mapper for JSON.
 	 */
 	private ObjectMapper jsonMapper;
+	
+	/**
+	 * The beer list store.
+	 */
+	private BeerListParser beerListStore;
 
 	/**
 	 * Default constructor.
@@ -78,5 +84,21 @@ public class Config {
 	 */
 	public String getCaskDaysListUrl() {
 		return caskDaysListUrl;
+	}
+
+	/**
+	 * The beer list store.
+	 * @return the beerListStore
+	 */
+	public BeerListParser getBeerListStore() {
+		return beerListStore;
+	}
+
+	/**
+	 * The beer list store.
+	 * @param beerListStore the beerListStore to set
+	 */
+	public void setBeerListStore(BeerListParser beerListStore) {
+		this.beerListStore = beerListStore;
 	}
 }

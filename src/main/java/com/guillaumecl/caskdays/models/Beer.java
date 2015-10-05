@@ -1,5 +1,7 @@
 package com.guillaumecl.caskdays.models;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Model for a beer.
  *
@@ -18,6 +20,11 @@ public class Beer {
 	private String region;
 
 	/**
+	 * The style of the beer.
+	 */
+	private String style;
+
+	/**
 	 * Default constructor for Jackson.
 	 */
 	public Beer() {
@@ -27,11 +34,30 @@ public class Beer {
 	 * Full fledged constructor for manual creation.
 	 *
 	 * @param name
+	 * @param style
 	 * @param region
 	 */
-	public Beer(String name, String region) {
+	public Beer(String name, String style, String region) {
 		this.name = name;
 		this.region = region;
+	}
+
+	/**
+	 * The style of the beer.
+	 *
+	 * @return the style
+	 */
+	public String getStyle() {
+		return style;
+	}
+
+	/**
+	 * The style of the beer.
+	 *
+	 * @param style the style to set
+	 */
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 	/**
@@ -68,6 +94,16 @@ public class Beer {
 	 */
 	public void setRegion(String region) {
 		this.region = region;
+	}
+	
+	/**
+	 * Custom toString to make things pretty.
+	 * 
+	 * @return The prettified beer.
+	 */
+	@Override
+	public String toString() {
+		return name + ", " + style + " from " + StringUtils.defaultString(region, "Unknown");
 	}
 
 }

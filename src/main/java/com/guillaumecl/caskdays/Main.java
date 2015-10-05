@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.guillaumecl.caskdays.external.BeerListParser;
-import com.guillaumecl.caskdays.models.Beer;
 import com.mashape.unirest.http.Unirest;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -60,7 +58,7 @@ public class Main {
 		configureUnirest(config);
 		configureBeerList(config);
 
-		CaskDaysServerResources caskDaysServer = new CaskDaysServerResources();
+		CaskDaysServerResources caskDaysServer = new CaskDaysServerResources(config);
 
 		ServletContainer container = new ServletContainer(caskDaysServer);
 		ServletHolder holder = new ServletHolder(container);
@@ -169,6 +167,7 @@ public class Main {
 	 */
 	private static void configureBeerList(Config config) {
 		BeerListParser parser = new BeerListParser(config);
-		List<Beer> beerList = parser.getList();
+		parser.getList(); // try this now to pre-cache
+		config.setBeerListStore(parser);
 	}
 }
