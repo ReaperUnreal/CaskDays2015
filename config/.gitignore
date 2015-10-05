@@ -1,3 +1,4 @@
 *.xml
 *.properties
 server.properties
+log4j.properties
