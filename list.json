@@ -1,0 +1,1767 @@
+[
+  {
+    "name": "Airways Brewing Co Mosiac/Citra Pale",
+    "region": "Washington",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Airways Brewing Co. Sky Hag",
+    "region": "Washington",
+    "style": "American IPA"
+  },
+  {
+    "name": "Anacortes IPA",
+    "region": "Washington",
+    "style": "American IPA Dry Hopped With Smicoe"
+  },
+  {
+    "name": "Anacortes IPA",
+    "region": "Washington",
+    "style": "Arican IPA Dry Hopped With Citra"
+  },
+  {
+    "name": "Boundary Bay Cabin Fever",
+    "region": "Washington",
+    "style": "Winter Ale"
+  },
+  {
+    "name": "Brainbridge Single Hop Pale Ale",
+    "region": "Washington",
+    "style": "American Pale Ale With Mandarina Bavaria"
+  },
+  {
+    "name": "Brainbridge Sol Patch",
+    "region": "Washington",
+    "style": "Pumpkin Ale With Madagascar Vanilla Beans"
+  },
+  {
+    "name": "Boundary Bay Inside Passage Ale",
+    "region": "Washington",
+    "style": "American IPA"
+  },
+  {
+    "name": "Diamon Knot Brewing IPA",
+    "region": "Washington",
+    "style": "American IPA Dry Hopped With Amarillo"
+  },
+  {
+    "name": "Diamon Knot Brewing Ho! Ho!",
+    "region": "Washington",
+    "style": "Winter Ale"
+  },
+  {
+    "name": "Dirty Bucket Brewing Co. Dirty Jack",
+    "region": "Washington",
+    "style": "Pumpkin Ale"
+  },
+  {
+    "name": "Dirty Bucket Brewing Co. Blootered",
+    "region": "Washington",
+    "style": "Scotch Ale"
+  },
+  {
+    "name": "Elliot Bay Organic Demolition Ale",
+    "region": "Washington",
+    "style": "American Strong Pale Ale"
+  },
+  {
+    "name": "Elliot Bay Organic B-Town",
+    "region": "Washington",
+    "style": "Brown Ale"
+  },
+  {
+    "name": "Elliot Bay Organic Klondike Gold Ale",
+    "region": "Washington",
+    "style": "Helles Lager Style"
+  },
+  {
+    "name": "Elliot Bay Mosiac Fresh Hop Ale",
+    "region": "Washington",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Elliot Bay Organic Red von Boorian Ale",
+    "region": "Washington",
+    "style": "Belgian Red Ale"
+  },
+  {
+    "name": "Elliot Bay Organic Mashing Pumpkin Ale",
+    "region": "Washington",
+    "style": "Spiced Strong Ale"
+  },
+  {
+    "name": "Hilliard's Beer Murdered Out Stout",
+    "region": "Washington",
+    "style": "Irish Dry Stout"
+  },
+  {
+    "name": "Hilliard's Beer CDA",
+    "region": "Washington",
+    "style": "Dry Hopped Cascadian Dark Ale"
+  },
+  {
+    "name": "Mac and Jacks Blackcat Porter",
+    "region": "Washington",
+    "style": "Porter With Bourbon & Vanilla"
+  },
+  {
+    "name": "Mac and jacks Blackcat Porter",
+    "region": "Washington",
+    "style": "Porter With Coffee"
+  },
+  {
+    "name": "Machine House Brewery Best Bitter",
+    "region": "Washington",
+    "style": "English Best Bitter"
+  },
+  {
+    "name": "Machine House Brewery Dark Mild",
+    "region": "Washington",
+    "style": "English Mild"
+  },
+  {
+    "name": "Machine House Brewery Citra Fresh Hop",
+    "region": "Washington",
+    "style": "American IPA"
+  },
+  {
+    "name": "Odin Brewing Co. Odin's Gift",
+    "region": "Washington",
+    "style": "Amber Ale"
+  },
+  {
+    "name": "Odin Brewing Co. 2015 Citra Freh Hop",
+    "region": "Washington",
+    "style": "India Pale Ale"
+  },
+  {
+    "name": "Post Doc Alpha Factor IPA",
+    "region": "Washington",
+    "style": "India Pale Ale"
+  },
+  {
+    "name": "Post Doc Transverse Wheat IPA",
+    "region": "Washington",
+    "style": "White IPA"
+  },
+  {
+    "name": "Rainy Daze Brewing Co. Rainy Rye",
+    "region": "Washington",
+    "style": "IPA American Rye IPA"
+  },
+  {
+    "name": "Rainy Daze Brewing Co. Sunrise Coffee Porter",
+    "region": "Washington",
+    "style": "Coffee Porter"
+  },
+  {
+    "name": "Rooftop Brew Co. Stargazer IPA",
+    "region": "Washington",
+    "style": "American IPA"
+  },
+  {
+    "name": "Rooftop Brew Co. Rye IPA",
+    "region": "Washington",
+    "style": "American IPA With Rye"
+  },
+  {
+    "name": "Scuttlebutt 10 Below Winter Ale",
+    "region": "Washington",
+    "style": "Winter Ale"
+  },
+  {
+    "name": "Scuttlebutt KEXP Transistor IPA",
+    "region": "Washington",
+    "style": "American IPA"
+  },
+  {
+    "name": "Beachwood BBQ & Brewing Co. Melrose IPA",
+    "region": "California",
+    "style": "West Coast IPA w/ Amarillo"
+  },
+  {
+    "name": "El Segundo Brewing Co. Mayberry IPA / Mango",
+    "region": "California",
+    "style": "West Coast IPA"
+  },
+  {
+    "name": "El Segundo Brewing Co. Blue House IPA",
+    "region": "California",
+    "style": "West Coast IPA"
+  },
+  {
+    "name": "Figueroa Mountain Brewing Hoppy Poppy IPA w/ Mosaic",
+    "region": "California",
+    "style": "West Coast IPA"
+  },
+  {
+    "name": "Ladyface Ale Companie Ladyface IPA",
+    "region": "California",
+    "style": "With Experimental Hop 07270 American IPA"
+  },
+  {
+    "name": "Macleod Ale Brewing Co. The Little Spree",
+    "region": "California",
+    "style": "Yorkshire Pale Ale"
+  },
+  {
+    "name": "Macleod Ale Brewing Co Kings Taxes",
+    "region": "California",
+    "style": "Scottish 60 Schilling"
+  },
+  {
+    "name": "Macleod Ale Brewing Co. Jackie Tar",
+    "region": "California",
+    "style": "Brown Stout"
+  },
+  {
+    "name": "Monkish Brewing Co. Cracked Phone Screen",
+    "region": "California",
+    "style": "Belgian Wit With Hibiscus & Orange Zest"
+  },
+  {
+    "name": "Monkish Brewing Co. Hard Drive Problems",
+    "region": "California",
+    "style": "Barrel Fermented Saison With Strawberries, Blueberries & Cherries"
+  },
+  {
+    "name": "Noble Aleworks Galaxy Showers",
+    "region": "California",
+    "style": "Single Hopped Double IPA"
+  },
+  {
+    "name": "Noble Aleworks English Bitter",
+    "region": "California",
+    "style": "Ordinary Bitter"
+  },
+  {
+    "name": "Smog City Brewing Co. Little Bo Pils",
+    "region": "California",
+    "style": "Pilsner With Saaz Hops"
+  },
+  {
+    "name": "Smog City Brewing Co. Hoptonic",
+    "region": "California",
+    "style": "American IPA w/ Simcoe, Amarillo and Citra"
+  },
+  {
+    "name": "Three Weavers Brewing Amburana Porter",
+    "region": "California",
+    "style": "Barrel Aged Imperial Porter With Roasted Cacao Nibs."
+  },
+  {
+    "name": "Three Weavers Brewing Deep Roots ESB",
+    "region": "California",
+    "style": "Extra Special Bitter"
+  },
+  {
+    "name": "To Be Announced",
+    "region": "California",
+    "style": "At Cask Days Festival"
+  },
+  {
+    "name": "To Be Announced",
+    "region": "California",
+    "style": "At Cask Days Festival"
+  },
+  {
+    "name": "Big Ditch Brewing Excafetor",
+    "region": "New York",
+    "style": "Rye Brown Ale With Coffee"
+  },
+  {
+    "name": "Big Ditch Brewing Hayburner",
+    "region": "New York",
+    "style": "American IPA with Citra and Simcoe on Cedar Staves"
+  },
+  {
+    "name": "Community Beer Works Whale",
+    "region": "New York",
+    "style": "Brown Ale"
+  },
+  {
+    "name": "Community Beer Works Frank",
+    "region": "New York",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Community Beer Works",
+    "region": "New York",
+    "style": "That IPA American IPA"
+  },
+  {
+    "name": "Community Beer Works Stout Affective Disorder American Stout",
+    "region": "New York",
+    "style": "59"
+  },
+  {
+    "name": "Community Beer Works Hoppy Porter",
+    "region": "New York",
+    "style": "American Porter"
+  },
+  {
+    "name": "Flying Bison Brewing Buffalo IPA",
+    "region": "New York",
+    "style": "IPA With Lemongrass, Ginger and Szechuan Peppercorns"
+  },
+  {
+    "name": "Flying Bison Brewing HERC Barleywine",
+    "region": "New York",
+    "style": "Oak Aged Barley Wine"
+  },
+  {
+    "name": "Hamburg Brewing OMS",
+    "region": "New York",
+    "style": "Oatmeal Milk Stout"
+  },
+  {
+    "name": "Hamburg Brewing OMS",
+    "region": "New York",
+    "style": "Oatmeal Milk Stout With Chili Peppers"
+  },
+  {
+    "name": "Resurgence Brewing The Don",
+    "region": "New York",
+    "style": "Belgian Blonde Ale"
+  },
+  {
+    "name": "Resurgence Brewing RIP Van Cap",
+    "region": "New York",
+    "style": "Pumpkin Ale"
+  },
+  {
+    "name": "Woodcock Brothers Brewing Amber Ale",
+    "region": "New York",
+    "style": "Amber Ale"
+  },
+  {
+    "name": "Woodcock Brothers Brewing Hoppycock",
+    "region": "New York",
+    "style": "American IPA"
+  },
+  {
+    "name": "House Ales Fermium",
+    "region": "House Ales",
+    "style": "Double Black IPA"
+  },
+  {
+    "name": "House Ales Market Session Ale",
+    "region": "House Ales",
+    "style": "Ordinary Bitter"
+  },
+  {
+    "name": "House Ales Matt's Marathon Mild 2015",
+    "region": "House Ales",
+    "style": "English Mild"
+  },
+  {
+    "name": "House Ales Mezza Notte",
+    "region": "House Ales",
+    "style": "Espresso Milk Stout"
+  },
+  {
+    "name": "House Ales Porter House",
+    "region": "House Ales",
+    "style": "Robust Porter"
+  },
+  {
+    "name": "House Ales Punter's Gold",
+    "region": "House Ales",
+    "style": "Golden Ale"
+  },
+  {
+    "name": "House Ales Run ESB",
+    "region": "House Ales",
+    "style": "Black Extra Special Bitter"
+  },
+  {
+    "name": "House Ales Swag Out",
+    "region": "House Ales",
+    "style": "Imperial Stout"
+  },
+  {
+    "name": "Big Spruce Brewing X Stillwell Gimme Nelson",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "(100% Nelson) American Pale Ale"
+  },
+  {
+    "name": "Big Spruce Brewing Bitter Getter",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "India Black IPA"
+  },
+  {
+    "name": "Boxing Rock Brewing Company Vicar's Cross",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Double IPA"
+  },
+  {
+    "name": "Boxing Rock Brewing Company The Darkness",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Cascadian Dark Ale"
+  },
+  {
+    "name": "Breton Brewing Co. Celtic Colours",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Maple Lager"
+  },
+  {
+    "name": "Brewnosers Mild",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Special Bitter"
+  },
+  {
+    "name": "Garrison Imperial Chocolate Stout",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Imperial Stout With Chocolate"
+  },
+  {
+    "name": "Garrison Vulcan Ale - Genesis Effect",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Red Session IPA"
+  },
+  {
+    "name": "Hell Bay Dark Cream Ale",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Dark Ale"
+  },
+  {
+    "name": "North Brewing",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "To Be Announced"
+  },
+  {
+    "name": "PEI Brewing Company Roll Out The Barrels",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Barrel Aged Lager w. Brett"
+  },
+  {
+    "name": "PEI Brewing Company Island Vibes",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Pumphouse Thai Wheat",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Wheat Beer"
+  },
+  {
+    "name": "Tatamagouche Brewing Co. Rye & Ginger",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Rye Beer"
+  },
+  {
+    "name": "Unfiltered Brewing Flat Black Jesus",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "American Stout"
+  },
+  {
+    "name": "Unfiltered Brewing Twelve Years To Zion",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Double IPA"
+  },
+  {
+    "name": "Upstreet Brewing Gravedigger",
+    "region": "Nova Scotia & P.E.I. ",
+    "style": "Imperial Pumpkin Ale"
+  },
+  {
+    "name": "Bomber Brewing Bomber IPA",
+    "region": "British Columbia & Alberta",
+    "style": "American IPA"
+  },
+  {
+    "name": "Bomber Brewing Braineater Pumpkin Ale",
+    "region": "British Columbia & Alberta",
+    "style": "Chocoloate Porter/Pumpkin Ale"
+  },
+  {
+    "name": "Bridge Brewing Amber",
+    "region": "British Columbia & Alberta",
+    "style": "Amber Ale"
+  },
+  {
+    "name": "Bridge Brewing Brown",
+    "region": "British Columbia & Alberta",
+    "style": "Brown Ale"
+  },
+  {
+    "name": "Central City Brewers + Distillers Red Racer Mango IPA American IPA",
+    "region": "British Columbia & Alberta",
+    "style": "113"
+  },
+  {
+    "name": "Driftwood Fat Tug",
+    "region": "British Columbia & Alberta",
+    "style": "Northwest IPA"
+  },
+  {
+    "name": "Four Winds Brewing Company Lucie",
+    "region": "British Columbia & Alberta",
+    "style": "Belgian Pale With Kumquats"
+  },
+  {
+    "name": "Four Winds Brewing Company Nectarous",
+    "region": "British Columbia & Alberta",
+    "style": "Dry Hopped Sour"
+  },
+  {
+    "name": "Howe Sound Brewing Sky Pilot Pale Ale",
+    "region": "British Columbia & Alberta",
+    "style": "Northwest Pale Ale Dry Hopped w/ Galaxy"
+  },
+  {
+    "name": "Howe Sound Brewing Pothole Filler",
+    "region": "British Columbia & Alberta",
+    "style": "Imperial Stout With Blueberries, Cacao Nibs & Galaxy Hops"
+  },
+  {
+    "name": "Howe Sound Brewing “Smoked” Pumpkineater",
+    "region": "British Columbia & Alberta",
+    "style": "Imperial Pumpkin Ale With Roasted Pumpkin, Spices & Smoked Malt. Conditioned With Rum, Cacao Nibs & vanilla Beans"
+  },
+  {
+    "name": "Howe Sound Brewing Father John's Winter Ale",
+    "region": "British Columbia & Alberta",
+    "style": "Winter Warmer With Molasses, Honey, Ginger and Nutmeg. Conditioned With Cold Extracted Coffee and Cognac"
+  },
+  {
+    "name": "Moon Under Water Hip As Funk",
+    "region": "British Columbia & Alberta",
+    "style": "Farmhouse IPA w/ Brett"
+  },
+  {
+    "name": "Parallel 49 Imperial Chocolate Vanilla Cracker Stout",
+    "region": "British Columbia & Alberta",
+    "style": "Imperial Stout"
+  },
+  {
+    "name": "Parallel 49 Bodhisattva",
+    "region": "British Columbia & Alberta",
+    "style": "Dry-Hopped Sour Ale"
+  },
+  {
+    "name": "Parallel 49 Yuzu Jerkface",
+    "region": "British Columbia & Alberta",
+    "style": "Northwest Wheat Ale W. Citrus Juice"
+  },
+  {
+    "name": "Persephone Stout",
+    "region": "British Columbia & Alberta",
+    "style": "Dry Irish Stout"
+  },
+  {
+    "name": "Persephone IPA",
+    "region": "British Columbia & Alberta",
+    "style": "India Pale Ale"
+  },
+  {
+    "name": "R & B Brewing Chocolate Orange Stout",
+    "region": "British Columbia & Alberta",
+    "style": "Oatmeal Stout With Orange Peel and Triple Sec-Infused Cocoa Nibs"
+  },
+  {
+    "name": "R & B Brewing East Side Bitter",
+    "region": "British Columbia & Alberta",
+    "style": "Pacific Northwest Bitter Dry Hopped w/ Columbus & Galaxy"
+  },
+  {
+    "name": "Real Cask Brewing Burnley Bastard",
+    "region": "British Columbia & Alberta",
+    "style": "English Mild"
+  },
+  {
+    "name": "Real Cask Brewing Blackburn Best Bitter",
+    "region": "British Columbia & Alberta",
+    "style": "English Best Bitter"
+  },
+  {
+    "name": "Steamworks Brewing Co. Heroica Red Ale",
+    "region": "British Columbia & Alberta",
+    "style": "131"
+  },
+  {
+    "name": "Steamworks Brewing Co. Steamworks Pumpkin",
+    "region": "British Columbia & Alberta",
+    "style": "Pumpkin Ale"
+  },
+  {
+    "name": "Steamworks Brewing Co. Steamworks Kolsch",
+    "region": "British Columbia & Alberta",
+    "style": "Kolsch"
+  },
+  {
+    "name": "Steel Toad Dry Hopped Bitter",
+    "region": "British Columbia & Alberta",
+    "style": "English Best Bitter"
+  },
+  {
+    "name": "Steel Toad Sour Saison",
+    "region": "British Columbia & Alberta",
+    "style": "Saison"
+  },
+  {
+    "name": "Big Rock Big Rock Kentucky Kicker",
+    "region": "British Columbia & Alberta",
+    "style": "Bourbon Barrel Aged Dark Ale w. Maple"
+  },
+  {
+    "name": "Big Rock Big Rock Cherry On My Wayward Son",
+    "region": "British Columbia & Alberta",
+    "style": "Dark Cherry Porter"
+  },
+  {
+    "name": "Wild Rose Vanilla Bourbon Porter",
+    "region": "British Columbia & Alberta",
+    "style": "Porter"
+  },
+  {
+    "name": "Wild Rose IPA With Gunpowder Green Tea",
+    "region": "British Columbia & Alberta",
+    "style": "American IPA"
+  },
+  {
+    "name": "Village Brewery Northern Red Ale",
+    "region": "British Columbia & Alberta",
+    "style": "Bourbon Barrel Aged Red Ale"
+  },
+  {
+    "name": "Village Brewery The Woodsman",
+    "region": "British Columbia & Alberta",
+    "style": "Red Ale"
+  },
+  {
+    "name": "Benelux Cuda",
+    "region": "Quebec",
+    "style": "American IPA"
+  },
+  {
+    "name": "Benelux Armada",
+    "region": "Quebec",
+    "style": "American Brown Ale"
+  },
+  {
+    "name": "Benelux San Lupulo",
+    "region": "Quebec",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Benelux Paisley",
+    "region": "Quebec",
+    "style": "Scotch Ale"
+  },
+  {
+    "name": "Brasseurs du Monde Trinqueur",
+    "region": "Quebec",
+    "style": "Scotch Ale With Citra"
+  },
+  {
+    "name": "Brasseurs du Monde New World Pilsner",
+    "region": "Quebec",
+    "style": "Dry Hopped Pilsner"
+  },
+  {
+    "name": "Brasseurs du Monde Saison Pinot",
+    "region": "Quebec",
+    "style": "Saison Pinot Noir Barrels with Summer Hops"
+  },
+  {
+    "name": "Dieu Du Ciel! Immoralite",
+    "region": "Quebec",
+    "style": "Imperial IPA"
+  },
+  {
+    "name": "Dieu Du Ciel! Chemin de Croix",
+    "region": "Quebec",
+    "style": "India Porter à L'ancienne"
+  },
+  {
+    "name": "Dieu Du Ciel! Tamarindo Gose",
+    "region": "Quebec",
+    "style": "German Gose With Tamarin"
+  },
+  {
+    "name": "Dieu Du Ciel! Disco Soleil",
+    "region": "Quebec",
+    "style": "Kumquat IPA"
+  },
+  {
+    "name": "Dieu Du Ciel! Peche Mortel",
+    "region": "Quebec",
+    "style": "Coffee Imperial Stout"
+  },
+  {
+    "name": "Dieu Du Ciel! Solstice d`Hiver",
+    "region": "Quebec",
+    "style": "Barley Wine"
+  },
+  {
+    "name": "Dieu Du Ciel! Grande Noirceur",
+    "region": "Quebec",
+    "style": "Imperial Stout"
+  },
+  {
+    "name": "Dieu Du Ciel! Aphrodisiaque",
+    "region": "Quebec",
+    "style": "Cacao and Vanilla Stout"
+  },
+  {
+    "name": "Dieu Du Ciel! Paienne Citra",
+    "region": "Quebec",
+    "style": "Pale Ale"
+  },
+  {
+    "name": "Dunham Pale Ale American",
+    "region": "Quebec",
+    "style": "American Pale Ale (With Habanero Pepper)"
+  },
+  {
+    "name": "Dunham Tropicale IPA",
+    "region": "Quebec",
+    "style": "Brett IPA (With Citrus Fruits)"
+  },
+  {
+    "name": "Dunham Rye ESB",
+    "region": "Quebec",
+    "style": "Extra Special Bitter (With Poplar Shoots)"
+  },
+  {
+    "name": "Dunham Saison du Pinacle",
+    "region": "Quebec",
+    "style": "Farmhouse Ale (Infused with Fireweed Flowers)"
+  },
+  {
+    "name": "Dunham Cyclope Gamma",
+    "region": "Quebec",
+    "style": "American IPA"
+  },
+  {
+    "name": "Gainsbourg Scotch Ale",
+    "region": "Quebec",
+    "style": "Wee Heavy"
+  },
+  {
+    "name": "Gainsbourg Der des D'Eer",
+    "region": "Quebec",
+    "style": "Belgian Triple"
+  },
+  {
+    "name": "Glutenberg American Pale Ale w/ Cascade",
+    "region": "Quebec",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "HopEra Trizo",
+    "region": "Quebec",
+    "style": "Belgian Triple IPA"
+  },
+  {
+    "name": "HopEra Skatebeer",
+    "region": "Quebec",
+    "style": "Scotch Ale"
+  },
+  {
+    "name": "HopEra Poptart Framboise",
+    "region": "Quebec",
+    "style": "Sour Saison"
+  },
+  {
+    "name": "Hopfenstark Postcolonial IPA",
+    "region": "Quebec",
+    "style": "American IPA"
+  },
+  {
+    "name": "Hopfenstark Greg",
+    "region": "Quebec",
+    "style": "Extra Foreign Stout (Harvest)"
+  },
+  {
+    "name": "Isle de Garde & Loup Rouge",
+    "region": "Quebec",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Isle de Garde & Loup Rouge Bitter Ordinaire",
+    "region": "Quebec",
+    "style": "Ordinary Bitter"
+  },
+  {
+    "name": "Le Castor Session Houblon",
+    "region": "Quebec",
+    "style": "Session IPA"
+  },
+  {
+    "name": "Le Castor Eclipse",
+    "region": "Quebec",
+    "style": "Black IPA"
+  },
+  {
+    "name": "Le Castor Oatmeal Stout",
+    "region": "Quebec",
+    "style": "Oatmeal Stout"
+  },
+  {
+    "name": "Le Saint-Bock Dezouna Breakfast Stout",
+    "region": "Quebec",
+    "style": "Maple Oatmeal Breakfast Stout"
+  },
+  {
+    "name": "Le Trèfle Noir Dark Vader",
+    "region": "Quebec",
+    "style": "Imperial Black IPA"
+  },
+  {
+    "name": "Le Trou Du Diable Punkrauch",
+    "region": "Quebec",
+    "style": "Rauchbier"
+  },
+  {
+    "name": "Le Trou Du Diable MacTavish",
+    "region": "Quebec",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Le Trou Du Diable Shawibeach",
+    "region": "Quebec",
+    "style": "American IPA"
+  },
+  {
+    "name": "Le Trou Du Diable Ze Blend (Dry-Hopped)",
+    "region": "Quebec",
+    "style": "Barrel Aged Sour"
+  },
+  {
+    "name": "Le Trou Du Diable Ze Blend (Whiskey Oak Chips)",
+    "region": "Quebec",
+    "style": "Barrel Aged Sour"
+  },
+  {
+    "name": "Le Trou Du Diable Madera",
+    "region": "Quebec",
+    "style": "5 Year Old Barrel Aged Maderized Beer"
+  },
+  {
+    "name": "Les Trois Mousquetaires Le Meileur Des Deux Mondes",
+    "region": "Quebec",
+    "style": "Double IPA & Porter Baltique Blend"
+  },
+  {
+    "name": "Les Trois Mousquetaires Beef Cake Mockery",
+    "region": "Quebec",
+    "style": "Brown Ale With Beef Stock"
+  },
+  {
+    "name": "Les Trois Mousquetaires Surette A La Camerise",
+    "region": "Quebec",
+    "style": "Berliner Weisse With Honeyberry"
+  },
+  {
+    "name": "Amsterdam Brewery El Jaguar",
+    "region": "Ontario",
+    "style": "Barrel-Aged Imperial Stout w. Chocolate & Chilies"
+  },
+  {
+    "name": "Amsterdam Brewery Homegrown",
+    "region": "Ontario",
+    "style": "Mixed Fermentation Farmhouse Ale (Dry-Hopped w. Galaxy)"
+  },
+  {
+    "name": "Amsterdam Brewery Hollys Landing",
+    "region": "Ontario",
+    "style": "Olde Ale Aged with Brett Lambicus in Cab Barrels"
+  },
+  {
+    "name": "Amsterdam Brewery Testify",
+    "region": "Ontario",
+    "style": "Brett Pale Ale (w. Nelson Hops)"
+  },
+  {
+    "name": "Amsterdam Brewery Superstition #2",
+    "region": "Ontario",
+    "style": "Farmhouse Ale aged in Pinot with Brett"
+  },
+  {
+    "name": "B-Sides Brewing Label",
+    "region": "Ontario",
+    "style": "Gigantic La Formidable American-Belgo IPA"
+  },
+  {
+    "name": "B-Sides Brewing Label",
+    "region": "Ontario",
+    "style": "Kissmeyer Nordic Pale Ale"
+  },
+  {
+    "name": "Barnstormer Brewing Co. Cirrus",
+    "region": "Ontario",
+    "style": "Pale Ale"
+  },
+  {
+    "name": "Barnstormer Brewing Co Parachute",
+    "region": "Ontario",
+    "style": "Pumpkin Porter"
+  },
+  {
+    "name": "Beau's All Natural Brewing Co. The Tom Green Beer!",
+    "region": "Ontario",
+    "style": "Milk Stout"
+  },
+  {
+    "name": "Beau's All Natural Brewing Co. Farm Table: Märzen",
+    "region": "Ontario",
+    "style": "Oktoberfest Lager"
+  },
+  {
+    "name": "Bellwoods Brewery Raspberry 3 Minutes to Midnight",
+    "region": "Ontario",
+    "style": "Barrel Aged Imperial Stout w/ Cocoa Nibs and Raspberries"
+  },
+  {
+    "name": "Bellwoods Brewery Barn Owl Blend No.3",
+    "region": "Ontario",
+    "style": "Mixed Fermentation Farmouse Ale w/ Ontario Peaches"
+  },
+  {
+    "name": "Bellwoods Brewery Cherry Farmageddon",
+    "region": "Ontario",
+    "style": "Barrel Aged Brett Saison Aged on Niagara Montmorency Cherries"
+  },
+  {
+    "name": "Big Rig Brewery Alpha Bomb",
+    "region": "Ontario",
+    "style": "Triple Cannon Hopped IPA"
+  },
+  {
+    "name": "Big Rig Brewery Bock Me Gently",
+    "region": "Ontario",
+    "style": "Copperbock w. Icewine & Muscat Grape"
+  },
+  {
+    "name": "Black Oak Brewing Peg Leg",
+    "region": "Ontario",
+    "style": "Robust Porter With Chocolate, Vanilla & Spiced Rum"
+  },
+  {
+    "name": "Black Oak Brewing Hard Times Pale",
+    "region": "Ontario",
+    "style": "American Pale Ale With Chinook Hops"
+  },
+  {
+    "name": "Black Oak Brewing Red Eye",
+    "region": "Ontario",
+    "style": "American IPA With Propeller Coffee"
+  },
+  {
+    "name": "Blood Brothers Brewing Guilty Remnant",
+    "region": "Ontario",
+    "style": "White Chocolate Stout"
+  },
+  {
+    "name": "Blood Brothers Brewing Acide Schtroumpfs",
+    "region": "Ontario",
+    "style": "Sour Blueberry Wheat"
+  },
+  {
+    "name": "Bobcaygeon Brewing Company Common Loon",
+    "region": "Ontario",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Boshkung Brewing Co. 12 Mile Spiced",
+    "region": "Ontario",
+    "style": "Pumpkin Ale"
+  },
+  {
+    "name": "Burdock West Coast Pilsner",
+    "region": "Ontario",
+    "style": "Hoppy Pilsner"
+  },
+  {
+    "name": "Burdock Brett Farmhouse Ale",
+    "region": "Ontario",
+    "style": "Farmhouse Saison"
+  },
+  {
+    "name": "Burdock Peach & Apricot Berliner",
+    "region": "Ontario",
+    "style": "Berliner Weisse"
+  },
+  {
+    "name": "Calabogie Brewing Company Lawn Boy Farm House Ale Saison",
+    "region": "Ontario",
+    "style": "213"
+  },
+  {
+    "name": "Calabogie Brewing Company Little Tea Pot",
+    "region": "Ontario",
+    "style": "Stout"
+  },
+  {
+    "name": "Calabogie Brewing Company Doug",
+    "region": "Ontario",
+    "style": "Double IPA"
+  },
+  {
+    "name": "Cameron's Brewing Company Augen Auf",
+    "region": "Ontario",
+    "style": "Pretzel Gose With Corriander"
+  },
+  {
+    "name": "Cameron's Brewing Company Celebrity Sex Tape",
+    "region": "Ontario",
+    "style": "Sour Ale With Brett & Lacto"
+  },
+  {
+    "name": "Cheshire Valley Brewing Out of this World Pale Ale",
+    "region": "Ontario",
+    "style": "Pale Ale"
+  },
+  {
+    "name": "Clifford Brewing Co. Bastard Landlord",
+    "region": "Ontario",
+    "style": "Extra Special Bitter"
+  },
+  {
+    "name": "Clocktower Brewpub The Pumpkin",
+    "region": "Ontario",
+    "style": "Spice/Vegetable Beer"
+  },
+  {
+    "name": "Collective Arts Brewing Co. Rhyme & Reason",
+    "region": "Ontario",
+    "style": "Extra Pale Ale"
+  },
+  {
+    "name": "Collective Arts Brewing Co. Stranger than Fiction Porter",
+    "region": "Ontario",
+    "style": "222"
+  },
+  {
+    "name": "Collective Arts Brewing Co. State of Mind",
+    "region": "Ontario",
+    "style": "Session IPA"
+  },
+  {
+    "name": "Collective Arts Brewing Co. Teardrops of Autumn'",
+    "region": "Ontario",
+    "style": "Sour Pumpkin Saison"
+  },
+  {
+    "name": "Creemore Springs Brewery Creemore APA",
+    "region": "Ontario",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Dominion City Brewing Co.Earnscliffe ESB",
+    "region": "Ontario",
+    "style": "Extra Special Bitter"
+  },
+  {
+    "name": "Dominion City Brewing Co. Fall Farmhouse Ale",
+    "region": "Ontario",
+    "style": "Farmhouse Ale"
+  },
+  {
+    "name": "Durham Brewing Company Red Dragon",
+    "region": "Ontario",
+    "style": "Irish Red Ale"
+  },
+  {
+    "name": "Flying Monkeys Craft Brewery Sleepy Hollow",
+    "region": "Ontario",
+    "style": "Sour Ale"
+  },
+  {
+    "name": "Flying Monkeys Craft Brewery Death by Coconut",
+    "region": "Ontario",
+    "style": "Stout"
+  },
+  {
+    "name": "Flying Monkeys Craft Brewery Ghost Bitch",
+    "region": "Ontario",
+    "style": "Stout"
+  },
+  {
+    "name": "Folly Brewing Little Barasway",
+    "region": "Ontario",
+    "style": "Farmhouse Porter"
+  },
+  {
+    "name": "Folly Brewing X GTA Brews Point Verde",
+    "region": "Ontario",
+    "style": "Farmhouse Bitter"
+  },
+  {
+    "name": "Forked River Brewing Company Ich Bin Nein Berliner",
+    "region": "Ontario",
+    "style": "Sour Rye Saison"
+  },
+  {
+    "name": "Forked River Brewing Company Hubba Hubba",
+    "region": "Ontario",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Forked River Brewing Company Sweet Sassy Mollasy",
+    "region": "Ontario",
+    "style": "Root Beer Porter"
+  },
+  {
+    "name": "Granite Brewery Hopping Mad",
+    "region": "Ontario",
+    "style": "American IPA"
+  },
+  {
+    "name": "Granite Brewery Galactic Pale Ale",
+    "region": "Ontario",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Granite Brewery Best Bitter Special",
+    "region": "Ontario",
+    "style": "English Bitter"
+  },
+  {
+    "name": "Great Lakes Brewery X Bar Hop Insane Frown Posse",
+    "region": "Ontario",
+    "style": "Brett Pale Ale w. Strawberries & Blackberries"
+  },
+  {
+    "name": "Great Lakes Brewery X Bar Hop Hanlan's Point",
+    "region": "Ontario",
+    "style": "Bourbon Barrel Coconut and Coffee Porter"
+  },
+  {
+    "name": "Great Lakes Brewery X Bar Hop Sweet Zombie Jesus",
+    "region": "Ontario",
+    "style": "Peanut Butter Milk Stout"
+  },
+  {
+    "name": "Great Lakes Brewery X Station Cold Brew",
+    "region": "Ontario",
+    "style": "Imperial Vanilla Bean Espresso Stout"
+  },
+  {
+    "name": "Hockley Valley Brewing Co Dr.Pepper's Dark Side",
+    "region": "Ontario",
+    "style": "Dark Ale"
+  },
+  {
+    "name": "Hockley Valley Brewing Co Aunt Amber's Punkin' Pie Amber Ale",
+    "region": "Ontario",
+    "style": "245"
+  },
+  {
+    "name": "Indie Alehouse Strawberry IPA",
+    "region": "Ontario",
+    "style": "Fruit IPA"
+  },
+  {
+    "name": "Indie Alehouse Maple Cinnamon Wit",
+    "region": "Ontario",
+    "style": "Belgian Wit"
+  },
+  {
+    "name": "Junction Craft Brewing Rail Tie Rye",
+    "region": "Ontario",
+    "style": "Rye Ale"
+  },
+  {
+    "name": "Junction Craft Brewing Royal Hudson",
+    "region": "Ontario",
+    "style": "West Coast Pale Ale"
+  },
+  {
+    "name": "Junction Craft Brewing Darkmatter",
+    "region": "Ontario",
+    "style": "Black IPA"
+  },
+  {
+    "name": "Kensington Brewing Company Home Grown Porter",
+    "region": "Ontario",
+    "style": "Robust Porter"
+  },
+  {
+    "name": "Left Field Brewery Bricks & Mortar",
+    "region": "Ontario",
+    "style": "Coffee Porter (Pilot Coffee Roaster)"
+  },
+  {
+    "name": "Left Field Brewery Wedgehead",
+    "region": "Ontario",
+    "style": "Hoppy Wheat Ale (w. Tangelo Wedges)"
+  },
+  {
+    "name": "Left Field Brewery Eephus",
+    "region": "Ontario",
+    "style": "Oatmeal Brown Ale"
+  },
+  {
+    "name": "Liberty Village Brewing Co",
+    "region": "Ontario",
+    "style": "Pretzel Porter Porter"
+  },
+  {
+    "name": "Liberty Village Brewing Co Mango Merkel",
+    "region": "Ontario",
+    "style": "Smoked Berliner Weisse"
+  },
+  {
+    "name": "Liberty Village Brewing Co X Toronto Brewing Co. Revenge of Brett on the Beach",
+    "region": "Ontario",
+    "style": "Brett IPA"
+  },
+  {
+    "name": "MacLean's Ales Armchair",
+    "region": "Ontario",
+    "style": "Scotch Ale"
+  },
+  {
+    "name": "MacLean's Ales Oatmeal Stout",
+    "region": "Ontario",
+    "style": "Stout"
+  },
+  {
+    "name": "Magnotta Ginger Snapped",
+    "region": "Ontario",
+    "style": "Brown Ale"
+  },
+  {
+    "name": "Manantler Craft Brewing Co. Dark Prince",
+    "region": "Ontario",
+    "style": "Black IPA"
+  },
+  {
+    "name": "Manantler Craft Brewing Co. Seismic Narwhal",
+    "region": "Ontario",
+    "style": "Imperial IPA"
+  },
+  {
+    "name": "Mill Street Brewery Nightmare on Mill Street",
+    "region": "Ontario",
+    "style": "Spiced Pumpkin Ale With Blackstrap Molasses"
+  },
+  {
+    "name": "Mill Street Brewery Lune de Sang Belgian Noir",
+    "region": "Ontario",
+    "style": "Oak-aged Belgian Dark Ale"
+  },
+  {
+    "name": "Mill Street Brewery Navigator IPA",
+    "region": "Ontario",
+    "style": "Oak-aged American IPA"
+  },
+  {
+    "name": "Muddy York Brewing Co. X Strawdog Brewing Co.Inkwell Imperial Stout",
+    "region": "Ontario",
+    "style": "266"
+  },
+  {
+    "name": "Muskoka Brewery Pho-Sho Thai Basil Pale Ale",
+    "region": "Ontario",
+    "style": "Amercian Pale Ale"
+  },
+  {
+    "name": "Muskoka Brewery Rogue Reaper",
+    "region": "Ontario",
+    "style": "Roggenbier"
+  },
+  {
+    "name": "Muskoka Brewery Autumn's Sour Kiss",
+    "region": "Ontario",
+    "style": "Spiced Apple Kettle Sour"
+  },
+  {
+    "name": "Muskoka Brewery Great Hoppy Porter",
+    "region": "Ontario",
+    "style": "Imperial Brown Ale"
+  },
+  {
+    "name": "Muskoka Brewery Electric Terry",
+    "region": "Ontario",
+    "style": "Chocolate Orange Milk Stout"
+  },
+  {
+    "name": "Niagara Oast House Brewers Wailing Fungus",
+    "region": "Ontario",
+    "style": "Brett IPA"
+  },
+  {
+    "name": "Niagara Oast House Brewers Dr. Lychee Gose Nuts",
+    "region": "Ontario",
+    "style": "Gose With Lychee"
+  },
+  {
+    "name": "Niagara Oast House Brewers Verjus Sour Ale",
+    "region": "Ontario",
+    "style": "Fruit Sour Ale"
+  },
+  {
+    "name": "Nickel Brook Brewing Co. Boleshevik Bastard",
+    "region": "Ontario",
+    "style": "Imperial Stout"
+  },
+  {
+    "name": "Nickel Brook Brewing Co. Pie Eye'd",
+    "region": "Ontario",
+    "style": "Pumpkin Ale"
+  },
+  {
+    "name": "Nickel Brook Brewing Co. Golden Sour Roeselare",
+    "region": "Ontario",
+    "style": "Mixed Fermentation"
+  },
+  {
+    "name": "Nickel Brook Brewing Co. 'Autumnus",
+    "region": "Ontario",
+    "style": "Hopfenweisse"
+  },
+  {
+    "name": "Nickel Brook Brewing Co. Raspberry Uber",
+    "region": "Ontario",
+    "style": "Berliner Weisse"
+  },
+  {
+    "name": "Northwinds Brewhouse Old Baldy",
+    "region": "Ontario",
+    "style": "Farmhouse Ale"
+  },
+  {
+    "name": "Northwinds Brewhouse X Sawdust City Beers || Men",
+    "region": "Ontario",
+    "style": "Pale Ale w. Peach & Earl Grey"
+  },
+  {
+    "name": "Rainhard Brewing NosBEERatu",
+    "region": "Ontario",
+    "style": "Black IPA w. Scorpion Peppers"
+  },
+  {
+    "name": "Rainhard Brewing Horseshoes & Handgrenades 100%",
+    "region": "Ontario",
+    "style": "Brett Pale"
+  },
+  {
+    "name": "Redline Brewhouse Clutch w. Key Lime & Graham Crackers",
+    "region": "Ontario",
+    "style": "Amercian Pale Ale"
+  },
+  {
+    "name": "Redline Brewhouse Aggressive Jazz Hands w. Mango",
+    "region": "Ontario",
+    "style": "Beglian Golden / IPA Hybrid"
+  },
+  {
+    "name": "Redline Brewhouse Fruit Loose",
+    "region": "Ontario",
+    "style": "Mixed Culture Ferment Fruit Cocktail Beer"
+  },
+  {
+    "name": "Royal City Brewing Co Delhi Double",
+    "region": "Ontario",
+    "style": "Double IPA"
+  },
+  {
+    "name": "Royal City Brewing Co Exhibition",
+    "region": "Ontario",
+    "style": "Session IPA"
+  },
+  {
+    "name": "Royal City Brewing Co Earl Grey Porter",
+    "region": "Ontario",
+    "style": "Tea Infused Porter"
+  },
+  {
+    "name": "Sawdust City Brewing Co. So What'cha Want",
+    "region": "Ontario",
+    "style": "Cucumber Jalapeno Golden Beach Ale"
+  },
+  {
+    "name": "Sawdust City Brewing Co. Twin Pines",
+    "region": "Ontario",
+    "style": "Double IPA"
+  },
+  {
+    "name": "Sawdust City Brewing Co Damn!!!!!!!",
+    "region": "Ontario",
+    "style": "Spicy Peanut Butter Imperial Stout"
+  },
+  {
+    "name": "Spearhead Brewing Company Smoke on the Walnut",
+    "region": "Ontario",
+    "style": "Black Walnut Ale"
+  },
+  {
+    "name": "Spearhead Brewing Company Conehead",
+    "region": "Ontario",
+    "style": "Pine Cone Ale"
+  },
+  {
+    "name": "Spearhead Brewing Company Stardust Saison",
+    "region": "Ontario",
+    "style": "Saison"
+  },
+  {
+    "name": "Stone City Ales Grizzled Hipster",
+    "region": "Ontario",
+    "style": "Double IPA"
+  },
+  {
+    "name": "Stone City Ales Devil and the Deep",
+    "region": "Ontario",
+    "style": "American Sour"
+  },
+  {
+    "name": "StoneHammer Brewing Hibernaut",
+    "region": "Ontario",
+    "style": "Imperial Brown Ale"
+  },
+  {
+    "name": "The Society of Beer Drinking Ladies Hop To The Beet American Pale Ale",
+    "region": "Ontario",
+    "style": "299"
+  },
+  {
+    "name": "Wellington Brewery 30th Anniversary Ale",
+    "region": "Ontario",
+    "style": "Bourbon Barrel Aged Olde Ale"
+  },
+  {
+    "name": "Wellington Brewery Buggin` Out",
+    "region": "Ontario",
+    "style": "Cab Franc Barrel Aged Sour Ale"
+  },
+  {
+    "name": "Ironwood Hard Cider Scorchin’ Perry in Cask",
+    "region": "Cider",
+    "style": "Perry Fermented With White Pepper"
+  },
+  {
+    "name": "Ironwood Hard Cider Sizzlin' Bacon Brown Sugar Bliss",
+    "region": "Cider",
+    "style": "Apple Cider Fermented With Brown Sugar and Real Bacon"
+  },
+  {
+    "name": "Les Verge De La Colline Honey Crisp Sour",
+    "region": "Cider",
+    "style": "Crabapple Cider With Brett."
+  },
+  {
+    "name": "Les Verge De La Colline Cuivré en fût",
+    "region": "Cider",
+    "style": "Wood Aged Cider"
+  },
+  {
+    "name": "Pommies Cider Pommies Fire Blight",
+    "region": "Cider",
+    "style": "Ontario Heritage Apples, Habanero Peppers and Cloves"
+  },
+  {
+    "name": "Pommies Cider Pommies Organic Wild Perry",
+    "region": "Cider",
+    "style": "Fermented Ontario Wild Pears"
+  },
+  {
+    "name": "Revel Cider Co. Brett Q",
+    "region": "Cider",
+    "style": "Wild fermented cider w. Brett"
+  },
+  {
+    "name": "Revel Cider Co. Coffee Banana T`ej",
+    "region": "Cider",
+    "style": "Traditional Ethiopian Mead w. Coffee, Banana & Honey"
+  },
+  {
+    "name": "Revel Cider Co. Maple Apfelgose",
+    "region": "Cider",
+    "style": "Apple Cider w. Lacto, Sea Salt & Maple"
+  },
+  {
+    "name": "Spirit Tree Cider Blue Velvet",
+    "region": "Cider",
+    "style": "Pear Cider w. Lavender"
+  },
+  {
+    "name": "Spirit Tree Cider Winter Bliss",
+    "region": "Cider",
+    "style": "Oak Aged New England Cider w. Orange Peel"
+  },
+  {
+    "name": "Spirit Tree Cider Tokyo Snakebite",
+    "region": "Cider",
+    "style": "Apple Lager with Ginger Syrup & Wasabi"
+  },
+  {
+    "name": "Spirit Tree Cider Wildy Delicious",
+    "region": "Cider",
+    "style": "Wild Fermented Apple Cider"
+  },
+  {
+    "name": "West Avenue Cider Hopkin",
+    "region": "Cider",
+    "style": "Hopped Pumpkin Cider"
+  },
+  {
+    "name": "West Avenue Cider Barrett Fuller's Secret",
+    "region": "Cider",
+    "style": "Bourbon Barrel Aged Cider"
+  },
+  {
+    "name": "West Avenue Cider Triple XXX",
+    "region": "Cider",
+    "style": "Hopped Cider"
+  },
+  {
+    "name": "West Avenue Cider Spontaneity",
+    "region": "Cider",
+    "style": "Farmhouse Cider"
+  },
+  {
+    "name": "West Avenue Cider X Brux House",
+    "region": "Cider",
+    "style": "To Be Announced"
+  },
+  {
+    "name": "West Avenue Cider X Clifford Brewing Black Helmet Pumpkin/Porter Cider",
+    "region": "Cider",
+    "style": "320"
+  },
+  {
+    "name": "West Avenue Cider Honey Monster",
+    "region": "Cider",
+    "style": "Cyser Cider (Apple, Honey & Riesling)"
+  },
+  {
+    "name": "West Avenue Cider Sake Cider",
+    "region": "Cider",
+    "style": "Spiced Cider"
+  },
+  {
+    "name": "West Avenue Cider Sour Cherry Scrumpy",
+    "region": "Cider",
+    "style": "Farmhouse Cider"
+  },
+  {
+    "name": "West Avenue Cider Bohemian Raspberry",
+    "region": "Cider",
+    "style": "Barrel Aged Cider"
+  },
+  {
+    "name": "101 Cider House SoCal Scrumpy",
+    "region": "Cider",
+    "style": "Wild Cider"
+  },
+  {
+    "name": "101 Cider House Cactus Red",
+    "region": "Cider",
+    "style": "Wild Cider"
+  },
+  {
+    "name": "Bad Apple Brewhouse Box Cutter",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Barnstormer Brewing Co Flight Delay IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Bellwoods Cat Lady IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Benelux Buzz",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Blood Brothers Brewing Neo Mexicanus",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Calabogie Brewing Company Bogie",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Central City Brewers + Distillers Spruce Tip IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Collective Arts Brewing Co. Ransack the Universe American IPA",
+    "region": "IPA Challenge",
+    "style": "334"
+  },
+  {
+    "name": "Dieu Du Ciel Moralite",
+    "region": "IPA Challenge",
+    "style": "Amercian IPA"
+  },
+  {
+    "name": "Dunham Cyclope Delta",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Four Winds Brewing Company Four Winds IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Granite Brewery Barmaid's T'ale",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Great Lakes Brewery Thrust! An IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "High Road Brewing Company Bronan",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Hopfenstark Postcolonial IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "House Ales Westside IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Howe Sound Brewing Hopraiser IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Indie Alehouse Instigator IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Isle de Garde & Loup Rouge Resinous IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Junction Craft Brewing Engineer's I P A",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "La Memphre Hopelaye!",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Le Castor Yamika IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Le Trou du Diable La Morsure",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Left Field Brewery Grandstand",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "MacLean's Ales India Pale Ale",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Manantler Craft Brewing Co. Liquid Swords",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Muddy York Brewing Co. Roller Boat",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Nickel Brook Brewing Co. Headstock IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Northwinds Brewhouse Corduroy",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Rainhard Brewing KAPOW!",
+    "region": "IPA Challenge",
+    "style": "Amercian IPA"
+  },
+  {
+    "name": "Stone City Ales Uncharted IPA",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Unfiltered Brewing Exile On North Street",
+    "region": "IPA Challenge",
+    "style": "American IPA"
+  },
+  {
+    "name": "Geoff Trail X Toronto Brewing Peaches and Cream",
+    "region": "Home Brewers",
+    "style": "Oatmeal Brown Ale"
+  },
+  {
+    "name": "Richard Sigesmund X Toronto Brewing Ready Steady Go",
+    "region": "Home Brewers",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Richard Sigesmund X Toronto Brewing Gimme Some Truth",
+    "region": "Home Brewers",
+    "style": "American Pale Ale"
+  },
+  {
+    "name": "Eric Emery X Toronto Brewing Paradise Casked",
+    "region": "Home Brewers",
+    "style": "Fruit Session IPA w. Pineapple, Grapefruit & Mango"
+  },
+  {
+    "name": "JP Tibensky X Toronto Brewing Idle Threat",
+    "region": "Home Brewers",
+    "style": "Hop Extract Pale Ale"
+  },
+  {
+    "name": "GTA Brews Home Brew Club X Toronto Brewing Vanilla Venti",
+    "region": "Home Brewers",
+    "style": "Mild Ale With Coffee & Vanilla Beans"
+  },
+  {
+    "name": "Cass Enright X Toronto Brewing Cass Ale",
+    "region": "Home Brewers",
+    "style": "Ontario Mild With Ontario Hops"
+  },
+  {
+    "name": "Brew TO X Kevin Freer X Escarpment Labs Poundability",
+    "region": "Home Brewers",
+    "style": "Batch #1 English Pale Ale w. Escarpment Lab Yeast"
+  },
+  {
+    "name": "Brew TO X Kevin Freer X Toronto Brewing Poundability",
+    "region": "Home Brewers",
+    "style": "Batch #2 English Pale Ale w. White Labs WLP001"
+  },
+  {
+    "name": "Brew TO X Kevin Freer X Toronto Brewing Poundability",
+    "region": "Home Brewers",
+    "style": "Batch #3 English Pale Ale w. Brett"
+  }
+]
