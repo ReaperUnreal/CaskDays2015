@@ -1,8 +1,9 @@
 package com.guillaumecl.caskdays.service;
 
-import javax.ws.rs.Consumes;
+import com.guillaumecl.caskdays.models.Beer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -20,18 +21,20 @@ public class BeerListService {
 	/**
 	 * Logger instance
 	 */
-	private static final Logger lobbyLogger = LoggerFactory.getLogger(BeerListService.class);
+	private static final Logger logger = LoggerFactory.getLogger(BeerListService.class);
 	
 	/**
 	 * The replay string.
 	 */
-	private final String beerList;
+	private final List<Beer> beerList;
 
 	/**
 	 * Create the service
 	 */
 	public BeerListService() {
-		beerList = "test";
+		Beer testBeer = new Beer("Some Shitty Beer", "Nowhere");
+		beerList = new ArrayList<>();
+		beerList.add(testBeer);
 	}
 	
 	/**
