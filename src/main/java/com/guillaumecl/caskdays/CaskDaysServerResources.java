@@ -15,10 +15,11 @@ public class CaskDaysServerResources extends ResourceConfig {
 	/**
 	 * Creates the web application resource configurator
 	 *
+	 * @param config
 	 */
-	public CaskDaysServerResources() {
+	public CaskDaysServerResources(Config config) {
 		register(JacksonFeature.class);
 
-		register(new BeerListService());
+		register(new BeerListService(config));
 	}
 }

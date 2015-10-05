@@ -1,8 +1,9 @@
 package com.guillaumecl.caskdays.service;
 
-import javax.ws.rs.Consumes;
+import com.guillaumecl.caskdays.Config;
+import com.guillaumecl.caskdays.models.Beer;
+import java.util.List;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -20,18 +21,19 @@ public class BeerListService {
 	/**
 	 * Logger instance
 	 */
-	private static final Logger lobbyLogger = LoggerFactory.getLogger(BeerListService.class);
+	private static final Logger logger = LoggerFactory.getLogger(BeerListService.class);
 	
 	/**
-	 * The replay string.
+	 * The config for the server.
 	 */
-	private final String beerList;
+	private final Config config;
 
 	/**
 	 * Create the service
+	 * @param config
 	 */
-	public BeerListService() {
-		beerList = "test";
+	public BeerListService(Config config) {
+		this.config = config;
 	}
 	
 	/**
@@ -43,6 +45,11 @@ public class BeerListService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/beers")
 	public Response getBeers() {
+		List<Beer> beerList = config.getBeerListStore().getList();
+		if (beerList.isEmpty()) {
+			logger.warn("Could not send beer list, list was empty.");
+			return Response.serverError().build();
+		}
 		return Response.ok(beerList).build();
 	}
 	
