@@ -119,11 +119,10 @@ public class BeerListParser {
 	 */
 	private List<Beer> getBeersFromSection(Element section) {
 		List<Beer> sectionBeers = section.select("div.menu-item").stream().map(element -> {
-			String name = element.select("div.menu-item-title").text();
-			String fixedName = spellChecker.correctPhrase(name);
-			String style = element.select("div.menu-item-description").text();
+			String name = spellChecker.correctPhrase(element.select("div.menu-item-title").text());
+			String style = spellChecker.correctPhrase(element.select("div.menu-item-description").text());
 			Beer beer = new Beer();
-			beer.setName(fixedName);
+			beer.setName(name);
 			beer.setStyle(style);
 			return beer;
 		}).collect(Collectors.toList());
