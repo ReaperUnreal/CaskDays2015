@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.guillaumecl.caskdays.external.BeerListParser;
+import com.guillaumecl.caskdays.spellcheck.SpellChecker;
 import com.mashape.unirest.http.Unirest;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -56,6 +57,7 @@ public class Main {
 		LoggingConfig.configureLog4j();
 		configureJackson(config);
 		configureUnirest(config);
+		configureSpellChecker(config);
 		configureBeerList(config);
 
 		CaskDaysServerResources caskDaysServer = new CaskDaysServerResources(config);
@@ -158,6 +160,12 @@ public class Main {
 				logger.error("Got an exception trying to shut down Unirest.", ex);
 			}
 		}));
+	}
+	
+	private static void configureSpellChecker(Config config) {
+		SpellChecker checker = new SpellChecker(config);
+		checker.loadFixes();
+		config.setSpellChecker(checker);
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.guillaumecl.caskdays.external;
 
 import com.guillaumecl.caskdays.Config;
 import com.guillaumecl.caskdays.models.Beer;
+import com.guillaumecl.caskdays.spellcheck.SpellChecker;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -44,12 +45,18 @@ public class BeerListParser {
 	private List<Beer> beerList;
 	
 	/**
+	 * The spell checker of the beer names.
+	 */
+	private final SpellChecker spellChecker;
+	
+	/**
 	 * Construct a beer list parser.
 	 * 
 	 * @param config 
 	 */
 	public BeerListParser(Config config) {
 		this.config = config;
+		spellChecker = config.getSpellChecker();
 		initialized = false;
 		beerList = Collections.emptyList();
 	}
@@ -112,8 +119,8 @@ public class BeerListParser {
 	 */
 	private List<Beer> getBeersFromSection(Element section) {
 		List<Beer> sectionBeers = section.select("div.menu-item").stream().map(element -> {
-			String name = element.select("div.menu-item-title").text();
-			String style = element.select("div.menu-item-description").text();
+			String name = spellChecker.correctPhrase(element.select("div.menu-item-title").text());
+			String style = spellChecker.correctPhrase(element.select("div.menu-item-description").text());
 			Beer beer = new Beer();
 			beer.setName(name);
 			beer.setStyle(style);
@@ -170,7 +177,7 @@ public class BeerListParser {
 						return beer;
 					});
 				})
-				//.filter(beer -> ! StringUtils.equalsIgnoreCase(beer.getName(), "to be announced"))
+				.filter(beer -> ! StringUtils.equalsIgnoreCase(beer.getName(), "to be announced"))
 				.collect(Collectors.toList());
 		
 		return beers;

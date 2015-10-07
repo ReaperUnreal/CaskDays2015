@@ -2,6 +2,7 @@ package com.guillaumecl.caskdays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guillaumecl.caskdays.external.BeerListParser;
+import com.guillaumecl.caskdays.spellcheck.SpellChecker;
 import java.util.Properties;
 
 /**
@@ -15,31 +16,46 @@ public class Config {
 	 * Default port to listen on
 	 */
 	private static final int DEFAULT_PORT = 7613;
-	
+
 	/**
 	 * Default cask days website to load.
 	 */
 	private static final String DEFAULT_CASK_DAYS_LIST_URL = "http://festival.caskdays.com/oncask";
 
 	/**
+	 * Default path to the spelling corrections file.
+	 */
+	private static final String DEFAULT_SPELLING_CORRECTIONS_FILE_PATH = "config/corrections.txt";
+
+	/**
 	 * Port to listen on.
 	 */
 	private final int port;
-	
+
 	/**
 	 * The web site to load.
 	 */
 	private final String caskDaysListUrl;
 
 	/**
+	 * The file with the list of spelling corrections.
+	 */
+	private final String spellingCorrectionsFilePath;
+
+	/**
 	 * The Jackson object mapper for JSON.
 	 */
 	private ObjectMapper jsonMapper;
-	
+
 	/**
 	 * The beer list store.
 	 */
 	private BeerListParser beerListStore;
+
+	/**
+	 * The spell checker.
+	 */
+	private SpellChecker spellChecker;
 
 	/**
 	 * Default constructor.
@@ -49,6 +65,34 @@ public class Config {
 	public Config(Properties serverProperties) {
 		port = Integer.parseInt(serverProperties.getProperty("port", Integer.toString(DEFAULT_PORT)));
 		caskDaysListUrl = serverProperties.getProperty("caskDaysListUrl", DEFAULT_CASK_DAYS_LIST_URL);
+		spellingCorrectionsFilePath = serverProperties.getProperty("spellingFilePath", DEFAULT_SPELLING_CORRECTIONS_FILE_PATH);
+	}
+
+	/**
+	 * The file with the list of spelling corrections.
+	 *
+	 * @return the spellingCorrectionsFilePath
+	 */
+	public String getSpellingCorrectionsFilePath() {
+		return spellingCorrectionsFilePath;
+	}
+
+	/**
+	 * The spell checker.
+	 *
+	 * @return the spellChecker
+	 */
+	public SpellChecker getSpellChecker() {
+		return spellChecker;
+	}
+
+	/**
+	 * The spell checker.
+	 *
+	 * @param spellChecker the spellChecker to set
+	 */
+	public void setSpellChecker(SpellChecker spellChecker) {
+		this.spellChecker = spellChecker;
 	}
 
 	/**
@@ -80,6 +124,7 @@ public class Config {
 
 	/**
 	 * The web site to load.
+	 *
 	 * @return the caskDaysListUrl
 	 */
 	public String getCaskDaysListUrl() {
@@ -88,6 +133,7 @@ public class Config {
 
 	/**
 	 * The beer list store.
+	 *
 	 * @return the beerListStore
 	 */
 	public BeerListParser getBeerListStore() {
@@ -96,6 +142,7 @@ public class Config {
 
 	/**
 	 * The beer list store.
+	 *
 	 * @param beerListStore the beerListStore to set
 	 */
 	public void setBeerListStore(BeerListParser beerListStore) {
