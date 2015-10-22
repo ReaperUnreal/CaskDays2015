@@ -15,11 +15,12 @@ function createTable(beerList) {
 		id: 'beerListTable'
 	}).addClass('table table-hover tablesorter').appendTo('div#main');
 	var table = $('#beerListTable');
-	table.append('<thead><tr><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th></thead>');
+	table.append('<thead><tr><th>Id</th><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th></thead>');
 
 	// create a new row for each beer
 	_.forEach(beerList, function createBeerRow(beer, idx) {
 		var row = $('<tr/>');
+		$('<td/>').text(beer.id).appendTo(row);
 		$('<td/>').text(beer.name).appendTo(row);
 		$('<td/>').text(beer.style).appendTo(row);
 		$('<td/>').text(beer.region).appendTo(row);
@@ -37,7 +38,7 @@ function createTable(beerList) {
 				return true;
 			}
 			beer.chosen = chosen;
-			saveListToLocalStorage();
+			saveListToLocalStorage(idx);
 			return true;
 		}).appendTo(chosen);
 		chosen.appendTo(row);
@@ -47,5 +48,6 @@ function createTable(beerList) {
 	table.tablesorter();
 }
 
-function saveListToLocalStorage() {
+function saveListToLocalStorage(idx) {
+	console.debug('changed: ', idx);
 }
