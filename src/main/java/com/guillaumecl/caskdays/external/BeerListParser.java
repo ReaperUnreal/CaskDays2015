@@ -1,17 +1,24 @@
 package com.guillaumecl.caskdays.external;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.guillaumecl.caskdays.Config;
 import com.guillaumecl.caskdays.models.Beer;
 import com.guillaumecl.caskdays.spellcheck.SpellChecker;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jsoup.Jsoup;
@@ -70,19 +77,42 @@ public class BeerListParser {
 		if (initialized) {
 			return beerList;
 		}
+		
+		// check to see if there's a cached file first
+		String beerListFilePathStr = config.getBeerListFilePath();
+		Path beerListFilePath = Paths.get(beerListFilePathStr);
+		if (Files.exists(beerListFilePath)) {
+			try {
+				// cached file exists, load it
+				byte[] content = Files.readAllBytes(beerListFilePath);
+				JsonNode beers = config.getJsonMapper().readTree(content);
+				beerList = new ArrayList<>();
+				for (JsonNode beerNode : beers) {
+					Beer beer = Beer.fromJSON(beerNode);
+					beerList.add(beer);
+				}
+				initialized = true;
+				return beerList;
+			} catch (IOException ex) {
+				logger.error("Could not read file for beer list.", ex);
+			}
+		}
+		
+		
+		// no cached file, try to parse all the stuff from the web site
 		Optional<String> maybeSite = getSite();
 		if (! maybeSite.isPresent()) {
 			logger.trace("Could not get site.");
 			return beerList;
 		}
-		
+
 		// get the site
 		String site = maybeSite.get();
 		//logger.trace("site: {}", site);
-		
+
 		// get it as HTML
 		Document dom = Jsoup.parse(site, config.getCaskDaysListUrl());
-		
+
 		// navigate the DOM to extract the list
 		beerList = extractBeerList(dom);
 		if (beerList.isEmpty()) {
@@ -121,9 +151,12 @@ public class BeerListParser {
 		List<Beer> sectionBeers = section.select("div.menu-item").stream().map(element -> {
 			String name = spellChecker.correctPhrase(element.select("div.menu-item-title").text());
 			String style = spellChecker.correctPhrase(element.select("div.menu-item-description").text());
+			String idStr = element.select("span.menu-item-price-top").text();
+			int id = NumberUtils.toInt(idStr, 9999);
 			Beer beer = new Beer();
 			beer.setName(name);
 			beer.setStyle(style);
+			beer.setId(id);
 			return beer;
 		}).collect(Collectors.toList());
 		return sectionBeers;
@@ -177,6 +210,7 @@ public class BeerListParser {
 						return beer;
 					});
 				})
+				.filter(beer -> beer.getId() >= 0)
 				.filter(beer -> ! StringUtils.equalsIgnoreCase(beer.getName(), "to be announced"))
 				.collect(Collectors.toList());
 		

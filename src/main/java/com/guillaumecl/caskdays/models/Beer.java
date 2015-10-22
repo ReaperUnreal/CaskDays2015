@@ -1,5 +1,6 @@
 package com.guillaumecl.caskdays.models;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -8,6 +9,11 @@ import org.apache.commons.lang3.StringUtils;
  * @author gcl
  */
 public class Beer {
+
+	/**
+	 * The id of the beer.
+	 */
+	private int id;
 
 	/**
 	 * The name of the beer, including the brewery.
@@ -33,13 +39,34 @@ public class Beer {
 	/**
 	 * Full fledged constructor for manual creation.
 	 *
+	 * @param id
 	 * @param name
 	 * @param style
 	 * @param region
 	 */
-	public Beer(String name, String style, String region) {
+	public Beer(int id, String name, String style, String region) {
+		this.id = id;
 		this.name = name;
+		this.style = style;
 		this.region = region;
+	}
+
+	/**
+	 * The id of the beer.
+	 *
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * The id of the beer.
+	 *
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**
@@ -95,15 +122,29 @@ public class Beer {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	
+
 	/**
 	 * Custom toString to make things pretty.
-	 * 
+	 *
 	 * @return The prettified beer.
 	 */
 	@Override
 	public String toString() {
 		return name + ", " + style + " from " + StringUtils.defaultString(region, "Unknown");
+	}
+	
+	/**
+	 * Create a beer from the json.
+	 * 
+	 * @param node
+	 * @return The created beer.
+	 */
+	public static Beer fromJSON(JsonNode node) {
+		String name = node.get("name").asText();
+		String style = node.get("style").asText();
+		String region = node.get("region").asText();
+		int id = node.get("id").asInt();
+		return new Beer(id, name, style, region);
 	}
 
 }

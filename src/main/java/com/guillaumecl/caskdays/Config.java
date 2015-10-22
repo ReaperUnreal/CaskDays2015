@@ -28,6 +28,11 @@ public class Config {
 	private static final String DEFAULT_SPELLING_CORRECTIONS_FILE_PATH = "config/corrections.txt";
 
 	/**
+	 * Default path to the saved list file.
+	 */
+	private static final String DEFAULT_BEER_LIST_JSON_FILE_PATH = "config/list.json";
+
+	/**
 	 * Port to listen on.
 	 */
 	private final int port;
@@ -36,6 +41,11 @@ public class Config {
 	 * The web site to load.
 	 */
 	private final String caskDaysListUrl;
+
+	/**
+	 * The file to load.
+	 */
+	private final String beerListFilePath;
 
 	/**
 	 * The file with the list of spelling corrections.
@@ -66,6 +76,16 @@ public class Config {
 		port = Integer.parseInt(serverProperties.getProperty("port", Integer.toString(DEFAULT_PORT)));
 		caskDaysListUrl = serverProperties.getProperty("caskDaysListUrl", DEFAULT_CASK_DAYS_LIST_URL);
 		spellingCorrectionsFilePath = serverProperties.getProperty("spellingFilePath", DEFAULT_SPELLING_CORRECTIONS_FILE_PATH);
+		beerListFilePath = serverProperties.getProperty("beerListFilePath", DEFAULT_BEER_LIST_JSON_FILE_PATH);
+	}
+
+	/**
+	 * The file to load.
+	 *
+	 * @return the beerListFilePath
+	 */
+	public String getBeerListFilePath() {
+		return beerListFilePath;
 	}
 
 	/**
