@@ -10,7 +10,7 @@ function createTable(beerList) {
 	// create a new table
 	$('<table/>', {
 		id: 'beerListTable'
-	}).appendTo('div#main');
+	}).addClass('table table-hover tablesorter').appendTo('div#main');
 	$('#beerListTable').append('<thead><tr><th>Name</th><th>Style</th><th>Region</th></thead>');
 
 	// create a new row for each beer
@@ -18,4 +18,6 @@ function createTable(beerList) {
 		var str = '<tr><td>' + beer.name + '</td><td>' + beer.style + '</td><td>' + beer.region + '</td></tr>';
 		$('#beerListTable').append(str);
 	});
+
+	$('#beerListTable').tablesorter();
 }
