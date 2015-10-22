@@ -1,4 +1,4 @@
-$.get('http://localhost:8081/beers', function gotData(data) {
+$.get('http://159.203.19.50:8081/beers', function gotData(data) {
 	console.debug('got data: ', data);
 	createTable(data);
 }, 'json');
