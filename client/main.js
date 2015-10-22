@@ -28,10 +28,24 @@ function createTable(beerList) {
 			type: 'checkbox',
 			id: 'beerCb' + idx,
 			value: idx
+		}).change(function onBeerCheckChange() {
+			var chosen = !!this.checked;
+			var idx = this.value|0;
+			var beer = beerList[idx];
+			if (! beer) {
+				console.error('Chosen beer is empty for idx: ', idx);
+				return true;
+			}
+			beer.chosen = chosen;
+			saveListToLocalStorage();
+			return true;
 		}).appendTo(chosen);
 		chosen.appendTo(row);
 		table.append(row);
 	});
 
 	table.tablesorter();
+}
+
+function saveListToLocalStorage() {
 }
