@@ -1,0 +1,15 @@
+@media print {
+	.noprint {
+		display: none;
+	}
+
+	table>tbody>tr>td.printable {
+		font-size: 0.8em;
+		padding-top: 3px;
+		padding-bottom: 3px;
+	}
+
+	div#header {
+		font-size: 1.2em;
+	}
+}
