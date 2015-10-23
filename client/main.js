@@ -34,8 +34,6 @@ function createTable(beerList, isSparse) {
 	// clear
 	$('div#main').empty();
 
-
-
 	// create a new table
 	$('<table/>', {
 		id: 'beerListTable'
