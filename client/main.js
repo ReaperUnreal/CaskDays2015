@@ -2,6 +2,9 @@ var beerList = [];
 
 var LOCAL_STORAGE_KEY = 'caskdays2015chosen';
 
+var chosenById = {};
+var isViewingChosen = false;
+
 $.get('http://localhost:8081/beers?cacheBust=' + Date.now(), function gotData(data) {
 //$.get('http://159.203.19.50:8081/beers?cacheBust=' + Date.now(), function gotData(data) {
 	console.debug('got data: ', data);
