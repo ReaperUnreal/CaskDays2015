@@ -26,6 +26,35 @@ function toggleViewingChosen() {
 }
 favs.on('click', toggleViewingChosen);
 
+var regionShort = {
+	'Washington': 'WA',
+	'California': 'CA',
+	'New York': 'NY',
+	'United Kingdom': 'UK',
+	'House Ales': 'Volo',
+	'Nova Scotia': 'NS & PEI',
+	'British Columbia & Alberta': 'BC & AB',
+	'Quebec': 'QC',
+	'Ontario': 'ON',
+	'IPA Challenge': 'IPA',
+	'Home Brewers': 'Home'
+};
+function shortenRegion(region) {
+	var keys = Object.keys(regionShort);
+	var key = _.find(keys, function startsWith(val) {
+		return _.startsWith(region, val);
+	});
+	if (! key) {
+		return region;
+	}
+	var short = regionShort[key];
+	if (short) {
+		return short;
+	} else {
+		return region;
+	}
+}
+
 function createTable(beerList, isSparse) {
 	// update chosen
 	loadChosenFromLocalStorage();
@@ -51,7 +80,7 @@ function createTable(beerList, isSparse) {
 		$('<td/>').text(beer.id).appendTo(row);
 		$('<td/>').text(beer.name).appendTo(row);
 		$('<td/>').text(beer.style).appendTo(row);
-		$('<td/>').text(beer.region).appendTo(row);
+		$('<td/>').text(shortenRegion(beer.region)).appendTo(row);
 		var chosen = $('<td/>');
 		var icon = $('<span/>');
 		if (beer.chosen) {
