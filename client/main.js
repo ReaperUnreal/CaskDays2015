@@ -67,7 +67,8 @@ function createTable(beerList, isSparse) {
 		id: 'beerListTable'
 	}).addClass('table table-hover tablesorter').appendTo('div#main');
 	var table = $('#beerListTable');
-	table.append('<thead><tr><th>Id</th><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th></thead>');
+	var thead = $('<thead />').addClass('noprint').appendTo(table);
+	thead.append('<tr><th>Id</th><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th>');
 
 	// create a new row for each beer
 	_.forEach(beerList, function createBeerRow(beer, idx) {
@@ -77,11 +78,11 @@ function createTable(beerList, isSparse) {
 		}
 
 		var row = $('<tr/>');
-		$('<td/>').text(beer.id).appendTo(row);
-		$('<td/>').text(beer.name).appendTo(row);
-		$('<td/>').text(beer.style).appendTo(row);
-		$('<td/>').text(shortenRegion(beer.region)).appendTo(row);
-		var chosen = $('<td/>');
+		$('<td/>').addClass('printable').text(beer.id).appendTo(row);
+		$('<td/>').addClass('printable').text(beer.name).appendTo(row);
+		$('<td/>').addClass('printable').text(beer.style).appendTo(row);
+		$('<td/>').addClass('printable').text(shortenRegion(beer.region)).appendTo(row);
+		var chosen = $('<td/>').addClass('printable');
 		var icon = $('<span/>');
 		if (beer.chosen) {
 			icon.addClass('glyphicon glyphicon-star');
