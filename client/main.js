@@ -14,7 +14,7 @@ $.get('http://localhost:8081/beers?cacheBust=' + Date.now(), function gotData(da
 
 var favs = $('button#toggle-favs');
 
-function toggleChosen() {
+function toggleViewingChosen() {
 	if (! _.keys(chosenById).length) {
 		return;
 	}
@@ -25,7 +25,7 @@ function toggleChosen() {
 	$('span#toggle-favs-icon').toggleClass('glyphicon-star');
 	$('span#toggle-favs-icon').toggleClass('glyphicon-star-empty');
 }
-favs.on('click', toggleChosen);
+favs.on('click', toggleViewingChosen);
 
 function createTable(beerList, isSparse) {
 	// update chosen
@@ -77,7 +77,7 @@ function createTable(beerList, isSparse) {
 					if (_.keys(chosenById).length == 0) {
 						// force back to not viewing chosen
 						// gg tablesorter throwing when table is empty
-						toggleChosen();
+						toggleViewingChosen();
 						return true;
 					} else {
 						$(this).remove();
