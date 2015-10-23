@@ -1,5 +1,7 @@
 var beerList = [];
 
+var LOCAL_STORAGE_KEY = 'caskdays2015chosen';
+
 $.get('http://159.203.19.50:8081/beers', function gotData(data) {
 	console.debug('got data: ', data);
 	beerList = data;
@@ -7,6 +9,9 @@ $.get('http://159.203.19.50:8081/beers', function gotData(data) {
 }, 'json');
 
 function createTable(beerList) {
+	// update chosen
+	loadChosenFromLocalStorage();
+
 	// clear
 	$('div#main').empty();
 
@@ -38,9 +43,9 @@ function createTable(beerList) {
 				return true;
 			}
 			beer.chosen = chosen;
-			saveListToLocalStorage(idx);
+			saveListToLocalStorage();
 			return true;
-		}).appendTo(chosen);
+		}).prop('checked', !!beer.chosen).appendTo(chosen);
 		chosen.appendTo(row);
 		table.append(row);
 	});
@@ -48,6 +53,27 @@ function createTable(beerList) {
 	table.tablesorter();
 }
 
-function saveListToLocalStorage(idx) {
-	console.debug('changed: ', idx);
+function saveListToLocalStorage() {
+	// space delimited string because why not
+	var arrChosen = _.filter(beerList, 'chosen');
+	var arrChosenIds = _.pluck(arrChosen, 'id');
+	var chosenStr = _.reduce(arrChosenIds, function append(accum, val) {
+		return accum + ' ' + val;
+	}, '').trim();
+	localStorage[LOCAL_STORAGE_KEY] = chosenStr;
+}
+
+function loadChosenFromLocalStorage() {
+	var chosenStr = localStorage[LOCAL_STORAGE_KEY];
+	if (! chosenStr) {
+		return;
+	}
+
+	var arrChosenIds = chosenStr.split(' ');
+	_.forEach(arrChosenIds, function assignChosen(id) {
+		var beer = _.find(beerList, 'id', id|0);
+		if (beer) {
+			beer.chosen = true;
+		}
+	});
 }
