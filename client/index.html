@@ -5,16 +5,22 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<script src="jquery.js"></script>
+		<script src="lodash.js"></script>
 		<script src="jquery.tablesorter.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="sweetalert.css">
 	</head>
 	<body>
 		<div id="header" class="container h1 text-center">
 			Cask Days 2015 Beer list
 		</div>
+		<div id="ls" class="container">
+			<button class="btn btn-default" id="load">Load</button>
+			<button class="btn btn-default" id="save">Save</button>
+		</div>
 		<div id="main" class="container">
 		</div>
-		<script src="lodash.js"></script>
 		<script src="main.js"></script>
 	</body>
 </html>

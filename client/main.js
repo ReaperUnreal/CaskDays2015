@@ -2,8 +2,7 @@ var beerList = [];
 
 var LOCAL_STORAGE_KEY = 'caskdays2015chosen';
 
-$.get('http://localhost:8081/beers?cacheBust=' + Date.now(), function gotData(data) {
-//$.get('http://159.203.19.50:8081/beers?cacheBust=' + Date.now(), function gotData(data) {
+$.get('http://159.203.19.50:8081/beers?cacheBust=' + Date.now(), function gotData(data) {
 	console.debug('got data: ', data);
 	beerList = data;
 	createTable(data);
@@ -51,7 +50,7 @@ function createTable(beerList) {
 		table.append(row);
 	});
 
-	table.tablesorter();
+	//table.tablesorter();
 }
 
 function saveListToLocalStorage() {
@@ -77,4 +76,84 @@ function loadChosenFromLocalStorage() {
 			beer.chosen = true;
 		}
 	});
+}
+
+$('button#load').click(function onLoadButtonClicked() {
+	promptForName(false, function gotInput(name) {
+		$.get('http://159.203.19.50:8081/getlist/' + name, function success(data) {
+			console.debug('got data from server: ', data);
+			loadBeerListFromJson(data);
+			swal('Beers Loaded', 'Loaded beers for ' + name, 'success');
+		}, 'json');
+		return true;
+	});
+});
+
+$('button#save').click(function onSaveButtonClicked() {
+	promptForName(true, function gotInput(name) {
+		var str = convertBeerListToJson(name);
+		$.ajax('http://159.203.19.50:8081/savelist', {
+			data: str,
+			contentType: 'application/json',
+			dataType: 'json',
+			method: 'POST'
+		}).done(function success() {
+			swal('Beers Saved', 'Saved beers for ' + name, 'success');
+		});
+		return true;
+	});
+});
+
+function promptForName(isForSave, callback) {
+	var text;
+	if (isForSave) {
+		text = "Enter name to save as:";
+	} else {
+		text = "Enter name to load:";
+	}
+	swal({
+		title: "Enter Name",
+		text: text,
+		type: "input",
+		showCancelButton: true,
+		closeOnConfirm: true,
+		animation: "slide-from-top",
+		inputPlaceholder: "Write something"
+	}, function(inputValue){
+		if (inputValue === false) {
+			return false;
+		}
+		if (inputValue === "") {
+			swal.showInputError("You need to write something!");
+			return false;
+		}
+		callback(inputValue);
+		return true;
+	});
+}
+
+function convertBeerListToJson(name) {
+	var arrChosen = _.filter(beerList, 'chosen');
+	var arrChosenIds = _.pluck(arrChosen, 'id');
+	var obj = {
+		name: name,
+		chosenIds: arrChosenIds
+	};
+	var str = JSON.stringify(obj);
+	return str;
+}
+
+function loadBeerListFromJson(obj) {
+	_.forEach(beerList, function clearChosen(beer) {
+		delete beer.chosen;
+	});
+	var arrChosenIds = obj.chosenIds;
+	_.forEach(arrChosenIds, function assignChosen(id) {
+		var beer = _.find(beerList, 'id', id|0);
+		if (beer) {
+			beer.chosen = true;
+		}
+	});
+	saveListToLocalStorage();
+	createTable(beerList);
 }
