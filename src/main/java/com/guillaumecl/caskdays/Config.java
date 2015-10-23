@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guillaumecl.caskdays.external.BeerListParser;
 import com.guillaumecl.caskdays.spellcheck.SpellChecker;
 import java.util.Properties;
+import redis.clients.jedis.Jedis;
 
 /**
  * Config for the server.
@@ -31,6 +32,11 @@ public class Config {
 	 * Default path to the saved list file.
 	 */
 	private static final String DEFAULT_BEER_LIST_JSON_FILE_PATH = "config/list.json";
+	
+	/**
+	 * The default prefix for redis.
+	 */
+	private static final String DEFAULT_REDIS_PREFIX = "CD2015";
 
 	/**
 	 * Port to listen on.
@@ -51,6 +57,11 @@ public class Config {
 	 * The file with the list of spelling corrections.
 	 */
 	private final String spellingCorrectionsFilePath;
+	
+	/**
+	 * The prefix for all of our redis keys.
+	 */
+	private final String redisPrefix;
 
 	/**
 	 * The Jackson object mapper for JSON.
@@ -68,6 +79,11 @@ public class Config {
 	private SpellChecker spellChecker;
 
 	/**
+	 * The jedis client.
+	 */
+	private Jedis jedis;
+
+	/**
 	 * Default constructor.
 	 *
 	 * @param serverProperties
@@ -77,6 +93,7 @@ public class Config {
 		caskDaysListUrl = serverProperties.getProperty("caskDaysListUrl", DEFAULT_CASK_DAYS_LIST_URL);
 		spellingCorrectionsFilePath = serverProperties.getProperty("spellingFilePath", DEFAULT_SPELLING_CORRECTIONS_FILE_PATH);
 		beerListFilePath = serverProperties.getProperty("beerListFilePath", DEFAULT_BEER_LIST_JSON_FILE_PATH);
+		redisPrefix = serverProperties.getProperty("redisPrefix", DEFAULT_REDIS_PREFIX);
 	}
 
 	/**
@@ -86,6 +103,14 @@ public class Config {
 	 */
 	public String getBeerListFilePath() {
 		return beerListFilePath;
+	}
+
+	/**
+	 * The prefix for all of our redis keys.
+	 * @return the redisPrefix
+	 */
+	public String getRedisPrefix() {
+		return redisPrefix;
 	}
 
 	/**
@@ -113,6 +138,24 @@ public class Config {
 	 */
 	public void setSpellChecker(SpellChecker spellChecker) {
 		this.spellChecker = spellChecker;
+	}
+
+	/**
+	 * The jedis client.
+	 *
+	 * @return the jedis
+	 */
+	public Jedis getJedis() {
+		return jedis;
+	}
+
+	/**
+	 * The jedis client.
+	 *
+	 * @param jedis the jedis to set
+	 */
+	public void setJedis(Jedis jedis) {
+		this.jedis = jedis;
 	}
 
 	/**

@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Properties;
+import redis.clients.jedis.Jedis;
 
 /**
  * Entry point for the rest server
@@ -57,6 +58,7 @@ public class Main {
 		LoggingConfig.configureLog4j();
 		configureJackson(config);
 		configureUnirest(config);
+		configureJedis(config);
 		configureSpellChecker(config);
 		configureBeerList(config);
 
@@ -177,5 +179,15 @@ public class Main {
 		BeerListParser parser = new BeerListParser(config);
 		parser.getList(); // try this now to pre-cache
 		config.setBeerListStore(parser);
+	}
+	
+	/**
+	 * Configure Jedis with the appropriate stuff and save it to config.
+	 * 
+	 * @param config 
+	 */
+	private static void configureJedis(Config config) {
+		Jedis jedis = new Jedis("localhost");
+		config.setJedis(jedis);
 	}
 }
