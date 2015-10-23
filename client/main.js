@@ -55,24 +55,25 @@ function createTable(beerList, isSparse) {
 		$('<td/>').text(beer.name).appendTo(row);
 		$('<td/>').text(beer.style).appendTo(row);
 		$('<td/>').text(beer.region).appendTo(row);
-		var chosen = $('<td/>').addClass('text-center');
-		$('<input />', {
-			type: 'checkbox',
-			id: 'beerCb' + idx,
-			value: idx
-		}).change(function onBeerCheckChange() {
-			var chosen = !!this.checked;
-			var idx = this.value|0;
+		var chosen = $('<td/>');
+		var icon = $('<span/>');
+		if (beer.chosen) {
+			icon.addClass('glyphicon glyphicon-star');
+		}
+		icon.appendTo(chosen);
+	 	row.on('click', function choose() {
 			var beer = beerList[idx];
 			if (! beer) {
 				console.error('Chosen beer is empty for idx: ', idx);
 				return true;
 			}
-			beer.chosen = chosen;
+			var chosen = beer.chosen = ! beer.chosen;
 
 			if (chosen) {
 				chosenById[beer.id] = beer;
+				icon.addClass('glyphicon glyphicon-star');
 			} else {
+				icon.removeClass('glyphicon glyphicon-star');
 				delete chosenById[beer.id];
 				if (isSparse) {
 					if (_.keys(chosenById).length == 0) {
@@ -81,13 +82,13 @@ function createTable(beerList, isSparse) {
 						toggleChosen();
 						return true;
 					} else {
-						$(this).parent().parent().remove();
+						$(this).remove();
 					}
 				}
 			}
 			saveListToLocalStorage();
 			return true;
-		}).prop('checked', !!beer.chosen).appendTo(chosen);
+		});
 		chosen.appendTo(row);
 		table.append(row);
 	});
