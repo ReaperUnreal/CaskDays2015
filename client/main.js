@@ -68,9 +68,9 @@ function createTable(beerList, isSparse) {
 			beer.chosen = chosen;
 
 			if (chosen) {
-				chosenById[idx] = beer;
+				chosenById[beer.id] = beer;
 			} else {
-				delete chosenById[idx];
+				delete chosenById[beer.id];
 				if (isSparse) {
 					if (_.keys(chosenById).length == 0) {
 						// force back to not viewing chosen
@@ -112,6 +112,7 @@ function loadChosenFromLocalStorage() {
 		var beer = _.find(beerList, 'id', id|0);
 		if (beer) {
 			beer.chosen = true;
+			chosenById[beer.id] = beer;
 		}
 	});
 }
