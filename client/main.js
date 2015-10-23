@@ -94,8 +94,7 @@ function createTable(beerList, isSparse) {
 
 function saveListToLocalStorage() {
 	// space delimited string because why not
-	var arrChosen = _.filter(beerList, 'chosen');
-	var arrChosenIds = _.pluck(arrChosen, 'id');
+	var arrChosenIds = Object.keys(chosenById);
 	var chosenStr = _.reduce(arrChosenIds, function append(accum, val) {
 		return accum + ' ' + val;
 	}, '').trim();
