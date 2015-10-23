@@ -1,15 +1,7 @@
-var beerList = [];
-
 var LOCAL_STORAGE_KEY = 'caskdays2015chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
-
-$.get('http://159.203.19.50:8081/beers?cacheBust=' + Date.now(), function gotData(data) {
-	console.debug('got data: ', data);
-	beerList = data;
-	createTable(data);
-}, 'json');
 
 var favs = $('button#toggle-favs');
 
@@ -147,3 +139,5 @@ function loadChosenFromLocalStorage() {
 		}
 	});
 }
+
+createTable(beerList);
