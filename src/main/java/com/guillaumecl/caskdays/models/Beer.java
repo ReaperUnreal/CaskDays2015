@@ -16,6 +16,11 @@ public class Beer {
 	private int id;
 
 	/**
+	 * The brewer of the beer.
+	 */
+	private String brewery;
+
+	/**
 	 * The name of the beer, including the brewery.
 	 */
 	private String name;
@@ -40,15 +45,15 @@ public class Beer {
 	 * Full fledged constructor for manual creation.
 	 *
 	 * @param id
+	 * @param brewery
 	 * @param name
 	 * @param style
-	 * @param region
 	 */
-	public Beer(int id, String name, String style, String region) {
+	public Beer(int id, String brewery, String name, String style) {
 		this.id = id;
+		this.brewery = brewery;
 		this.name = name;
 		this.style = style;
-		this.region = region;
 	}
 
 	/**
@@ -67,6 +72,24 @@ public class Beer {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * The brewer of the beer.
+	 *
+	 * @return the brewery
+	 */
+	public String getBrewery() {
+		return brewery;
+	}
+
+	/**
+	 * The brewer of the beer.
+	 *
+	 * @param brewery the brewery to set
+	 */
+	public void setBrewery(String brewery) {
+		this.brewery = brewery;
 	}
 
 	/**
@@ -130,21 +153,24 @@ public class Beer {
 	 */
 	@Override
 	public String toString() {
-		return name + ", " + style + " from " + StringUtils.defaultString(region, "Unknown");
+		return getBrewery() + ": " + name + ", " + style + " from " + StringUtils.defaultString(region, "Unknown");
 	}
-	
+
 	/**
 	 * Create a beer from the json.
-	 * 
+	 *
 	 * @param node
 	 * @return The created beer.
 	 */
 	public static Beer fromJSON(JsonNode node) {
+		String brewery = node.get("brewery").asText();
 		String name = node.get("name").asText();
 		String style = node.get("style").asText();
 		String region = node.get("region").asText();
 		int id = node.get("id").asInt();
-		return new Beer(id, name, style, region);
+		Beer beer = new Beer(id, brewery, name, style);
+		beer.setRegion(region);
+		return beer;
 	}
 
 }

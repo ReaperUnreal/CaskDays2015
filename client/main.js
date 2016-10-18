@@ -1,4 +1,4 @@
-var LOCAL_STORAGE_KEY = 'caskdays2015chosen';
+var LOCAL_STORAGE_KEY = 'caskdays2016chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
@@ -21,11 +21,12 @@ favs.on('click', toggleViewingChosen);
 var regionShort = {
 	'Washington': 'WA',
 	'California': 'CA',
+	'Oregon': 'OR',
 	'New York': 'NY',
 	'United Kingdom': 'UK',
 	'House Ales': 'Volo',
-	'Nova Scotia': 'NS & PEI',
-	'British Columbia & Alberta': 'BC & AB',
+	'Alberta': 'AB',
+	'British Columbia': 'BC',
 	'Quebec': 'QC',
 	'Ontario': 'ON',
 	'IPA Challenge': 'IPA',
@@ -60,7 +61,7 @@ function createTable(beerList, isSparse) {
 	}).addClass('table table-hover tablesorter').appendTo('div#main');
 	var table = $('#beerListTable');
 	var thead = $('<thead />').addClass('noprint').appendTo(table);
-	thead.append('<tr><th>Id</th><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th>');
+	thead.append('<tr><th>Id</th><th>Brewery</th><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th>');
 
 	// create a new row for each beer
 	_.forEach(beerList, function createBeerRow(beer, idx) {
@@ -71,6 +72,7 @@ function createTable(beerList, isSparse) {
 
 		var row = $('<tr/>');
 		$('<td/>').addClass('printable').text(beer.id).appendTo(row);
+		$('<td/>').addClass('printable').text(beer.brewery).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.name).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.style).appendTo(row);
 		$('<td/>').addClass('printable').text(shortenRegion(beer.region)).appendTo(row);

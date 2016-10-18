@@ -16,11 +16,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -57,6 +56,11 @@ public class BeerListParser {
 	private final SpellChecker spellChecker;
 	
 	/**
+	 * The styles that we can guess from.
+	 */
+	private final List<String> styleGuesses;
+	
+	/**
 	 * Construct a beer list parser.
 	 * 
 	 * @param config 
@@ -66,6 +70,7 @@ public class BeerListParser {
 		spellChecker = config.getSpellChecker();
 		initialized = false;
 		beerList = Collections.emptyList();
+		styleGuesses = config.getStyleGuesses();
 	}
 	
 	/**
@@ -142,24 +147,80 @@ public class BeerListParser {
 	}
 	
 	/**
+	 * Couldn't find the style name, it's probably embedded try and guess it. This list
+	 * is built through manual exploration.
+	 * 
+	 * @param nameAndStyle
+	 * @return The style if we could guess.
+	 */
+	private Optional<String> guessStyle(String nameAndStyle) {
+		return styleGuesses.stream()
+				.filter(guess -> StringUtils.containsIgnoreCase(nameAndStyle, guess))
+				.findFirst();
+	}
+	
+	/**
+	 * Parse a beer from the menu item.
+	 * 
+	 * @param item
+	 * @return The parsed out beer.
+	 */
+	private Optional<Beer> getBeerFromMenuItem(Element item) {
+		String brewery = spellChecker.correctPhrase(item.getElementsByClass("menu-item-title").first().text());
+		String nameAndStyle = item.getElementsByClass("menu-item-description").first().text();
+		String parts[] = StringUtils.split(nameAndStyle, ",", 2);
+		String name;
+		String style;
+		if (parts.length != 2) {
+			logger.debug("Could not split name and style of \"{}\" by \"{}\", guessing.", nameAndStyle, brewery);
+			Optional<String> maybeStyle = guessStyle(nameAndStyle);
+			if (maybeStyle.isPresent()) {
+				name = nameAndStyle;
+				style = maybeStyle.get();
+			} else {
+				logger.warn("Could not split name and style of \"{}\" by \"{}\", returning empty.", nameAndStyle, brewery);
+				return Optional.empty();
+			}
+		} else {
+			name = spellChecker.correctPhrase(parts[0].trim());
+			style = spellChecker.correctPhrase(parts[1].trim());
+		}
+		
+		Element idElement = item.getElementsByClass("menu-item-price-top").first();
+		String idStr = null;
+		if (idElement == null) {
+			if (name.equals("Dry Hopped Aviator Red") && brewery.equals("Flying Bison Brewing Company")) {
+				// data entry is apparently hard
+				idStr = "90";
+			} else {
+				logger.warn("Could not find node for id of \"{}\" by \"{}\"", name, brewery);
+				return Optional.empty();
+			}
+		}
+		if (idStr == null && idElement != null) {
+			idStr = idElement.text();
+		}
+		int id = NumberUtils.toInt(idStr, 9999);
+		if (id == 9999) {
+			logger.warn("Could not parse id of \"{}\" by \"{}\", got: \"{}\"", name, brewery, idStr);
+			return Optional.empty();
+		}
+		
+		return Optional.of(new Beer(id, brewery, name, style));
+	}
+	
+	/**
 	 * Create some beers, but without section names from the section element.
 	 * 
 	 * @param section
 	 * @return List of beers found in the section.
 	 */
-	private List<Beer> getBeersFromSection(Element section) {
-		List<Beer> sectionBeers = section.select("div.menu-item").stream().map(element -> {
-			String name = spellChecker.correctPhrase(element.select("div.menu-item-title").text());
-			String style = spellChecker.correctPhrase(element.select("div.menu-item-description").text());
-			String idStr = element.select("span.menu-item-price-top").text();
-			int id = NumberUtils.toInt(idStr, 9999);
-			Beer beer = new Beer();
-			beer.setName(name);
-			beer.setStyle(style);
-			beer.setId(id);
-			return beer;
-		}).collect(Collectors.toList());
-		return sectionBeers;
+	private Stream<Beer> getBeersFromSection(Element section) {
+		Element menuItemsRoot = section.getElementsByClass("menu-items").first();
+		return menuItemsRoot.getElementsByClass("menu-item").stream()
+				.map(this::getBeerFromMenuItem)
+				.filter(Optional::isPresent)
+				.map(Optional::get);
 	}
 	
 	/**
@@ -168,9 +229,23 @@ public class BeerListParser {
 	 * @param heading
 	 * @return The section name.
 	 */
-	private String getSectionTitleFromElement(Element heading) {
-		String title = heading.select("h2").last().text();
+	private String getSectionTitleFromSection(Element section) {
+		String title = section.getElementsByClass("menu-section-title").first().text();
 		return prettifySectionName(title);
+	}
+	
+	/**
+	 * Parse an individual section of beer.
+	 * 
+	 * @param section
+	 * @return The beers in the section.
+	 */
+	private Stream<Beer> parseSection(Element section) {
+		String sectionName = getSectionTitleFromSection(section);
+		return getBeersFromSection(section).map(beer -> {
+			beer.setRegion(sectionName);
+			return beer;
+		});
 	}
 	
 	/**
@@ -180,41 +255,12 @@ public class BeerListParser {
 	 * @return The list of beers that was found.
 	 */
 	private List<Beer> extractBeerList(Document dom) {
-		Element mainPage = dom.select("main#page").first();
-		Element listParent = mainPage.select("div.sqs-col-10").first();
+		Element menus = dom.getElementsByClass("menus").first();
+		Elements sections = menus.getElementsByClass("menu-section");
 		
-		// get the sections
-		Elements sectionHeadings = listParent.select("div[data-block-type=2]");
-		Elements sectionContents = listParent.select("div[data-block-type=18]");
-		if (sectionHeadings.size() != sectionContents.size()) {
-			logger.error("Section headings and section contents don't have the same count: {} vs {}", sectionHeadings.size(), sectionContents.size());
-			return Collections.emptyList();
-		}
-		logger.trace("num headings: {}, num contents: {}", sectionHeadings.size(), sectionContents.size());
-		
-		// get the beers together
-		List<Beer> beers = IntStream.range(0, sectionHeadings.size())
-				.mapToObj(idx -> Pair.of(sectionHeadings.get(idx), sectionContents.get(idx)))
-				.flatMap(section -> {
-					// section name
-					Element heading = section.getLeft();
-					String sectionName = getSectionTitleFromElement(heading);
-					
-					// beers in section
-					Element content = section.getRight();
-					List<Beer> sectionBeers = getBeersFromSection(content);
-					
-					// assign region
-					return sectionBeers.stream().map(beer -> {
-						beer.setRegion(sectionName);
-						return beer;
-					});
-				})
-				.filter(beer -> beer.getId() >= 0)
-				.filter(beer -> ! StringUtils.equalsIgnoreCase(beer.getName(), "to be announced"))
+		return sections.stream()
+				.flatMap(this::parseSection)
 				.collect(Collectors.toList());
-		
-		return beers;
 	}
 	
 	/**
