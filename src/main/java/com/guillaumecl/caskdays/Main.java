@@ -23,10 +23,17 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.DispatcherType;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -60,6 +67,7 @@ public class Main {
 		configureUnirest(config);
 		configureJedis(config);
 		configureSpellChecker(config);
+		configureStyleGuesses(config);
 		configureBeerList(config);
 
 		CaskDaysServerResources caskDaysServer = new CaskDaysServerResources(config);
@@ -168,6 +176,27 @@ public class Main {
 		SpellChecker checker = new SpellChecker(config);
 		checker.loadFixes();
 		config.setSpellChecker(checker);
+	}
+	
+	private static void configureStyleGuesses(Config config) {
+		String styleGuessesFilePathStr = config.getStyleGuessesFilePath();
+		Path styleGuessesFilePath = Paths.get(styleGuessesFilePathStr);
+		List<String> styleGuesses;
+		if (Files.exists(styleGuessesFilePath)) {
+			try {
+				styleGuesses = Files.readAllLines(styleGuessesFilePath)
+						.stream()
+						.filter(StringUtils::isNotBlank)
+						.collect(Collectors.toList());
+			} catch (IOException ex) {
+				logger.error("Got an exception trying to load the style guesses.", ex);
+				styleGuesses = Collections.emptyList();
+			}
+		} else {
+			logger.info("Could not find style guesses file, will make no guesses.");
+			styleGuesses = Collections.emptyList();
+		}
+		config.setStyleGuesses(styleGuesses);
 	}
 
 	/**

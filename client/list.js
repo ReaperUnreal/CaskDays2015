@@ -1,4 +1,4 @@
-[
+var beerList = [
   {
     "id": 1,
     "brewery": "Baerlic Brewing Company",
@@ -3086,4 +3086,4 @@
     "region": "IPA Challenge",
     "style": "American IPA"
   }
-]
+];

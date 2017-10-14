@@ -1,2 +1,2 @@
-# CaskDays2015
-A web site for Cask Days 2015 to create and manage your beer list.
+# CaskDays2017
+A web site for Cask Days 2017 to create and manage your beer list.
