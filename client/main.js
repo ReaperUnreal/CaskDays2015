@@ -1,4 +1,4 @@
-var LOCAL_STORAGE_KEY = 'caskdays2016chosen';
+var LOCAL_STORAGE_KEY = 'caskdays2017chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
@@ -17,6 +17,19 @@ function toggleViewingChosen() {
 	$('span#toggle-favs-icon').toggleClass('glyphicon-star-empty');
 }
 favs.on('click', toggleViewingChosen);
+
+function copyShareUrl() {
+	var chosenIds = _.keys(chosenById);
+	if (! chosenIds.length) {
+		return;
+	}
+	var query = '/?' + chosenIds.join('&');
+	// TOOD: just write to clipboard
+	// rather than mess with location
+	history.replaceState({}, 'chosen', query);
+}
+var share = $('button#share-url');
+share && share.on('click', copyShareUrl);
 
 var regionShort = {
 	'Washington': 'WA',
@@ -89,6 +102,9 @@ function createTable(beerList, isSparse) {
 				return true;
 			}
 			var chosen = beer.chosen = ! beer.chosen;
+			// this is awful but overwrite history
+			// to remove any stale share url query params
+			history.replaceState({}, 'chosen', '/');
 
 			if (chosen) {
 				chosenById[beer.id] = beer;
@@ -119,7 +135,7 @@ function createTable(beerList, isSparse) {
 
 function saveListToLocalStorage() {
 	// space delimited string because why not
-	var arrChosenIds = Object.keys(chosenById);
+	var arrChosenIds = _.keys(chosenById);
 	var chosenStr = _.reduce(arrChosenIds, function append(accum, val) {
 		return accum + ' ' + val;
 	}, '').trim();
@@ -133,8 +149,12 @@ function loadChosenFromLocalStorage() {
 	}
 
 	var arrChosenIds = chosenStr.split(' ');
+	loadChosen(arrChosenIds);
+}
+
+function loadChosen(arrChosenIds) {
 	_.forEach(arrChosenIds, function assignChosen(id) {
-		var beer = _.find(beerList, 'id', id|0);
+		var beer = _.find(beerList, 'id', id);
 		if (beer) {
 			beer.chosen = true;
 			chosenById[beer.id] = beer;
@@ -142,4 +162,13 @@ function loadChosenFromLocalStorage() {
 	});
 }
 
+var query = location.search;
+if ((/^\?/).test(query)) {
+	var arrChosenIds = query.substring(1).split('&');
+	loadChosen(arrChosenIds);
+	saveListToLocalStorage();
+}
+
+// meh sure, just flog local storage twice
+// TODO: kill all of this with fire before caskdays 2018
 createTable(beerList);
