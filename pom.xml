@@ -3,16 +3,15 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.bigvikinggames</groupId>
-	<artifactId>caskdays-server-2015</artifactId>
-	<name>Cask Days 2015 Server</name>
+	<groupId>com.guillaumecl</groupId>
+	<artifactId>caskdays-server-2017</artifactId>
+	<name>Cask Days 2017 Server</name>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
 		<jersey.version>2.19</jersey.version>
 		<jackson.version>2.5.4</jackson.version>
 		<jetty.version>9.2.2.v20140723</jetty.version>
-		<bvgcommons.version>1.0.9</bvgcommons.version>
 	</properties>
 
 	<distributionManagement>
@@ -30,9 +29,15 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.bigvikinggames.commons</groupId>
-			<artifactId>logging</artifactId>
-			<version>${bvgcommons.version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
 		</dependency>
 
 		<dependency>
@@ -105,12 +110,6 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.bigvikinggames.commons</groupId>
-			<artifactId>db</artifactId>
-			<version>${bvgcommons.version}</version>
 		</dependency>
 
 		<dependency>

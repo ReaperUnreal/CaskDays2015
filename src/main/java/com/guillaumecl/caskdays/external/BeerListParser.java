@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Spliterators;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -91,11 +93,9 @@ public class BeerListParser {
 				// cached file exists, load it
 				byte[] content = Files.readAllBytes(beerListFilePath);
 				JsonNode beers = config.getJsonMapper().readTree(content);
-				beerList = new ArrayList<>();
-				for (JsonNode beerNode : beers) {
-					Beer beer = Beer.fromJSON(beerNode);
-					beerList.add(beer);
-				}
+				beerList = StreamSupport.stream(beers.spliterator(), false)
+						.map(Beer::fromJSON)
+						.collect(Collectors.toList());
 				initialized = true;
 				return beerList;
 			} catch (IOException ex) {

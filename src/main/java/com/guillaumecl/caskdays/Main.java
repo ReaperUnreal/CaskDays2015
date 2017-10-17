@@ -1,6 +1,5 @@
 package com.guillaumecl.caskdays;
 
-import com.bigvikinggames.commons.logging.LoggingConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -9,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.guillaumecl.caskdays.external.BeerListParser;
 import com.guillaumecl.caskdays.spellcheck.SpellChecker;
 import com.mashape.unirest.http.Unirest;
+import java.io.File;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.DispatcherType;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.PropertyConfigurator;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -61,8 +63,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		Config config = loadConfiguration();
-		
-		LoggingConfig.configureLog4j();
+
+		configureLog4j();
 		configureJackson(config);
 		configureUnirest(config);
 		configureJedis(config);
@@ -113,8 +115,8 @@ public class Main {
 
 		return new Config(serverProperties);
 	}
-	
-		/**
+
+	/**
 	 * Configure jackson.
 	 *
 	 * @param config
@@ -171,13 +173,13 @@ public class Main {
 			}
 		}));
 	}
-	
+
 	private static void configureSpellChecker(Config config) {
 		SpellChecker checker = new SpellChecker(config);
 		checker.loadFixes();
 		config.setSpellChecker(checker);
 	}
-	
+
 	private static void configureStyleGuesses(Config config) {
 		String styleGuessesFilePathStr = config.getStyleGuessesFilePath();
 		Path styleGuessesFilePath = Paths.get(styleGuessesFilePathStr);
@@ -209,14 +211,27 @@ public class Main {
 		parser.getList(); // try this now to pre-cache
 		config.setBeerListStore(parser);
 	}
-	
+
 	/**
 	 * Configure Jedis with the appropriate stuff and save it to config.
-	 * 
-	 * @param config 
+	 *
+	 * @param config
 	 */
 	private static void configureJedis(Config config) {
 		Jedis jedis = new Jedis("localhost");
 		config.setJedis(jedis);
+	}
+
+	private static void configureLog4j() {
+		// Configure from built in config
+		ClassLoader loader = Main.class.getClassLoader();
+		URL configUrl = loader.getResource("log4j.properties");
+		if (configUrl != null) {
+			PropertyConfigurator.configure(configUrl);
+		}
+
+		// Then check for config file
+		File log4jFile = new File("config/log4j.properties");
+		PropertyConfigurator.configureAndWatch(log4jFile.getAbsolutePath());
 	}
 }
