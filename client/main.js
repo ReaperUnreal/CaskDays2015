@@ -2,6 +2,7 @@ var LOCAL_STORAGE_KEY = 'caskdays2016chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
+var shouldRemoveSat = false;
 
 var favs = $('button#toggle-favs');
 
@@ -9,7 +10,7 @@ function toggleViewingChosen() {
 	if (! _.keys(chosenById).length) {
 		return;
 	}
-	createTable(beerList, ! isViewingChosen);
+	createTable(beerList, ! isViewingChosen, shouldRemoveSat);
 	// don't persist unless createTable passes
 	// not sure why I bother trusting things to throw properly
 	isViewingChosen = ! isViewingChosen;
@@ -17,6 +18,16 @@ function toggleViewingChosen() {
 	$('span#toggle-favs-icon').toggleClass('glyphicon-star-empty');
 }
 favs.on('click', toggleViewingChosen);
+
+var sat = $('button#toggle-sat');
+
+function toggleViewingSaturday() {
+	createTable(beerList, isViewingChosen, ! shouldRemoveSat);
+	shouldRemoveSat = ! shouldRemoveSat;
+	$('button#toggle-sat').toggleClass('btn-danger');
+	$('button#toggle-sat').toggleClass('btn-warning');
+}
+sat.on('click', toggleViewingSaturday);
 
 var regionShort = {
 	'Washington': 'WA',
@@ -30,7 +41,9 @@ var regionShort = {
 	'Quebec': 'QC',
 	'Ontario': 'ON',
 	'IPA Challenge': 'IPA',
-	'Home Brewers': 'Home'
+	'Homebrewer': 'Home',
+	'Toronto': 'TO',
+	'Maine': 'MN'
 };
 function shortenRegion(region) {
 	var keys = Object.keys(regionShort);
@@ -48,7 +61,7 @@ function shortenRegion(region) {
 	}
 }
 
-function createTable(beerList, isSparse) {
+function createTable(beerList, favoritesOnly, removeSat) {
 	// update chosen
 	loadChosenFromLocalStorage();
 
@@ -61,20 +74,33 @@ function createTable(beerList, isSparse) {
 	}).addClass('table table-hover tablesorter').appendTo('div#main');
 	var table = $('#beerListTable');
 	var thead = $('<thead />').addClass('noprint').appendTo(table);
-	thead.append('<tr><th>Id</th><th>Brewery</th><th>Name</th><th>Style</th><th>Region</th><th>Chosen</th>');
+	thead.append('<tr><th>ID</th><th>Brewery</th><th>Name</th><th>Style</th><th>ABV</th><th>IBU</th><th>Region</th><th>Chosen</th>');
 
 	// create a new row for each beer
 	_.forEach(beerList, function createBeerRow(beer, idx) {
 
-		if (isSparse && ! beerList[idx].chosen) {
+		if (favoritesOnly && ! beerList[idx].chosen) {
+			return;
+		}
+		if (beer.brewery === 'NA') {
+			return;
+		}
+		if (removeSat && beer.limited) {
 			return;
 		}
 
 		var row = $('<tr/>');
+		if (beer.limited) {
+			row.css('background-color', 'orangered');
+		}
+		var abv = (beer.abv === "NA") ? "" : beer.abv;
+		var ibu = (beer.ibu === "NA") ? "" : beer.ibu;
 		$('<td/>').addClass('printable').text(beer.id).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.brewery).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.name).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.style).appendTo(row);
+		$('<td/>').addClass('printable').text(abv).appendTo(row);
+		$('<td/>').addClass('printable').text(ibu).appendTo(row);
 		$('<td/>').addClass('printable').text(shortenRegion(beer.region)).appendTo(row);
 		var chosen = $('<td/>').addClass('printable');
 		var icon = $('<span/>');
@@ -96,7 +122,7 @@ function createTable(beerList, isSparse) {
 			} else {
 				icon.removeClass('glyphicon glyphicon-star');
 				delete chosenById[beer.id];
-				if (isSparse) {
+				if (favoritesOnly) {
 					if (_.keys(chosenById).length == 0) {
 						// force back to not viewing chosen
 						// gg tablesorter throwing when table is empty
