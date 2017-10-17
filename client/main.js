@@ -69,8 +69,14 @@ function createTable(beerList, isSparse) {
 		if (isSparse && ! beerList[idx].chosen) {
 			return;
 		}
+		if (beer.brewery === 'NA') {
+			return;
+		}
 
 		var row = $('<tr/>');
+		if (beer.limited) {
+			row.css('background-color', 'orangered');
+		}
 		$('<td/>').addClass('printable').text(beer.id).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.brewery).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.name).appendTo(row);
