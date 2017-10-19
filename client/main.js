@@ -1,10 +1,8 @@
-var LOCAL_STORAGE_KEY = 'caskdays2016chosen';
+var LOCAL_STORAGE_KEY = 'caskdays2017chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
 var shouldRemoveSat = false;
-
-var favs = $('button#toggle-favs');
 
 function toggleViewingChosen() {
 	if (! _.keys(chosenById).length) {
@@ -17,9 +15,21 @@ function toggleViewingChosen() {
 	$('span#toggle-favs-icon').toggleClass('glyphicon-star');
 	$('span#toggle-favs-icon').toggleClass('glyphicon-star-empty');
 }
+var favs = $('button#toggle-favs');
 favs.on('click', toggleViewingChosen);
 
-var sat = $('button#toggle-sat');
+function copyShareUrl() {
+	var chosenIds = _.keys(chosenById);
+	if (! chosenIds.length) {
+		return;
+	}
+	var query = '/?' + chosenIds.join('&');
+	// TOOD: just write to clipboard
+	// rather than mess with location
+	history.replaceState({}, 'chosen', query);
+}
+var share = $('button#share-url');
+share && share.on('click', copyShareUrl);
 
 function toggleViewingSaturday() {
 	createTable(beerList, isViewingChosen, ! shouldRemoveSat);
@@ -27,6 +37,7 @@ function toggleViewingSaturday() {
 	$('button#toggle-sat').toggleClass('btn-danger');
 	$('button#toggle-sat').toggleClass('btn-warning');
 }
+var sat = $('button#toggle-sat');
 sat.on('click', toggleViewingSaturday);
 
 var regionShort = {
@@ -115,6 +126,9 @@ function createTable(beerList, favoritesOnly, removeSat) {
 				return true;
 			}
 			var chosen = beer.chosen = ! beer.chosen;
+			// this is awful but overwrite history
+			// to remove any stale share url query params
+			history.replaceState({}, 'chosen', '/');
 
 			if (chosen) {
 				chosenById[beer.id] = beer;
@@ -145,7 +159,7 @@ function createTable(beerList, favoritesOnly, removeSat) {
 
 function saveListToLocalStorage() {
 	// space delimited string because why not
-	var arrChosenIds = Object.keys(chosenById);
+	var arrChosenIds = _.keys(chosenById);
 	var chosenStr = _.reduce(arrChosenIds, function append(accum, val) {
 		return accum + ' ' + val;
 	}, '').trim();
@@ -159,8 +173,12 @@ function loadChosenFromLocalStorage() {
 	}
 
 	var arrChosenIds = chosenStr.split(' ');
+	loadChosen(arrChosenIds);
+}
+
+function loadChosen(arrChosenIds) {
 	_.forEach(arrChosenIds, function assignChosen(id) {
-		var beer = _.find(beerList, 'id', id|0);
+		var beer = _.find(beerList, 'id', id);
 		if (beer) {
 			beer.chosen = true;
 			chosenById[beer.id] = beer;
@@ -168,4 +186,13 @@ function loadChosenFromLocalStorage() {
 	});
 }
 
+var query = location.search;
+if ((/^\?/).test(query)) {
+	var arrChosenIds = query.substring(1).split('&');
+	loadChosen(arrChosenIds);
+	saveListToLocalStorage();
+}
+
+// meh sure, just flog local storage twice
+// TODO: kill all of this with fire before caskdays 2018
 createTable(beerList);
