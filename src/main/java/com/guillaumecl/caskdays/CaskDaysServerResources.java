@@ -1,6 +1,6 @@
 package com.guillaumecl.caskdays;
 
-import com.guillaumecl.caskdays.service.BeerListService;
+import com.guillaumecl.caskdays.service.AccountService;
 import com.guillaumecl.caskdays.util.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
@@ -20,6 +20,6 @@ public class CaskDaysServerResources extends ResourceConfig {
 	public CaskDaysServerResources(Config config) {
 		register(JacksonFeature.class);
 
-		register(new BeerListService(config));
+		register(new AccountService(config));
 	}
 }

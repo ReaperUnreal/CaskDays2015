@@ -15,11 +15,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ChosenBeers {
 
 	/**
-	 * The name of the set of chosen beers.
-	 */
-	private String name;
-
-	/**
 	 * The chosen ids.
 	 */
 	private List<Integer> chosenIds;
@@ -33,11 +28,9 @@ public class ChosenBeers {
 	/**
 	 * Full fledged constructor for manual creation.
 	 *
-	 * @param name
 	 * @param chosenIds
 	 */
-	public ChosenBeers(String name, List<Integer> chosenIds) {
-		this.name = name;
+	public ChosenBeers(List<Integer> chosenIds) {
 		this.chosenIds = chosenIds;
 	}
 	
@@ -68,24 +61,6 @@ public class ChosenBeers {
 	}
 
 	/**
-	 * The name of the set of chosen beers.
-	 *
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * The name of the set of chosen beers.
-	 *
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
 	 * The chosen ids.
 	 *
 	 * @return the chosenIds
@@ -110,6 +85,6 @@ public class ChosenBeers {
 	 */
 	@Override
 	public String toString() {
-		return "ChosenBeers{" + "name=" + name + ", chosenIds=" + chosenIds + '}';
+		return "ChosenBeers{ chosenIds=" + chosenIds + '}';
 	}
 }

@@ -66,11 +66,7 @@ public class Main {
 
 		configureLog4j();
 		configureJackson(config);
-		configureUnirest(config);
 		configureJedis(config);
-		configureSpellChecker(config);
-		configureStyleGuesses(config);
-		configureBeerList(config);
 
 		CaskDaysServerResources caskDaysServer = new CaskDaysServerResources(config);
 
@@ -84,7 +80,7 @@ public class Main {
 		FilterHolder corsFilterHolder = restContext.addFilter(CrossOriginFilter.class, "/*", EnumSet.allOf(DispatcherType.class));
 
 		HashMap<String, String> corsParams = new HashMap<>();
-		corsParams.put("allowedMethods", "GET,POST,HEAD,PUT,DELETE");
+		corsParams.put("allowedMethods", "GET,POST,OPTIONS");
 		corsFilterHolder.setInitParameters(corsParams);
 
 		HandlerList handlers = new HandlerList();
@@ -133,83 +129,6 @@ public class Main {
 				.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 
 		config.setJsonMapper(objectMapper);
-	}
-
-	/**
-	 * Setup Unirest with some more sane defaults.
-	 *
-	 * @param config
-	 */
-	private static void configureUnirest(Config config) {
-		// use Jackson for JSON
-		Unirest.setObjectMapper(new com.mashape.unirest.http.ObjectMapper() {
-			private final ObjectMapper jacksonObjectMapper = config.getJsonMapper();
-
-			@Override
-			public <T> T readValue(String value, Class<T> valueType) {
-				try {
-					return jacksonObjectMapper.readValue(value, valueType);
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			}
-
-			@Override
-			public String writeValue(Object value) {
-				try {
-					return jacksonObjectMapper.writeValueAsString(value);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		});
-
-		// add the shutdown hook
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			try {
-				Unirest.shutdown();
-			} catch (IOException ex) {
-				logger.error("Got an exception trying to shut down Unirest.", ex);
-			}
-		}));
-	}
-
-	private static void configureSpellChecker(Config config) {
-		SpellChecker checker = new SpellChecker(config);
-		checker.loadFixes();
-		config.setSpellChecker(checker);
-	}
-
-	private static void configureStyleGuesses(Config config) {
-		String styleGuessesFilePathStr = config.getStyleGuessesFilePath();
-		Path styleGuessesFilePath = Paths.get(styleGuessesFilePathStr);
-		List<String> styleGuesses;
-		if (Files.exists(styleGuessesFilePath)) {
-			try {
-				styleGuesses = Files.readAllLines(styleGuessesFilePath)
-						.stream()
-						.filter(StringUtils::isNotBlank)
-						.collect(Collectors.toList());
-			} catch (IOException ex) {
-				logger.error("Got an exception trying to load the style guesses.", ex);
-				styleGuesses = Collections.emptyList();
-			}
-		} else {
-			logger.info("Could not find style guesses file, will make no guesses.");
-			styleGuesses = Collections.emptyList();
-		}
-		config.setStyleGuesses(styleGuesses);
-	}
-
-	/**
-	 * Get the beer list off of the website and into memory.
-	 *
-	 * @param config
-	 */
-	private static void configureBeerList(Config config) {
-		BeerListParser parser = new BeerListParser(config);
-		parser.getList(); // try this now to pre-cache
-		config.setBeerListStore(parser);
 	}
 
 	/**
