@@ -1,4 +1,4 @@
-package com.guillaumecl.caskdays.util;
+package com.bigvikinggames.animoji.util;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;

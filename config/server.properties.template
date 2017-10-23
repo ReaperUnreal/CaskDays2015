@@ -1,1 +1,51 @@
-port = 8081
+# Server properties
+port = 11350
+redis.host = localhost
+
+# Filesystem locations for data files
+replayPath = replays
+trackingPath = tracking
+
+# If the REST API is being hosted on an SSL enabled endpoint (affects kik debugging)
+isSSL = false
+# This affects kik auth as well
+dev = true
+
+# Feature toggles
+lifeSystemEnabled = false
+
+# Broadcast access token
+accessToken = SomeThingsN3v3erChangeMyFr31nd!
+
+#
+# Kik Configuration
+#
+
+# Kik messaging
+kik.apiKey = API_KEY
+kik.username = KIKBOT_USERNAME
+kik.linkUrl = KIK_GAME_URL
+kik.picUrl = KIKBOT_PICTURE_URL
+kik.attributionName = KIKBOT_ATTRIBUTION_NAME
+kik.attributionIconUrl = KIKBOT_ATTRIBUTION_ICON_URL
+kik.assetBaseUrl = KIK_ASSET_BASE
+
+# A magic code that will reset your kikbot state (optional)
+kik.botStateResetCode = KIKBOT_RESET_CODE
+
+# Bot data (shared with facebook too)
+kikbot.dataRoot = KIKBOT_DATA_ROOT
+
+#
+# Facebook Configuration
+#
+
+# Messaging
+facebook.accessToken = PAGE_ACCESS_TOKEN
+facebook.verifyToken = HUB_CHALLENGE_RESPONSE
+facebook.canvasLink = APP_CANVAS_LINK
+
+# Login
+facebook.appId = FACEBOOK_APP_ID
+facebook.secret = FACEVOOK_SECRET
+

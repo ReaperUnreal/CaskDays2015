@@ -1,13 +1,9 @@
-package com.guillaumecl.caskdays;
+package com.bigvikinggames.animoji;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.guillaumecl.caskdays.external.BeerListParser;
-import com.guillaumecl.caskdays.spellcheck.SpellChecker;
-import com.mashape.unirest.http.Unirest;
 import java.io.File;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -24,17 +20,10 @@ import javax.servlet.DispatcherType;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.PropertyConfigurator;
 import redis.clients.jedis.Jedis;
 
@@ -65,8 +54,6 @@ public class Main {
 		Config config = loadConfiguration();
 
 		configureLog4j();
-		configureJackson(config);
-		configureJedis(config);
 
 		CaskDaysServerResources caskDaysServer = new CaskDaysServerResources(config);
 
@@ -110,35 +97,6 @@ public class Main {
 		}
 
 		return new Config(serverProperties);
-	}
-
-	/**
-	 * Configure jackson.
-	 *
-	 * @param config
-	 */
-	private static void configureJackson(Config config) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper
-				.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-				// ignore additional/unknown properties
-				.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-				// don't serialize nulls
-				.setSerializationInclusion(JsonInclude.Include.NON_NULL)
-				// set the date output format
-				.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-
-		config.setJsonMapper(objectMapper);
-	}
-
-	/**
-	 * Configure Jedis with the appropriate stuff and save it to config.
-	 *
-	 * @param config
-	 */
-	private static void configureJedis(Config config) {
-		Jedis jedis = new Jedis("localhost");
-		config.setJedis(jedis);
 	}
 
 	private static void configureLog4j() {
