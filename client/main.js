@@ -56,7 +56,7 @@ var regionShort = {
 	'Nova Scotia': 'NS',
 	'IPA Challenge': 'IPA',
 	'Homebrewer': 'Home',
-	'Cider': 'Cid'
+	'Cider': 'Cid',
 	'Toronto': 'TO',
 	'Keep6 Imports': 'K6'
 };
