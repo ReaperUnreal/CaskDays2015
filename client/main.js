@@ -1,4 +1,4 @@
-var LOCAL_STORAGE_KEY = 'caskdays2017chosen';
+var LOCAL_STORAGE_KEY = 'caskdays2018chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
