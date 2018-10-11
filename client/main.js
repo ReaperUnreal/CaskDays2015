@@ -2,13 +2,13 @@ var LOCAL_STORAGE_KEY = 'caskdays2018chosen';
 
 var chosenById = {};
 var isViewingChosen = false;
-var shouldRemoveSat = false;
+var shouldRemoveSession3 = false;
 
 function toggleViewingChosen() {
 	if (! _.keys(chosenById).length) {
 		return;
 	}
-	createTable(beerList, ! isViewingChosen, shouldRemoveSat);
+	createTable(beerList, ! isViewingChosen, shouldRemoveSession3);
 	// don't persist unless createTable passes
 	// not sure why I bother trusting things to throw properly
 	isViewingChosen = ! isViewingChosen;
@@ -31,30 +31,34 @@ function copyShareUrl() {
 var share = $('button#share-url');
 share && share.on('click', copyShareUrl);
 
-function toggleViewingSaturday() {
-	createTable(beerList, isViewingChosen, ! shouldRemoveSat);
-	shouldRemoveSat = ! shouldRemoveSat;
-	$('button#toggle-sat').toggleClass('btn-danger');
-	$('button#toggle-sat').toggleClass('btn-warning');
+function toggleViewingSession3() {
+	createTable(beerList, isViewingChosen, ! shouldRemoveSession3);
+	shouldRemoveSession3 = ! shouldRemoveSession3;
+	$('button#toggle-session3').toggleClass('btn-danger');
+	$('button#toggle-session3').toggleClass('btn-warning');
 }
-var sat = $('button#toggle-sat');
-sat.on('click', toggleViewingSaturday);
+var session3 = $('button#toggle-session3');
+session3.on('click', toggleViewingSession3);
 
 var regionShort = {
 	'Washington': 'WA',
 	'California': 'CA',
 	'Oregon': 'OR',
 	'New York': 'NY',
+	'Pennsylvania': 'PA',
+	'Maine': 'MN',
 	'United Kingdom': 'UK',
 	'House Ales': 'Volo',
 	'Alberta': 'AB',
 	'British Columbia': 'BC',
 	'Quebec': 'QC',
 	'Ontario': 'ON',
+	'Nova Scotia': 'NS',
 	'IPA Challenge': 'IPA',
 	'Homebrewer': 'Home',
+	'Cider': 'Cid'
 	'Toronto': 'TO',
-	'Maine': 'MN'
+	'Keep6 Imports': 'K6'
 };
 function shortenRegion(region) {
 	var keys = Object.keys(regionShort);
@@ -72,7 +76,7 @@ function shortenRegion(region) {
 	}
 }
 
-function createTable(beerList, favoritesOnly, removeSat) {
+function createTable(beerList, favoritesOnly, removeSession3) {
 	// update chosen
 	loadChosenFromLocalStorage();
 
@@ -85,7 +89,7 @@ function createTable(beerList, favoritesOnly, removeSat) {
 	}).addClass('table table-hover tablesorter').appendTo('div#main');
 	var table = $('#beerListTable');
 	var thead = $('<thead />').addClass('noprint').appendTo(table);
-	thead.append('<tr><th>ID</th><th>Brewery</th><th>Name</th><th>Style</th><th>ABV</th><th>IBU</th><th>Region</th><th>Chosen</th>');
+	thead.append('<tr><th>ID</th><th>Session</th><th>Brewery</th><th>Name</th><th>Style</th><th>ABV</th><th>Region</th><th>Chosen</th>');
 
 	// create a new row for each beer
 	_.forEach(beerList, function createBeerRow(beer, idx) {
@@ -96,7 +100,11 @@ function createTable(beerList, favoritesOnly, removeSat) {
 		if (beer.brewery === 'NA') {
 			return;
 		}
-		if (removeSat && beer.limited) {
+		if (beer.session[0] !== 'S') {
+			return;
+		}
+		var session = Number.parseInt(beer.session[1]);
+		if (removeSession3 && session === 3) {
 			return;
 		}
 
@@ -104,14 +112,18 @@ function createTable(beerList, favoritesOnly, removeSat) {
 		if (beer.limited) {
 			row.css('background-color', 'orangered');
 		}
-		var abv = (beer.abv === "NA") ? "" : beer.abv;
-		var ibu = (beer.ibu === "NA") ? "" : beer.ibu;
+
+		var abvNum = Number.parseFloat(beer.abv);
+		var abv = "" + abvNum;
+		if (isNaN(abvNum)) {
+			abv = "";
+		}
 		$('<td/>').addClass('printable').text(beer.id).appendTo(row);
+		$('<td/>').addClass('printable').text("" + session).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.brewery).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.name).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.style).appendTo(row);
 		$('<td/>').addClass('printable').text(abv).appendTo(row);
-		$('<td/>').addClass('printable').text(ibu).appendTo(row);
 		$('<td/>').addClass('printable').text(shortenRegion(beer.region)).appendTo(row);
 		var chosen = $('<td/>').addClass('printable');
 		var icon = $('<span/>');
