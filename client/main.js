@@ -97,7 +97,7 @@ function createTable(beerList, favoritesOnly, removeSession3) {
 		if (favoritesOnly && ! beerList[idx].chosen) {
 			return;
 		}
-		if (beer.brewery === 'NA') {
+		if (beer.name === "To Be Announced") {
 			return;
 		}
 		if (beer.session[0] !== 'S') {
