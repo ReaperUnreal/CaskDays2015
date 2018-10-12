@@ -2261,7 +2261,7 @@ var beerList = [
     "region": "Homebrew",
     "brewery": "Jesse Reynolds X Guillaume Couture-Levesque",
     "name": "Hail Caesar!",
-    "style": "American Blonde Ale",
+    "style": "Ceasar-Beer Hybrid",
     "abv": "6",
     "allergen": "Yes",
     "allergen_desc": "Clam Juice",
