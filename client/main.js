@@ -3,12 +3,13 @@ var LOCAL_STORAGE_KEY = 'caskdays2018chosen';
 var chosenById = {};
 var isViewingChosen = false;
 var shouldRemoveSession3 = false;
+var shouldRemoveKegs = false;
 
 function toggleViewingChosen() {
 	if (! _.keys(chosenById).length) {
 		return;
 	}
-	createTable(beerList, ! isViewingChosen, shouldRemoveSession3);
+	createTable(beerList, ! isViewingChosen, shouldRemoveSession3, shouldRemoveKegs);
 	// don't persist unless createTable passes
 	// not sure why I bother trusting things to throw properly
 	isViewingChosen = ! isViewingChosen;
@@ -32,13 +33,22 @@ var share = $('button#share-url');
 share && share.on('click', copyShareUrl);
 
 function toggleViewingSession3() {
-	createTable(beerList, isViewingChosen, ! shouldRemoveSession3);
+	createTable(beerList, isViewingChosen, ! shouldRemoveSession3, shouldRemoveKegs);
 	shouldRemoveSession3 = ! shouldRemoveSession3;
 	$('button#toggle-session3').toggleClass('btn-danger');
 	$('button#toggle-session3').toggleClass('btn-warning');
 }
 var session3 = $('button#toggle-session3');
 session3.on('click', toggleViewingSession3);
+
+function toggleViewingKegs() {
+	createTable(beerList, isViewingChosen, shouldRemoveSession3, ! shouldRemoveKegs);
+	shouldRemoveKegs = ! shouldRemoveKegs;
+	$('button#toggle-keg').toggleClass('btn-danger');
+	$('button#toggle-keg').toggleClass('btn-warning');
+}
+var kegs = $('button#toggle-keg');
+kegs.on('click', toggleViewingKegs);
 
 var regionShort = {
 	'Washington': 'WA',
@@ -76,7 +86,7 @@ function shortenRegion(region) {
 	}
 }
 
-function createTable(beerList, favoritesOnly, removeSession3) {
+function createTable(beerList, favoritesOnly, removeSession3, removeKegs) {
 	// update chosen
 	loadChosenFromLocalStorage();
 
@@ -108,6 +118,11 @@ function createTable(beerList, favoritesOnly, removeSession3) {
 			return;
 		}
 
+		var region = shortenRegion(beer.region);
+		if (removeKegs && region === 'K6') {
+			return;
+		}
+
 		var row = $('<tr/>');
 		if (beer.limited) {
 			row.css('background-color', 'orangered');
@@ -124,7 +139,7 @@ function createTable(beerList, favoritesOnly, removeSession3) {
 		$('<td/>').addClass('printable').text(beer.name).appendTo(row);
 		$('<td/>').addClass('printable').text(beer.style).appendTo(row);
 		$('<td/>').addClass('printable').text(abv).appendTo(row);
-		$('<td/>').addClass('printable').text(shortenRegion(beer.region)).appendTo(row);
+		$('<td/>').addClass('printable').text(region).appendTo(row);
 		var chosen = $('<td/>').addClass('printable');
 		var icon = $('<span/>');
 		if (beer.chosen) {
