@@ -137,7 +137,7 @@ var beerList = [
     "region": "California",
     "brewery": "Smog City *",
     "name": "Smog City IPA",
-    "style": "West Coast IPA (w. Mango & Habanero)",
+	"style": "West Coast IPA (w\/ Mango & Habanero)",
     "abv": "7.3",
     "allergen": "",
     "allergen_desc": "",
