@@ -1,15 +1,18 @@
-var LOCAL_STORAGE_KEY = 'caskdays2018chosen';
+var LOCAL_STORAGE_CHOSEN_KEY = 'caskdays2018chosen';
+var LOCAL_STORAGE_DRANK_KEY = 'caskdays2018drank';
 
 var chosenById = {};
+var drankById = {};
 var isViewingChosen = false;
 var shouldRemoveSession3 = false;
 var shouldRemoveKegs = false;
+var inDrinkingMode = false;
 
 function toggleViewingChosen() {
 	if (! _.keys(chosenById).length) {
 		return;
 	}
-	createTable(beerList, ! isViewingChosen, shouldRemoveSession3, shouldRemoveKegs);
+	createTable(beerList, ! isViewingChosen, shouldRemoveSession3, shouldRemoveKegs, inDrinkingMode);
 	// don't persist unless createTable passes
 	// not sure why I bother trusting things to throw properly
 	isViewingChosen = ! isViewingChosen;
@@ -45,7 +48,7 @@ var share = $('button#share-url');
 share && share.on('click', copyShareUrl);
 
 function toggleViewingSession3() {
-	createTable(beerList, isViewingChosen, ! shouldRemoveSession3, shouldRemoveKegs);
+	createTable(beerList, isViewingChosen, ! shouldRemoveSession3, shouldRemoveKegs, inDrinkingMode);
 	shouldRemoveSession3 = ! shouldRemoveSession3;
 	$('button#toggle-session3').toggleClass('btn-danger');
 	$('button#toggle-session3').toggleClass('btn-warning');
@@ -55,7 +58,7 @@ var session3 = $('button#toggle-session3');
 session3.on('click', toggleViewingSession3);
 
 function toggleViewingKegs() {
-	createTable(beerList, isViewingChosen, shouldRemoveSession3, ! shouldRemoveKegs);
+	createTable(beerList, isViewingChosen, shouldRemoveSession3, ! shouldRemoveKegs, inDrinkingMode);
 	shouldRemoveKegs = ! shouldRemoveKegs;
 	$('button#toggle-keg').toggleClass('btn-danger');
 	$('button#toggle-keg').toggleClass('btn-warning');
@@ -63,6 +66,16 @@ function toggleViewingKegs() {
 }
 var kegs = $('button#toggle-keg');
 kegs.on('click', toggleViewingKegs);
+
+function toggleDrinkingMode() {
+	createTable(beerList, isViewingChosen, shouldRemoveSession3, shouldRemoveKegs, ! inDrinkingMode);
+	inDrinkingMode = ! inDrinkingMode;
+	$('button#toggle-drinking-mode').toggleClass('btn-success');
+	$('button#toggle-drinking-mode').toggleClass('btn-info');
+	$('span#toggle-drinking-mode-text').text(inDrinkingMode ? "Return To Planning Mode" : "Enter Drinking Mode");
+}
+var drinking = $('button#toggle-drinking-mode');
+drinking.on('click', toggleDrinkingMode);
 
 var regionShort = {
 	'Washington': 'WA',
@@ -111,9 +124,12 @@ var headerNames = [
 	"Chosen"
 ];
 
-function createTable(beerList, favoritesOnly, removeSession3, removeKegs) {
+function createTable(beerList, favoritesOnly, removeSession3, removeKegs, drinkingMode) {
 	// update chosen
 	loadChosenFromLocalStorage();
+
+	// update drank
+	loadDrankFromLocalStorage();
 
 	// clear
 	$('div#main').empty();
@@ -161,6 +177,12 @@ function createTable(beerList, favoritesOnly, removeSession3, removeKegs) {
 			row.css('background-color', 'orangered');
 		}
 
+		if (drinkingMode && beer.drank) {
+			row.css('background-color', 'green');
+		} else {
+			row.css('background-color', '');
+		}
+
 		var abvNum = Number.parseFloat(beer.abv);
 		var abv = "" + abvNum;
 		if (isNaN(abvNum)) {
@@ -185,33 +207,46 @@ function createTable(beerList, favoritesOnly, removeSession3, removeKegs) {
 				console.error('Chosen beer is empty for idx: ', idx);
 				return true;
 			}
-			var chosen = beer.chosen = ! beer.chosen;
-			// this is awful but overwrite history
-			// to remove any stale share url query params
-			try {
-				history.replaceState({}, 'chosen', '/');
-			} catch (err) {
-				console.error("RIP: ", err);
-			}
 
-			if (chosen) {
-				chosenById[beer.id] = beer;
-				icon.addClass('glyphicon glyphicon-star');
+			if (drinkingMode) {
+				var drank = beer.drank = ! beer.drank;
+				if (drank) {
+					row.css('background-color', 'green');
+					drankById[beer.id] = beer;
+				} else {
+					row.css('background-color', '');
+					delete drankById[beer.id];
+				}
+				saveDrankToLocalStorage();
 			} else {
-				icon.removeClass('glyphicon glyphicon-star');
-				delete chosenById[beer.id];
-				if (favoritesOnly) {
-					if (_.keys(chosenById).length == 0) {
-						// force back to not viewing chosen
-						// gg tablesorter throwing when table is empty
-						toggleViewingChosen();
-						return true;
-					} else {
-						$(this).remove();
+				var chosen = beer.chosen = ! beer.chosen;
+				// this is awful but overwrite history
+				// to remove any stale share url query params
+				try {
+					history.replaceState({}, 'chosen', '/');
+				} catch (err) {
+					console.error("RIP: ", err);
+				}
+
+				if (chosen) {
+					chosenById[beer.id] = beer;
+					icon.addClass('glyphicon glyphicon-star');
+				} else {
+					icon.removeClass('glyphicon glyphicon-star');
+					delete chosenById[beer.id];
+					if (favoritesOnly) {
+						if (_.keys(chosenById).length == 0) {
+							// force back to not viewing chosen
+							// gg tablesorter throwing when table is empty
+							toggleViewingChosen();
+							return true;
+						} else {
+							$(this).remove();
+						}
 					}
 				}
+				saveListToLocalStorage();
 			}
-			saveListToLocalStorage();
 			return true;
 		});
 		chosen.appendTo(row);
@@ -227,11 +262,11 @@ function saveListToLocalStorage() {
 	var chosenStr = _.reduce(arrChosenIds, function append(accum, val) {
 		return accum + ' ' + val;
 	}, '').trim();
-	localStorage[LOCAL_STORAGE_KEY] = chosenStr;
+	localStorage[LOCAL_STORAGE_CHOSEN_KEY] = chosenStr;
 }
 
 function loadChosenFromLocalStorage() {
-	var chosenStr = localStorage[LOCAL_STORAGE_KEY];
+	var chosenStr = localStorage[LOCAL_STORAGE_CHOSEN_KEY];
 	if (! chosenStr) {
 		return;
 	}
@@ -246,6 +281,35 @@ function loadChosen(arrChosenIds) {
 		if (beer) {
 			beer.chosen = true;
 			chosenById[beer.id] = beer;
+		}
+	});
+}
+
+function saveDrankToLocalStorage() {
+	// space delimited string because why not
+	var arrDrankIds = _.keys(drankById);
+	var drankStr = _.reduce(arrDrankIds, function append(accum, val) {
+		return accum + ' ' + val;
+	}, '').trim();
+	localStorage[LOCAL_STORAGE_DRANK_KEY] = drankStr;
+}
+
+function loadDrankFromLocalStorage() {
+	var drankStr = localStorage[LOCAL_STORAGE_DRANK_KEY];
+	if (! drankStr) {
+		return;
+	}
+
+	var arrDrankIds = drankStr.split(' ');
+	loadDrank(arrDrankIds);
+}
+
+function loadDrank(arrDrankIds) {
+	_.forEach(arrDrankIds, function assignDrank(id) {
+		var beer = _.find(beerList, 'id', id);
+		if (beer) {
+			beer.drank = true;
+			drankById[beer.id] = beer;
 		}
 	});
 }
