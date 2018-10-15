@@ -9,24 +9,32 @@
 		<script src="lodash.js"></script>
 		<script src="jquery.tablesorter.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.5/dist/sweetalert2.all.min.js"></script>
 		<meta name="viewport" content="width=device-width, user-scalable=no" />
+		<meta charset="utf-8" />
 	</head>
 	<body>
 		<div id="header" class="container h1 ">
 			<div class="col-md-2"></div>
 			<div class="col-md-8 text-center">Cask Days 2018 Beer list</div>
-			<div class="col-md-2 text-right">
+		</div>
+		<div class="container">
+			<div class="col-md-2"></div>
+			<div class="col-md-8 text-center noprint">
 				<button id="share-url" class="btn btn-info noprint">
 					<span id="share-url-icon" class="glyphicon glyphicon-link"></span>
+					Share
 				</button>
 				<button id="toggle-session3" class="btn btn-danger noprint">
 					<span id="toggle-session3-icon" class="glyphicon glyphicon-calendar"></span>
+					<span id="toggle-session3-text">Hide Session 3</span>
 				</button>
 				<button id="toggle-keg" class="btn btn-danger noprint">
-					<span id="toggle-keg-icon" class="glyphicon glyphicon-tree-conifer"></span>
+					<span id="toggle-keg-text">Hide Kegs</span>
 				</button>
 				<button id="toggle-favs" class="btn btn-info noprint">
 					<span id="toggle-favs-icon" class="glyphicon glyphicon-star"></span>
+					<span id="toggle-favs-text">Show Chosen Only</span>
 				</button>
 			</div>
 		</div>
