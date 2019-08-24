@@ -1,44 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.guillaumecl</groupId>
-	<artifactId>caskdays-server-2017</artifactId>
-	<name>Cask Days 2017 Server</name>
+	<groupId>com.caskdayshelper</groupId>
+	<artifactId>server</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
-		<jersey.version>2.19</jersey.version>
-		<jackson.version>2.5.4</jackson.version>
-		<jetty.version>9.2.2.v20140723</jetty.version>
+		<commons.codec.version>1.13</commons.codec.version>
+		<commons.collections.version>4.4</commons.collections.version>
+		<commons.lang.version>3.9</commons.lang.version>
+		<jool.version>0.9.13</jool.version>
+		<jersey.version>2.28</jersey.version>
+		<jackson.version>2.9.9</jackson.version>
+		<jetty.version>9.4.20.v20190813</jetty.version>
 	</properties>
 
-	<distributionManagement>
-		<repository>
-			<id>central</id>
-			<name>maven-releases</name>
-			<url>http://maven.bigvikinggames.com:8081/artifactory/libs-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>maven-snapshots</name>
-			<url>http://maven.bigvikinggames.com:8081/artifactory/libs-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>com.caskdayshelper.server.Main</Main-Class>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.11.2</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-api</artifactId>
+						<version>1.11.2</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons.codec.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons.collections.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jool</artifactId>
+			<version>${jool.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
+			<version>1.7.25</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
+			<version>1.7.25</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -55,6 +135,31 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlets</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jmx</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>apache-jsp</artifactId>
+			<version>${jetty.version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-annotations</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
 
@@ -95,97 +200,82 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-csv</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.0</version>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>${jersey.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.mashape.unirest</groupId>
-			<artifactId>unirest-java</artifactId>
-			<version>1.4.7</version>
+			<groupId>com.bigvikinggames.commons</groupId>
+			<artifactId>logging</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.8.3</version>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.2.11</version>
 		</dependency>
 
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>2.7.2</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.10.7</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.10.7</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.10.7</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.asynchttpclient</groupId>
+			<artifactId>async-http-client</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>5.1.8.RELEASE</version>
 		</dependency>
 
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<preparationGoals>clean install</preparationGoals>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.scm</groupId>
-						<artifactId>maven-scm-provider-gitexe</artifactId>
-						<version>1.8.1</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.guillaumecl.caskdays.Main</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
