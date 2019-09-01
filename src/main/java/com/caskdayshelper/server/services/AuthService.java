@@ -239,7 +239,7 @@ public class AuthService {
 
                     String jws = createJws(GITHUB_ID_PREPEND + userName);
                     logger.trace("created jws: {}", jws);
-                    URI uri = UriBuilder.fromPath(createRedirectUrl("/auth/isauthed/") + jws).build();
+                    URI uri = UriBuilder.fromPath(createRedirectUrl("auth/isauthed/") + jws).build();
                     logger.trace("redirect uri: {}", uri.toASCIIString());
                     response.resume(Response.temporaryRedirect(uri).build());
 
@@ -325,7 +325,7 @@ public class AuthService {
 
                     String jws = createJws(GOOGLE_ID_PREPEND + userId, tokenResponse.getExpiresAt());
                     logger.trace("created jws: {}", jws);
-                    URI uri = UriBuilder.fromPath(createRedirectUrl("/auth/isauthed/") + jws).build();
+                    URI uri = UriBuilder.fromPath(createRedirectUrl("auth/isauthed/") + jws).build();
                     logger.trace("redirect uri: {}", uri.toASCIIString());
                     response.resume(Response.temporaryRedirect(uri).build());
 
@@ -410,7 +410,7 @@ public class AuthService {
 
                     String jws = createJws(FACEBOOK_ID_PREPEND + userId, tokenResponse.getExpiresAt());
                     logger.trace("created jws: {}", jws);
-                    URI uri = UriBuilder.fromPath(createRedirectUrl("/auth/isauthed/") + jws).build();
+                    URI uri = UriBuilder.fromPath(createRedirectUrl("auth/isauthed/") + jws).build();
                     logger.trace("redirect uri: {}", uri.toASCIIString());
                     response.resume(Response.temporaryRedirect(uri).build());
 
