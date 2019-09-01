@@ -50,6 +50,9 @@ public class Main {
         if (props.containsKey("oauth.google.id") && props.containsKey("oauth.google.secret")) {
             builder.addCredential(Credentials.Providers.GOOGLE, props.getProperty("oauth.google.id"), props.getProperty("oauth.google.secret"));
         }
+        if (props.containsKey("oauth.fb.id") && props.containsKey("oauth.fb.secret")) {
+            builder.addCredential(Credentials.Providers.FACEBOOK, props.getProperty("oauth.fb.id"), props.getProperty("oauth.fb.secret"));
+        }
         return builder.build();
     }
 

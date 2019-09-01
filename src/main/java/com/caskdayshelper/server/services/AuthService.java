@@ -1,6 +1,7 @@
 package com.caskdayshelper.server.services;
 
 import com.caskdayshelper.server.config.Credentials;
+import com.caskdayshelper.server.services.model.FacebookTokenResponse;
 import com.caskdayshelper.server.services.model.GithubTokenResponse;
 import com.caskdayshelper.server.services.model.GoogleTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,7 @@ public class AuthService {
 
     private static final String GITHUB_REDIRECT_PATH = "auth/githubcallback";
     private static final String GOOGLE_REDIRECT_PATH = "auth/googlecallback";
+    private static final String FACEBOOK_REDIRECT_PATH = "auth/fbcallback";
 
     private static final String GITHUB_AUTH_URL = "https://github.com/login/oauth/authorize";
     private static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
@@ -48,6 +50,11 @@ public class AuthService {
     private static final String GOOGLE_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token";
     private static final String GOOGLE_API_URL = "https://www.googleapis.com/oauth2/v2/";
     private static final String GOOGLE_ID_PREPEND = "google-";
+
+    private static final String FACEBOOK_AUTH_URL = "https://www.facebook.com/v4.0/dialog/oauth";
+    private static final String FACEBOOK_TOKEN_URL = "https://graph.facebook.com/v4.0/oauth/access_token";
+    private static final String FACEBOOK_API_URL = "https://graph.facebook.com/";
+    private static final String FACEBOOK_ID_PREPEND = "fb-";
 
     private static final String REDIS_STATE_SET_NAME = "stateset";
 
@@ -83,7 +90,7 @@ public class AuthService {
 
     private String createRedirectUrl(String redirectPath) {
         String redirectUrl = baseUrl;
-        if (!baseUrl.endsWith("/")) {
+        if (!baseUrl.endsWith("/") && !redirectPath.startsWith("/")) {
             redirectUrl += "/";
         }
         redirectUrl += redirectPath;
@@ -132,7 +139,6 @@ public class AuthService {
     @GET
     @Path("/github")
     public void authGithub(@Suspended final AsyncResponse response) {
-        var redirectUrl = createRedirectUrl(GITHUB_REDIRECT_PATH);
         UriBuilder redirectUriBuilder = UriBuilder.fromPath(GITHUB_AUTH_URL)
                 .queryParam("response_type", "code")
                 .queryParam("scope", "user");
@@ -147,6 +153,14 @@ public class AuthService {
                 .queryParam("scope", "profile")
                 .queryParam("access_type", "online");
         createRedirect(response, redirectUriBuilder, Credentials.Providers.GOOGLE, GOOGLE_REDIRECT_PATH);
+    }
+
+    @GET
+    @Path("/fb")
+    public void authFacebook(@Suspended final AsyncResponse response) {
+        UriBuilder redirectUriBuilder = UriBuilder.fromPath(FACEBOOK_AUTH_URL)
+                .queryParam("response_type", "code");
+        createRedirect(response, redirectUriBuilder, Credentials.Providers.FACEBOOK, FACEBOOK_REDIRECT_PATH);
     }
 
     @GET
@@ -225,7 +239,7 @@ public class AuthService {
 
                     String jws = createJws(GITHUB_ID_PREPEND + userName);
                     logger.trace("created jws: {}", jws);
-                    URI uri = UriBuilder.fromPath("https://caskdayshelper.com/api/auth/isauthed/" + jws).build();
+                    URI uri = UriBuilder.fromPath(createRedirectUrl("/auth/isauthed/") + jws).build();
                     logger.trace("redirect uri: {}", uri.toASCIIString());
                     response.resume(Response.temporaryRedirect(uri).build());
 
@@ -240,7 +254,6 @@ public class AuthService {
     @Path("/googlecallback")
     public void googleAuthCallback(@Suspended final AsyncResponse response, @QueryParam("code") String code, @QueryParam("state") String state) {
         logger.trace("Google auth callback");
-        logger.info("Got Google callback, code: {}, state: {}", code, state);
         asyncRedis.srem(REDIS_STATE_SET_NAME, state).thenAcceptAsync(res -> {
             // invalid state
             if (res != 1) {
@@ -257,7 +270,7 @@ public class AuthService {
                 return;
             }
             var googleCreds = maybeCredentials.get();
-            logger.trace("Got the github creds");
+            logger.trace("Got the google creds");
 
             // valid state, exchange code for token
             var redirectUrl = createRedirectUrl(GOOGLE_REDIRECT_PATH);
@@ -312,7 +325,92 @@ public class AuthService {
 
                     String jws = createJws(GOOGLE_ID_PREPEND + userId, tokenResponse.getExpiresAt());
                     logger.trace("created jws: {}", jws);
-                    URI uri = UriBuilder.fromPath("https://caskdayshelper.com/api/auth/isauthed/" + jws).build();
+                    URI uri = UriBuilder.fromPath(createRedirectUrl("/auth/isauthed/") + jws).build();
+                    logger.trace("redirect uri: {}", uri.toASCIIString());
+                    response.resume(Response.temporaryRedirect(uri).build());
+
+                    return true;
+                }, asyncExecutor);
+                return true;
+            }, asyncExecutor);
+        }, asyncExecutor);
+    }
+
+    @GET
+    @Path("/fbcallback")
+    public void facebookAuthCallback(@Suspended final AsyncResponse response, @QueryParam("code") String code, @QueryParam("state") String state) {
+        logger.trace("Facebook auth callback");
+        logger.info("Got Facebook callback, code: {}, state: {}", code, state);
+        asyncRedis.srem(REDIS_STATE_SET_NAME, state).thenAcceptAsync(res -> {
+            // invalid state
+            if (res != 1) {
+                logger.error("Invalid token state in callback: {}, removed {}", state, res);
+                response.resume(Response.status(Response.Status.BAD_REQUEST).build());
+                return;
+            }
+            logger.trace("Valid state");
+
+            var maybeCredentials = credentials.findCredentials(Credentials.Providers.FACEBOOK);
+            if (maybeCredentials.isEmpty()) {
+                logger.error("Could not auth with facebook, no credentials found.");
+                response.resume(Response.status(Response.Status.NOT_IMPLEMENTED).build());
+                return;
+            }
+            var fbCreds = maybeCredentials.get();
+            logger.trace("Got the facebook creds");
+
+            // valid state, exchange code for token
+            var redirectUrl = createRedirectUrl(FACEBOOK_REDIRECT_PATH);
+            getApiRequest(FACEBOOK_TOKEN_URL, Map.of(
+                    "client_id", fbCreds.getId(),
+                    "client_secret", fbCreds.getSecret(),
+                    "redirect_uri", redirectUrl,
+                    "code", code
+            ), Collections.emptyMap()).handleAsync((apiResponse, throwable) -> {
+                logger.trace("Got token response");
+                if (throwable != null) {
+                    logger.error("Got an error trying to get a token from facebook.", throwable);
+                    response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                    return false;
+                }
+
+                FacebookTokenResponse tokenResponse;
+                try {
+                    tokenResponse = mapper.readValue(apiResponse.getResponseBodyAsStream(), FacebookTokenResponse.class);
+                } catch (Exception e) {
+                    logger.error("Couldn't read token response from facebook.", e);
+                    response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                    return false;
+                }
+                logger.trace("Got token response: {}, asking for user data", tokenResponse.toString());
+
+                // yet another level deep we go, we need the user id
+                getApiRequest(FACEBOOK_API_URL + "me", Map.of(
+                        "fields", "id",
+                        "access_token", tokenResponse.getAccessToken()
+                ), Collections.emptyMap()).handleAsync((userApiResponse, throwable2) -> {
+                    logger.trace("back from facebook api");
+                    if (throwable2 != null) {
+                        logger.error("Got an error trying to get user data from facebook.", throwable2);
+                        response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                        return false;
+                    }
+                    logger.trace("No error");
+
+                    String userId;
+                    try {
+                        var rootNode = mapper.readTree(userApiResponse.getResponseBodyAsStream());
+                        userId = rootNode.get("id").asText();
+                    } catch (Exception e) {
+                        logger.error("Couldn't read user response from facebook.", e);
+                        response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                        return false;
+                    }
+                    logger.trace("Got user id: {}", userId);
+
+                    String jws = createJws(FACEBOOK_ID_PREPEND + userId, tokenResponse.getExpiresAt());
+                    logger.trace("created jws: {}", jws);
+                    URI uri = UriBuilder.fromPath(createRedirectUrl("/auth/isauthed/") + jws).build();
                     logger.trace("redirect uri: {}", uri.toASCIIString());
                     response.resume(Response.temporaryRedirect(uri).build());
 
