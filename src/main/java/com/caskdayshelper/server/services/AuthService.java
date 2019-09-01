@@ -2,6 +2,7 @@ package com.caskdayshelper.server.services;
 
 import com.caskdayshelper.server.config.Credentials;
 import com.caskdayshelper.server.services.model.GithubTokenResponse;
+import com.caskdayshelper.server.services.model.GoogleTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.lettuce.core.api.async.RedisAsyncCommands;
@@ -17,6 +18,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.security.Key;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -41,6 +44,9 @@ public class AuthService {
     private static final String GITHUB_ID_PREPEND = "github-";
 
     private static final String GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
+    private static final String GOOGLE_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token";
+    private static final String GOOGLE_API_URL = "https://www.googleapis.com/oauth2/v2/";
+    private static final String GOOGLE_ID_PREPEND = "google-";
 
     private static final String REDIS_STATE_SET_NAME = "stateset";
 
@@ -64,6 +70,10 @@ public class AuthService {
 
     private String createJws(String userId) {
         return Jwts.builder().setSubject(userId).signWith(jwtKey).compact();
+    }
+
+    private String createJws(String userId, Instant expiry) {
+        return Jwts.builder().setSubject(userId).setExpiration(Date.from(expiry)).signWith(jwtKey).compact();
     }
 
     private static String generateTokenState() {
@@ -133,10 +143,11 @@ public class AuthService {
     public void authGoogle(@Suspended final AsyncResponse response) {
         UriBuilder redirectUriBuilder = UriBuilder.fromPath(GOOGLE_AUTH_URL)
                 .queryParam("response_type", "code")
-                .queryParam("scope", "profile email")
+                .queryParam("scope", "profile")
                 .queryParam("access_type", "online");
         createRedirect(response, redirectUriBuilder, Credentials.Providers.GOOGLE, GOOGLE_REDIRECT_PATH);
     }
+
 
     @GET
     @Path("/githubcallback")
@@ -230,7 +241,86 @@ public class AuthService {
     public void googleAuthCallback(@Suspended final AsyncResponse response, @QueryParam("code") String code, @QueryParam("state") String state) {
         logger.trace("Google auth callback");
         logger.info("Got Google callback, code: {}, state: {}", code, state);
-        response.resume(Response.ok().build());
+        asyncRedis.srem(REDIS_STATE_SET_NAME, state).thenAcceptAsync(res -> {
+            // invalid state
+            if (res != 1) {
+                logger.error("Invalid token state in callback: {}, removed {}", state, res);
+                response.resume(Response.status(Response.Status.BAD_REQUEST).build());
+                return;
+            }
+            logger.trace("Valid state");
+
+            var maybeCredentials = credentials.findCredentials(Credentials.Providers.GOOGLE);
+            if (maybeCredentials.isEmpty()) {
+                logger.error("Could not auth with google, no credentials found.");
+                response.resume(Response.status(Response.Status.NOT_IMPLEMENTED).build());
+                return;
+            }
+            var googleCreds = maybeCredentials.get();
+            logger.trace("Got the github creds");
+
+            // valid state, exchange code for token
+            var redirectUrl = createRedirectUrl(GOOGLE_REDIRECT_PATH);
+            postApiRequest(GOOGLE_TOKEN_URL, Map.of(
+                    "grant_type", "authorization_code",
+                    "client_id", googleCreds.getId(),
+                    "client_secret", googleCreds.getSecret(),
+                    "redirect_uri", redirectUrl,
+                    "code", code
+            ), Map.of(
+                    "Accept", "application/json"
+            )).handleAsync((apiResponse, throwable) -> {
+                logger.trace("Got token response");
+                if (throwable != null) {
+                    logger.error("Got an error trying to get a token from google.", throwable);
+                    response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                    return false;
+                }
+
+                GoogleTokenResponse tokenResponse;
+                try {
+                    tokenResponse = mapper.readValue(apiResponse.getResponseBodyAsStream(), GoogleTokenResponse.class);
+                } catch (Exception e) {
+                    logger.error("Couldn't read token response from google.", e);
+                    response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                    return false;
+                }
+                logger.trace("Got token response: {}, asking for user data", tokenResponse.toString());
+
+                // yet another level deep we go, we need the user id
+                getApiRequest(GOOGLE_API_URL + "userinfo", Collections.emptyMap(), Map.of(
+                        "Authorization", "Bearer " + tokenResponse.getAccessToken()
+                )).handleAsync((userApiResponse, throwable2) -> {
+                    logger.trace("back from google api");
+                    if (throwable2 != null) {
+                        logger.error("Got an error trying to get user data from google.", throwable2);
+                        response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                        return false;
+                    }
+                    logger.trace("No error");
+
+                    String userId;
+                    try {
+                        var rootNode = mapper.readTree(userApiResponse.getResponseBodyAsStream());
+                        userId = rootNode.get("id").asText();
+                    } catch (Exception e) {
+                        logger.error("Couldn't read user response from google.", e);
+                        response.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+                        return false;
+                    }
+                    logger.trace("Got user id: {}", userId);
+
+                    String jws = createJws(GOOGLE_ID_PREPEND + userId, tokenResponse.getExpiresAt());
+                    logger.trace("created jws: {}", jws);
+                    URI uri = UriBuilder.fromPath("https://caskdayshelper.com/api/auth/isauthed/" + jws).build();
+                    logger.trace("redirect uri: {}", uri.toASCIIString());
+                    response.resume(Response.temporaryRedirect(uri).build());
+
+                    return true;
+                }, asyncExecutor);
+                return true;
+            }, asyncExecutor);
+        }, asyncExecutor);
     }
 
     @GET
