@@ -33,6 +33,8 @@ public class Main {
     private static final String REDIS_PORT_KEY = "redis.port";
     private static final String REDIS_PW_KEY = "redis.pw";
     private static final int DEFAULT_REDIS_PORT = 6379;
+    private static final String BASE_URL_KEY = "base";
+    private static final String DEFAULT_BASE_URL = "http://localhost";
 
     /**
      * Build the credentials we'll need for auth.
@@ -44,6 +46,9 @@ public class Main {
         var builder = new Credentials.Builder();
         if (props.containsKey("oauth.github.id") && props.containsKey("oauth.github.secret")) {
             builder.addCredential(Credentials.Providers.GITHUB, props.getProperty("oauth.github.id"), props.getProperty("oauth.github.secret"));
+        }
+        if (props.containsKey("oauth.google.id") && props.containsKey("oauth.google.secret")) {
+            builder.addCredential(Credentials.Providers.GOOGLE, props.getProperty("oauth.google.id"), props.getProperty("oauth.google.secret"));
         }
         return builder.build();
     }
@@ -89,13 +94,14 @@ public class Main {
         var redisConnection = buildRedis(props);
 
         int port = Integer.parseInt(props.getProperty(REST_PORT_KEY, Integer.toUnsignedString(DEFAULT_REST_PORT)));
+        var baseUrl = props.getProperty(BASE_URL_KEY, DEFAULT_BASE_URL + ":" + Integer.toUnsignedString(port));
         var server = new RESTServerBuilder(port)
                 .addSLF4JRequestLogging()
                 .addResource("/auth", res ->
                         res.addCORS()
                                 .addJackson(mapper)
                                 .generateWADL(true)
-                                .addService(new AuthService(key, credentials, redisConnection.async(), asyncExecutor, mapper)))
+                                .addService(new AuthService(key, credentials, redisConnection.async(), asyncExecutor, mapper, baseUrl)))
                 .build();
 
         try {

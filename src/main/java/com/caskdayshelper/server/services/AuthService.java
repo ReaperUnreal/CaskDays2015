@@ -32,8 +32,8 @@ import static org.asynchttpclient.Dsl.asyncHttpClient;
 public class AuthService {
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-    private static final String GITHUB_REDIRECT_URL = "https://caskdayshelper.com/api/auth/githubcallback";
-    private static final String GOOGLE_REDIRECT_URL = "https://caskdayshelper.com/api/auth/googlecallback";
+    private static final String GITHUB_REDIRECT_PATH = "auth/githubcallback";
+    private static final String GOOGLE_REDIRECT_PATH = "auth/googlecallback";
 
     private static final String GITHUB_AUTH_URL = "https://github.com/login/oauth/authorize";
     private static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
@@ -50,22 +50,33 @@ public class AuthService {
     private final Executor asyncExecutor;
     private final AsyncHttpClient httpClient;
     private final ObjectMapper mapper;
+    private final String baseUrl;
 
-    public AuthService(Key jwtKey, Credentials credentials, RedisAsyncCommands<String, String> asyncRedis, Executor asyncExecutor, ObjectMapper mapper) {
+    public AuthService(Key jwtKey, Credentials credentials, RedisAsyncCommands<String, String> asyncRedis, Executor asyncExecutor, ObjectMapper mapper, String baseUrl) {
         this.jwtKey = jwtKey;
         this.credentials = credentials;
         this.asyncRedis = asyncRedis;
         this.asyncExecutor = asyncExecutor;
         httpClient = asyncHttpClient();
         this.mapper = mapper;
+        this.baseUrl = baseUrl;
     }
 
     private String createJws(String userId) {
         return Jwts.builder().setSubject(userId).signWith(jwtKey).compact();
     }
 
-    private String generateTokenState() {
+    private static String generateTokenState() {
         return UUID.randomUUID().toString();
+    }
+
+    private String createRedirectUrl(String redirectPath) {
+        String redirectUrl = baseUrl;
+        if (!baseUrl.endsWith("/")) {
+            redirectUrl += "/";
+        }
+        redirectUrl += redirectPath;
+        return redirectUrl;
     }
 
     private CompletableFuture<org.asynchttpclient.Response> postApiRequest(String baseUrl, Map<String, String> queryParams, Map<String, String> headers) {
@@ -86,7 +97,7 @@ public class AuthService {
         return preparedGet.execute().toCompletableFuture();
     }
 
-    private void createRedirect(final AsyncResponse response, UriBuilder redirectUriBuilder, Credentials.Providers credentialProvider) {
+    private void createRedirect(final AsyncResponse response, UriBuilder redirectUriBuilder, Credentials.Providers credentialProvider, String redirectPath) {
         var maybeCredentials = credentials.findCredentials(credentialProvider);
         if (maybeCredentials.isEmpty()) {
             logger.error("Could not auth with {}, no credentials found.", credentialProvider);
@@ -96,8 +107,10 @@ public class AuthService {
         var credentials = maybeCredentials.get();
         var tokenState = generateTokenState();
         asyncRedis.sadd(REDIS_STATE_SET_NAME, tokenState).thenAcceptAsync(res -> {
+            var redirectUrl = createRedirectUrl(redirectPath);
             URI redirectUri = redirectUriBuilder
                     .queryParam("client_id", credentials.getId())
+                    .queryParam("redirect_uri", redirectUrl)
                     .queryParam("state", tokenState)
                     .build();
             logger.info("Redirecting to: \"{}\"", redirectUri.toASCIIString());
@@ -108,11 +121,11 @@ public class AuthService {
     @GET
     @Path("/github")
     public void authGithub(@Suspended final AsyncResponse response) {
+        var redirectUrl = createRedirectUrl(GITHUB_REDIRECT_PATH);
         UriBuilder redirectUriBuilder = UriBuilder.fromPath(GITHUB_AUTH_URL)
                 .queryParam("response_type", "code")
-                .queryParam("redirect_uri", GITHUB_REDIRECT_URL)
                 .queryParam("scope", "user");
-        createRedirect(response, redirectUriBuilder, Credentials.Providers.GITHUB);
+        createRedirect(response, redirectUriBuilder, Credentials.Providers.GITHUB, GITHUB_REDIRECT_PATH);
     }
 
     @GET
@@ -120,10 +133,9 @@ public class AuthService {
     public void authGoogle(@Suspended final AsyncResponse response) {
         UriBuilder redirectUriBuilder = UriBuilder.fromPath(GOOGLE_AUTH_URL)
                 .queryParam("response_type", "code")
-                .queryParam("redirect_uri", GOOGLE_REDIRECT_URL)
                 .queryParam("scope", "profile email")
                 .queryParam("access_type", "online");
-        createRedirect(response, redirectUriBuilder, Credentials.Providers.GOOGLE);
+        createRedirect(response, redirectUriBuilder, Credentials.Providers.GOOGLE, GOOGLE_REDIRECT_PATH);
     }
 
     @GET
@@ -149,11 +161,12 @@ public class AuthService {
             logger.trace("Got the github creds");
 
             // valid state, exchange code for token
+            var redirectUrl = createRedirectUrl(GITHUB_REDIRECT_PATH);
             postApiRequest(GITHUB_TOKEN_URL, Map.of(
                     "grant_type", "authorization_code",
                     "client_id", githubCreds.getId(),
                     "client_secret", githubCreds.getSecret(),
-                    "redirect_uri", GITHUB_REDIRECT_URL,
+                    "redirect_uri", redirectUrl,
                     "code", code
             ), Map.of(
                     "Accept", "application/json"
@@ -216,6 +229,8 @@ public class AuthService {
     @Path("/googlecallback")
     public void googleAuthCallback(@Suspended final AsyncResponse response, @QueryParam("code") String code, @QueryParam("state") String state) {
         logger.trace("Google auth callback");
+        logger.info("Got Google callback, code: {}, state: {}", code, state);
+        response.resume(Response.ok().build());
     }
 
     @GET

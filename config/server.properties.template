@@ -2,3 +2,6 @@ port=9001
 jwt.key=lol
 oauth.github.id=lolno
 oauth.github.secret=uwish
+oauth.google.id=comeon
+oauth.google.secret=uwotm8
+base=https://caskdayshelper.com/api/
