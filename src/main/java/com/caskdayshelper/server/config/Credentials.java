@@ -14,7 +14,6 @@ public class Credentials {
     public enum Providers {
         GITHUB,
         FACEBOOK,
-        TWITTER,
         GOOGLE;
     }
 

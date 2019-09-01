@@ -6,6 +6,7 @@ import com.caskdayshelper.server.services.model.GoogleTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.lettuce.core.api.async.RedisAsyncCommands;
+import org.apache.tomcat.util.scan.JarFileUrlNestedJar;
 import org.asynchttpclient.AsyncHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,7 +148,6 @@ public class AuthService {
                 .queryParam("access_type", "online");
         createRedirect(response, redirectUriBuilder, Credentials.Providers.GOOGLE, GOOGLE_REDIRECT_PATH);
     }
-
 
     @GET
     @Path("/githubcallback")
