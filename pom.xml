@@ -13,7 +13,7 @@
 		<commons.lang.version>3.9</commons.lang.version>
 		<jool.version>0.9.13</jool.version>
 		<jersey.version>2.28</jersey.version>
-		<jackson.version>2.9.9</jackson.version>
+		<jackson.version>2.9.10</jackson.version>
 		<jetty.version>9.4.20.v20190813</jetty.version>
 	</properties>
 
@@ -215,12 +215,6 @@
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 			<version>${jersey.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.bigvikinggames.commons</groupId>
-			<artifactId>logging</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
