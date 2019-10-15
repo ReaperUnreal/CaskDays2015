@@ -84,18 +84,22 @@ var regionShort = {
 	'New York': 'NY',
 	'Pennsylvania': 'PA',
 	'Maine': 'MN',
+	'Vermont': 'VT',
+	'Colorado': 'CO',
 	'United Kingdom': 'UK',
 	'House Ales': 'Volo',
 	'Alberta': 'AB',
 	'British Columbia': 'BC',
 	'Quebec': 'QC',
+	'Québec': 'QC',
+	'Manitoba': 'MB',
 	'Ontario': 'ON',
 	'Nova Scotia': 'NS',
 	'IPA Challenge': 'IPA',
-	'Homebrewer': 'Home',
+	'Homebrew': 'Home',
 	'Cider': 'Cid',
 	'Toronto': 'TO',
-	'Keep6 Imports': 'K6'
+	'Keep6 Draft': 'K6'
 };
 function shortenRegion(region) {
 	var keys = Object.keys(regionShort);

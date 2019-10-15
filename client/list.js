@@ -12,7 +12,7 @@ var beerList = [
     "id": "2",
     "session": "S3",
     "region": "Maine",
-    "brewery": "Alla",
+    "brewery": "Allagash",
     "name": "Pick Your Own",
     "style": "Fruited Sour Red Ale",
     "abv": "6"
@@ -57,7 +57,7 @@ var beerList = [
     "id": "7",
     "session": "S3",
     "region": "Maine",
-    "brewery": "Oxbo",
+    "brewery": "Oxbow",
     "name": "Keller Luppolo",
     "style": "Pils",
     "abv": "5"
@@ -66,7 +66,7 @@ var beerList = [
     "id": "8",
     "session": "S3",
     "region": "Maine",
-    "brewery": "Oxbo",
+    "brewery": "Oxbow",
     "name": "Zwickel Luppolo",
     "style": "Pils",
     "abv": "5"
@@ -111,7 +111,7 @@ var beerList = [
     "id": "13",
     "session": "S3",
     "region": "Maine",
-    "brewery": "Oxbo",
+    "brewery": "Oxbow",
     "name": "S. Hemisphere FPA",
     "style": "Saison",
     "abv": "6"
@@ -120,7 +120,7 @@ var beerList = [
     "id": "14",
     "session": "S3",
     "region": "Maine",
-    "brewery": "Oxbo",
+    "brewery": "Oxbow",
     "name": "Whole Leaf FPA",
     "style": "Saison",
     "abv": "6"
@@ -156,7 +156,7 @@ var beerList = [
     "id": "18",
     "session": "S3",
     "region": "Vermont",
-    "brewery": "Lost",
+    "brewery": "Lost Nation",
     "name": "LostOber Fest",
     "style": "Oktoberfest",
     "abv": "5.9"
@@ -165,7 +165,7 @@ var beerList = [
     "id": "19",
     "session": "S3",
     "region": "Vermont",
-    "brewery": "Lost",
+    "brewery": "Lost Nation",
     "name": "Tossing Seeds Citra DIPA",
     "style": "DIPA",
     "abv": "8"
@@ -201,7 +201,7 @@ var beerList = [
     "id": "23",
     "session": "S3",
     "region": "Vermont",
-    "brewery": "Lost",
+    "brewery": "Lost Nation",
     "name": "Mosaic IPA",
     "style": "IPA",
     "abv": "5.5"
@@ -210,7 +210,7 @@ var beerList = [
     "id": "24",
     "session": "S3",
     "region": "Vermont",
-    "brewery": "Lost",
+    "brewery": "Lost Nation",
     "name": "Lost Galaxy IPA",
     "style": "Session IPA",
     "abv": "4.8"
@@ -246,7 +246,7 @@ var beerList = [
     "id": "28",
     "session": "S3",
     "region": "New York",
-    "brewery": "Barr",
+    "brewery": "Barrier",
     "name": "Shadows & Dust",
     "style": "DDH IPA",
     "abv": "7.6"
@@ -264,7 +264,7 @@ var beerList = [
     "id": "30",
     "session": "S3",
     "region": "New York",
-    "brewery": "Othe",
+    "brewery": "Other Half",
     "name": "DDH Double Cashmere Daydream",
     "style": "Oat Cream DIPA w. Watermelon Gummi Candy",
     "abv": "8.3"
@@ -282,7 +282,7 @@ var beerList = [
     "id": "32",
     "session": "S3",
     "region": "New York",
-    "brewery": "Sing",
+    "brewery": "SingleCut Beersmiths",
     "name": "Jackknifed Juggernaut DDH IPA w. Pacifica",
     "style": "IPA",
     "abv": "7"
@@ -327,7 +327,7 @@ var beerList = [
     "id": "37",
     "session": "S3",
     "region": "New York",
-    "brewery": "Thin",
+    "brewery": "Thin Man",
     "name": "Embiggen #2",
     "style": "NEIPA",
     "abv": "7"
@@ -336,7 +336,7 @@ var beerList = [
     "id": "38",
     "session": "S3",
     "region": "New York",
-    "brewery": "Thin",
+    "brewery": "Thin Man",
     "name": "My Girl Sasha",
     "style": "American Wheat",
     "abv": "5.6"
@@ -354,7 +354,7 @@ var beerList = [
     "id": "40",
     "session": "S3",
     "region": "New York",
-    "brewery": "Thin",
+    "brewery": "Thin Man",
     "name": "Minkey Boodle",
     "style": "Raspberry Sour",
     "abv": "7"
@@ -399,7 +399,7 @@ var beerList = [
     "id": "45",
     "session": "S3",
     "region": "Pennsylvania",
-    "brewery": "Fore",
+    "brewery": "Forest & Main",
     "name": "Steeper Dive",
     "style": "Bitter",
     "abv": "2.5"
@@ -408,7 +408,7 @@ var beerList = [
     "id": "46",
     "session": "S3",
     "region": "Pennsylvania",
-    "brewery": "Fore",
+    "brewery": "Forest & Main",
     "name": "Three Snakes",
     "style": "DIPA",
     "abv": "8"
@@ -462,7 +462,7 @@ var beerList = [
     "id": "52",
     "session": "S3",
     "region": "Colorado",
-    "brewery": "Croo",
+    "brewery": "Crooked Stave",
     "name": "Strawberry Ginger Hibiscus Petite Sour",
     "style": "Oak Aged Wild Ale",
     "abv": "4.2"
@@ -471,7 +471,7 @@ var beerList = [
     "id": "53",
     "session": "S3",
     "region": "Colorado",
-    "brewery": "Croo",
+    "brewery": "Crooked Stave",
     "name": "Vine Pilsner",
     "style": "Oenobeer",
     "abv": "5"
@@ -516,7 +516,7 @@ var beerList = [
     "id": "58",
     "session": "S3",
     "region": "Colorado",
-    "brewery": "Prim",
+    "brewery": "Primitive Beer",
     "name": "Parallel Thoughts",
     "style": "American Spontaneous Beer",
     "abv": "6"
@@ -570,7 +570,7 @@ var beerList = [
     "id": "64",
     "session": "S3",
     "region": "Washington",
-    "brewery": "Gard",
+    "brewery": "Garden Path Fermentation",
     "name": "The Wet Hopped Ship. (2nd Edition)",
     "style": "A Skagitonian Fresh Hop Ale",
     "abv": "5.7"
@@ -624,7 +624,7 @@ var beerList = [
     "id": "70",
     "session": "S3",
     "region": "Washington",
-    "brewery": "Mach",
+    "brewery": "Machine House",
     "name": "Fresh Hop Simcoe Session",
     "style": "Fresh Hop Session Pale",
     "abv": "4"
@@ -633,7 +633,7 @@ var beerList = [
     "id": "71",
     "session": "S3",
     "region": "Washington",
-    "brewery": "Mach",
+    "brewery": "Machine House",
     "name": "Fresh Hop Mosaic Pale",
     "style": "Fresh Hop Pale Ale",
     "abv": "5"
@@ -678,7 +678,7 @@ var beerList = [
     "id": "76",
     "session": "S3",
     "region": "Washington",
-    "brewery": "Mach",
+    "brewery": "Machine House",
     "name": "Export India Porter",
     "style": "Export India Porter",
     "abv": "5.3"
@@ -712,7 +712,7 @@ var beerList = [
 	  "id":"80"
 	  ,"session":"S3"
 	  ,"region":"Oregon"
-	  ,"brewery":"Casc"
+	  ,"brewery":"Cascade"
 	  ,"name":"Tartini Twist"
 	  ,"style":"Barrel Aged Sour Ales Infused w. Gin Botanicals & Fresh Orange Zest"
 	  ,"abv":"9.4"
@@ -720,7 +720,7 @@ var beerList = [
 	  "id":"81",
 	  "session":"S3",
 	  "region":"Oregon",
-	  "brewery":"Casc",
+	  "brewery":"Cascade",
 	  "name":"Pinot De Cerise",
 	  "style":"Barrel Aged Sour w. Pinot Noir Juice & Bing Cherries"
 	  ,"abv":"10.2"
@@ -728,7 +728,7 @@ var beerList = [
 	  "id":"82",
 	  "session":"S3",
 	  "region":"Oregon",
-	  "brewery":"Casc",
+	  "brewery":"Cascade",
 	  "name":"Porter-Pourri",
 	  "style":"Barrel Aged Sour w. Rose Hips, Rose Petals & Hibiscus",
 	  "abv":"7"
@@ -746,7 +746,7 @@ var beerList = [
     "id": "84",
     "session": "S3",
     "region": "Oregon",
-    "brewery": "Hair",
+    "brewery": "Hair Of The Dog",
     "name": "Maple Fred",
     "style": "Bourbon Barrel Aged American Strong Ale",
     "abv": "10"
@@ -782,7 +782,7 @@ var beerList = [
     "id": "88",
     "session": "S3",
     "region": "Oregon",
-    "brewery": "Hair",
+    "brewery": "Hair Of The Dog",
     "name": "Doggie Claws '19",
     "style": "American Barleywine w. Wildflower Honey",
     "abv": "11.5"
@@ -809,7 +809,7 @@ var beerList = [
     "id": "91",
     "session": "S3",
     "region": "California",
-    "brewery": "Cell",
+    "brewery": "Cellador",
     "name": "Breezeblocks",
     "style": "Open Fermented Saison",
     "abv": "7.1"
@@ -863,7 +863,7 @@ var beerList = [
     "id": "97",
     "session": "S3",
     "region": "California",
-    "brewery": "York",
+    "brewery": "Yorkshire Square",
     "name": "Early Doors",
     "style": "Pub Bitter",
     "abv": "3.6"
@@ -872,7 +872,7 @@ var beerList = [
     "id": "98",
     "session": "S3",
     "region": "California",
-    "brewery": "York",
+    "brewery": "Yorkshire Square",
     "name": "Drift Catcher",
     "style": "Proper Dark Ale",
     "abv": "4.3"
@@ -885,7 +885,7 @@ var beerList = [
     "name": "When The Wind Blows, Let It Blow",
 	  "style": "Amber Ale",
 	  "abv":"5.1"
-  },[
+  },
   {
     "id": "100",
     "session": "S1",
@@ -899,7 +899,7 @@ var beerList = [
     "id": "101",
     "session": "S3",
     "region": "United Kingdom",
-    "brewery": "Clou",
+    "brewery": "Cloudwater",
     "name": "Proper",
     "style": "Export Stout",
     "abv": "6.2"
@@ -908,7 +908,7 @@ var beerList = [
     "id": "102",
     "session": "S3",
     "region": "United Kingdom",
-    "brewery": "Clou",
+    "brewery": "Cloudwater",
     "name": "Is There Room In The Budget For A Sports Car?",
     "style": "Munich Malt Pale Ale",
     "abv": "4.6"
@@ -998,7 +998,7 @@ var beerList = [
     "id": "112",
     "session": "S3",
     "region": "Nova Scotia",
-    "brewery": "Stil",
+    "brewery": "Stillwell",
     "name": "Prince Kellerpils",
     "style": "Kellerbier",
     "abv": "4.5"
@@ -1088,7 +1088,7 @@ var beerList = [
     "id": "122",
     "session": "S3",
     "region": "Québec",
-    "brewery": "Dieu",
+    "brewery": "Dieu Du Ciel",
     "name": "Péché Mortel Xtra Xtra Coffee",
     "style": "Imperial Coffee Stout w. Extra Extra Coffee",
     "abv": "9.5"
@@ -1169,7 +1169,7 @@ var beerList = [
     "id": "131",
     "session": "S3",
     "region": "Québec",
-    "brewery": "Dunh",
+    "brewery": "Dunham",
     "name": "Stout Impériale Russe",
     "style": "Russian Imperial Stout",
     "abv": "9.5"
@@ -1223,7 +1223,7 @@ var beerList = [
     "id": "137",
     "session": "S3",
     "region": "Québec",
-    "brewery": "Isle",
+    "brewery": "Isle De Garde",
     "name": "Cette Session Sensationelle",
     "style": "Session American IPA",
     "abv": "4.1"
@@ -1232,7 +1232,7 @@ var beerList = [
     "id": "138",
     "session": "S3",
     "region": "Québec",
-    "brewery": "Isle",
+    "brewery": "Isle De Garde",
     "name": "C'est Une IPA; Elle Est Américaine",
     "style": "American IPA",
     "abv": "5.6"
@@ -1286,7 +1286,7 @@ var beerList = [
     "id": "144",
     "session": "S3",
     "region": "Québec",
-    "brewery": "Les ",
+    "brewery": "Les Trois Mousquetaires",
     "name": "Dixième Extra Cherry",
     "style": "Imperial Sour Black Kriek",
     "abv": "10"
@@ -1405,7 +1405,7 @@ var beerList = [
     "region": "Alberta",
     "brewery": "Blind Enthusiasm",
     "name": "Do you even cask, Bro?",
-	  "style": "English Chocolate Brown Ale"
+	  "style": "English Chocolate Brown Ale",
 	  "abv":"5.6"
   },
 {
@@ -1417,9 +1417,6 @@ var beerList = [
     "style": "German Wheat Ale",
     "abv": "4"
   },
-
-
-[
   {
     "id": "159",
     "session": "S1",
@@ -1514,7 +1511,7 @@ var beerList = [
     "id": "169",
     "session": "S3",
     "region": "British Columbia",
-    "brewery": "Four",
+    "brewery": "Four Winds",
     "name": "Pomona Stone Fruit Sour",
     "style": "Barrel Aged Fruited Sour",
     "abv": "5.5"
@@ -1532,7 +1529,7 @@ var beerList = [
     "id": "171",
     "session": "S3",
     "region": "British Columbia",
-    "brewery": "Lupp",
+    "brewery": "Luppolo",
     "name": "Albiccochina 2019",
     "style": "Barrel Aged Mixed Fermentation Sour w. Apricots",
     "abv": "7"
@@ -1586,7 +1583,7 @@ var beerList = [
     "id": "177",
     "session": "S3",
     "region": "British Columbia",
-    "brewery": "Twin",
+    "brewery": "Twin Sails",
     "name": "Cookie Jar",
     "style": "Oatmeal Fudge Stout w. Vanilla & Coconut",
     "abv": "6"
@@ -1739,7 +1736,7 @@ var beerList = [
     "id": "194",
     "session": "S3",
     "region": "Cider",
-    "brewery": "101 ",
+    "brewery": "101 Cider House",
     "name": "The Floor Is Guava",
     "style": "Cider",
     "abv": "6.9"
@@ -1748,7 +1745,7 @@ var beerList = [
     "id": "195",
     "session": "S3",
     "region": "Cider",
-    "brewery": "101 ",
+    "brewery": "101 Cider House",
     "name": "Forest Mojito",
     "style": "CIder",
     "abv": "6.9"
@@ -2090,7 +2087,7 @@ var beerList = [
     "id": "233",
     "session": "S3",
     "region": "Ontario",
-    "brewery": "Barn",
+    "brewery": "Barncat",
     "name": "Cafe A Handful Of Darkness",
     "style": "Strong Porter w. Coffee & Vanilla",
     "abv": "7.2"
@@ -2144,7 +2141,7 @@ var beerList = [
     "id": "239",
     "session": "S3",
     "region": "Ontario",
-    "brewery": "Bell",
+    "brewery": "Bellwoods",
     "name": "Mint Chocolate Chip Imperial Stout",
     "style": "Imperial Stout w. Mint & Chocolate",
     "abv": "10"
@@ -2225,7 +2222,7 @@ var beerList = [
     "id": "248",
     "session": "S3",
     "region": "Ontario",
-    "brewery": "Burd",
+    "brewery": "Burdock",
     "name": "Grape & Lemon Zesté",
     "style": "Fruited Sour Beer",
     "abv": "4.5"
@@ -2837,7 +2834,7 @@ var beerList = [
     "id": "316",
     "session": "S3",
     "region": "Ontario",
-    "brewery": "Sonn",
+    "brewery": "Sonnen Hill",
     "name": "Three New Grains",
     "style": "Bitter",
     "abv": "3.8"
@@ -2927,7 +2924,7 @@ var beerList = [
     "id": "326",
     "session": "S3",
     "region": "Ontario",
-    "brewery": "Toot",
+    "brewery": "Tooth And Nail",
     "name": "Fortified",
     "style": "Imperial Stout w. Coffee & Chocolate",
     "abv": "9.5"
