@@ -1,5 +1,5 @@
-var LOCAL_STORAGE_CHOSEN_KEY = 'caskdays2018chosen';
-var LOCAL_STORAGE_DRANK_KEY = 'caskdays2018drank';
+var LOCAL_STORAGE_CHOSEN_KEY = 'caskdays2019chosen';
+var LOCAL_STORAGE_DRANK_KEY = 'caskdays2019drank';
 
 var chosenById = {};
 var drankById = {};
