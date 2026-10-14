@@ -1,49 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title>Cask Days 2019 Helper</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="print.css">
-		<script src="jquery.js"></script>
-		<script src="lodash.js"></script>
-		<script src="jquery.tablesorter.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.5/dist/sweetalert2.all.min.js"></script>
-		<meta name="viewport" content="width=device-width, user-scalable=no" />
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Cask Days 2026 Helper</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><text y=%2714%27 font-size=%2714%27>🍺</text></svg>">
+		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<div id="header" class="container h1 ">
-			<div class="col-md-2"></div>
-			<div class="col-md-8 text-center">Cask Days 2019 Beer list</div>
-		</div>
-		<div class="container">
-			<div class="col-md-2"></div>
-			<div class="col-md-8 text-center noprint">
-				<button id="share-url" class="btn btn-info noprint">
-					<span id="share-url-icon" class="glyphicon glyphicon-link"></span>
-					Share
-				</button>
-				<button id="toggle-session3" class="btn btn-danger noprint">
-					<span id="toggle-session3-icon" class="glyphicon glyphicon-calendar"></span>
-					<span id="toggle-session3-text">Hide Session 3</span>
-				</button>
-				<button id="toggle-keg" class="btn btn-danger noprint">
-					<span id="toggle-keg-text">Hide Kegs</span>
-				</button>
-				<button id="toggle-favs" class="btn btn-info noprint">
-					<span id="toggle-favs-icon" class="glyphicon glyphicon-star"></span>
-					<span id="toggle-favs-text">Show Chosen Only</span>
-				</button>
-				<button id="toggle-drinking-mode" class="btn btn-success noprint">
-					<span id="toggle-drinking-mode-text">Enter Drinking Mode</span>
-				</button>
-			</div>
-		</div>
-		<div id="main" class="container">
-		</div>
-		<script src="list.js"></script>
-		<script src="main.js"></script>
+		<header class="header">
+			<h1>Cask Days 2026 Beer List</h1>
+			<p class="updated">List updated <span id="last-updated"></span></p>
+			<nav class="controls no-print">
+				<button id="share" type="button">Share</button>
+				<button id="toggle-view" type="button">Show Chosen Only</button>
+				<button id="toggle-mode" type="button" class="mode">Enter Drinking Mode</button>
+			</nav>
+		</header>
+		<main id="main"></main>
+		<div id="toast" class="toast" role="status" hidden></div>
+		<script type="module" src="app.js"></script>
 	</body>
 </html>
