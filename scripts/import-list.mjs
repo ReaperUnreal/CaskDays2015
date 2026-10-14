@@ -1,0 +1,249 @@
+// @ts-check
+// Fetches the Cask Days cask list from Google Sheets and writes client/beers.js.
+// Usage: node scripts/import-list.mjs [path/to/local.csv]
+
+import { readFile, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const SHEET_ID = '125Fn4dGsDYW37g5h49blUH2donqO9Ha-s1sc0vKlyDI';
+const CASK_LIST_GID = '1369546103';
+const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${CASK_LIST_GID}`;
+
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const CORRECTIONS_PATH = resolve(REPO_ROOT, 'data/corrections.txt');
+const OUTPUT_PATH = resolve(REPO_ROOT, 'client/beers.js');
+
+const Column = Object.freeze({
+	ID: 'Cask #',
+	REGION: 'Province',
+	BREWERY: 'Brewery Name',
+	NAME: 'Beer Name',
+	STYLE: 'Style',
+	ABV: 'Alc./Vol.',
+});
+
+const CASK_ID_PATTERN = /^#(\d+)$/;
+const LAST_UPDATED_PREFIX = 'Last Updated:';
+const CORRECTION_SEPARATOR = '|';
+
+/** @typedef {{ id: number, region: string, brewery: string, name: string, style: string, abv: string }} Beer */
+/** @typedef {{ bad: string, good: string }} Correction */
+
+/**
+ * Minimal RFC 4180 parser. Handles quoted fields, escaped quotes, and newlines inside quotes.
+ * @param {string} text
+ * @returns {string[][]}
+ */
+function parseCsv(text) {
+	/** @type {string[][]} */
+	const rows = [];
+	/** @type {string[]} */
+	let row = [];
+	let field = '';
+	let inQuotes = false;
+
+	for (let i = 0; i < text.length; i++) {
+		const char = text[i];
+
+		if (inQuotes) {
+			if (char === '"' && text[i + 1] === '"') {
+				field += '"';
+				i++;
+				continue;
+			}
+			if (char === '"') {
+				inQuotes = false;
+				continue;
+			}
+			field += char;
+			continue;
+		}
+
+		if (char === '"') {
+			inQuotes = true;
+			continue;
+		}
+		if (char === ',') {
+			row.push(field);
+			field = '';
+			continue;
+		}
+		if (char === '\r') {
+			continue;
+		}
+		if (char === '\n') {
+			row.push(field);
+			rows.push(row);
+			row = [];
+			field = '';
+			continue;
+		}
+		field += char;
+	}
+
+	// flush a last line with no trailing newline
+	if (field.length > 0 || row.length > 0) {
+		row.push(field);
+		rows.push(row);
+	}
+
+	return rows;
+}
+
+/**
+ * @param {string} text
+ * @returns {Correction[]}
+ */
+function parseCorrections(text) {
+	return text
+		.split('\n')
+		.map((line) => line.trim())
+		.filter((line) => line.length > 0 && line.includes(CORRECTION_SEPARATOR))
+		.map((line) => {
+			const [bad, good] = line.split(CORRECTION_SEPARATOR, 2);
+			return { bad, good };
+		});
+}
+
+/**
+ * @param {Correction[]} corrections
+ * @returns {(text: string) => string}
+ */
+function makeCorrector(corrections) {
+	return (text) => corrections.reduce((acc, { bad, good }) => acc.replaceAll(bad, good), text);
+}
+
+/**
+ * @param {string[][]} rows
+ * @returns {Record<string, number>} header name to column index
+ */
+function findColumns(rows) {
+	const headerRow = rows.find((row) => row[0] === Column.ID);
+	if (!headerRow) {
+		throw new Error(`Could not find a header row starting with "${Column.ID}"`);
+	}
+
+	/** @type {Record<string, number>} */
+	const columns = {};
+	for (const name of Object.values(Column)) {
+		const index = headerRow.indexOf(name);
+		if (index === -1) {
+			throw new Error(`Header row is missing column "${name}"`);
+		}
+		columns[name] = index;
+	}
+	return columns;
+}
+
+/**
+ * @param {string[][]} rows
+ * @returns {string}
+ */
+function findLastUpdated(rows) {
+	const row = rows.find((r) => r[0]?.startsWith(LAST_UPDATED_PREFIX));
+	if (!row) {
+		return '';
+	}
+	return row[0].slice(LAST_UPDATED_PREFIX.length).trim();
+}
+
+/**
+ * @param {string} raw e.g. "6.66%"
+ * @returns {string}
+ */
+function normalizeAbv(raw) {
+	return raw.trim().replace(/%$/, '');
+}
+
+/**
+ * @param {string[][]} rows
+ * @param {Record<string, number>} columns
+ * @param {(text: string) => string} correct
+ * @returns {Beer[]}
+ */
+function extractBeers(rows, columns, correct) {
+	/** @type {Beer[]} */
+	const beers = [];
+
+	for (const row of rows) {
+		const idMatch = row[0]?.match(CASK_ID_PATTERN);
+		if (!idMatch) {
+			continue;
+		}
+
+		const cell = (/** @type {string} */ name) => (row[columns[name]] ?? '').trim();
+		beers.push({
+			id: Number(idMatch[1]),
+			region: cell(Column.REGION),
+			brewery: correct(cell(Column.BREWERY)),
+			name: correct(cell(Column.NAME)),
+			style: correct(cell(Column.STYLE)),
+			abv: normalizeAbv(cell(Column.ABV)),
+		});
+	}
+
+	return beers;
+}
+
+/**
+ * @param {string | undefined} localPath
+ * @returns {Promise<string>}
+ */
+async function loadCsv(localPath) {
+	if (localPath) {
+		return readFile(localPath, 'utf8');
+	}
+
+	const response = await fetch(SHEET_CSV_URL);
+	if (!response.ok) {
+		throw new Error(`Sheet fetch failed: ${response.status} ${response.statusText}`);
+	}
+	return response.text();
+}
+
+/**
+ * @param {string} lastUpdated
+ * @param {Beer[]} beers
+ * @returns {string}
+ */
+function renderModule(lastUpdated, beers) {
+	const rows = beers.map((beer) => `\t${JSON.stringify(beer)},`).join('\n');
+	return [
+		'// Generated by scripts/import-list.mjs. Do not edit by hand.',
+		`export const lastUpdated = ${JSON.stringify(lastUpdated)};`,
+		'',
+		'/** @type {import("./types.js").Beer[]} */',
+		'export const beers = [',
+		rows,
+		'];',
+		'',
+	].join('\n');
+}
+
+async function main() {
+	const localPath = process.argv[2];
+
+	const [csv, correctionsText] = await Promise.all([
+		loadCsv(localPath),
+		readFile(CORRECTIONS_PATH, 'utf8').catch(() => ''),
+	]);
+
+	const rows = parseCsv(csv);
+	const columns = findColumns(rows);
+	const correct = makeCorrector(parseCorrections(correctionsText));
+	const beers = extractBeers(rows, columns, correct);
+	const lastUpdated = findLastUpdated(rows);
+
+	if (beers.length === 0) {
+		throw new Error('No beers found; refusing to write an empty list.');
+	}
+
+	await writeFile(OUTPUT_PATH, renderModule(lastUpdated, beers));
+	console.log(`Wrote ${beers.length} beers (sheet last updated ${lastUpdated || 'unknown'}) to ${OUTPUT_PATH}`);
+}
+
+main().catch((error) => {
+	console.error(error.message);
+	process.exit(1);
+});
