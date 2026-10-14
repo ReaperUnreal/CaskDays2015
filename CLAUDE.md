@@ -4,58 +4,57 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A yearly-updated helper site for the Cask Days beer festival, served at caskdayshelper.com. Users browse the beer list, star beers, print or share their picks, and tick beers off on the day. The repo name says 2015; the README says 2018; master says 2019. Same repo re-used every year.
+A yearly-updated helper site for the Cask Days beer festival. Users browse the cask list, star beers, share their picks, print, and tick beers off in drinking mode. The repo name says 2015. Same repo re-used every year.
 
-## Branch map (read this first)
+## Layout
 
-`master` is the source of truth. Check which branch you are on before trusting what's in the tree.
+- `client/` is the whole app and the directory to serve. Static ES modules, no build, no dependencies, no tests. `// @ts-check` with JSDoc types throughout.
+- `client/beers.js` is generated. Never edit it by hand.
+- `scripts/import-list.mjs` regenerates `client/beers.js` from the organizers' Google Sheet. Zero dependencies, Node 24.
+- `data/corrections.txt` holds `bad|good` text replacements the import applies to brewery, name, and style.
 
-| Branch | Date | State |
-|---|---|---|
-| `master` | 2019-10 | Static client only. Server deleted in `7b632df`. Has drinking mode, kegs toggle, share dialog. |
-| `feature_2018_update` | 2018-10 | Ancestor of master. Still carries the old Jersey/Jedis scraper under `src/`. Nothing here is unmerged. |
-| `feature_oauth` | 2019-10 | Branched from master. Brand-new Java 11 server (`com.caskdayshelper.server`) doing Google/Facebook/GitHub OAuth to JWT. Auth only; no beer or list endpoints yet. Client in this branch is behind master. |
-| `feature_server_saves` | 2015-10 | Original client that fetched `/beers` and saved lists to the server by name. Historical. |
-| `feature_accounts` | 2017-10 | Copy-pasted starter from an unrelated project (`com.bigvikinggames.animoji`). Ignore. |
+## Commands
 
-## The client (`client/`)
+```sh
+node scripts/import-list.mjs                 # fetch the sheet, rewrite client/beers.js
+node scripts/import-list.mjs path/to/x.csv   # same, from a local CSV export
+python3 -m http.server 8765 -d client        # serve locally
+```
 
-Fully static. `index.html` loads `list.js` (a hardcoded `var beerList = [...]`) then `main.js`. No build, no package.json, no bundler. Open `client/index.html` directly or serve the directory. Since commit `e7f31fd` the client makes no network calls. Bootstrap 3 and sweetalert2 come from CDNs.
+Type check without installing anything into the repo. The corporate npm registry needs a valid token, so point at npmjs:
 
-- `beerList` rows are skipped when `name === "To Be Announced"` or `session` doesn't start with `S`. Region `K6` (Keep6 kegs) is skippable via the kegs toggle.
-- Two sets of per-user state, both in memory and in `localStorage` as space-delimited id strings: chosen (`caskdays<year>chosen`) and drank (`caskdays<year>drank`). `createTable()` re-reads both on every render.
-- Header buttons: share, hide session 3, hide kegs, chosen-only, drinking mode. Each toggle re-calls `createTable()` with all five flags and flips its own button text.
-- Planning mode: clicking a row toggles chosen. Drinking mode: clicking a row toggles drank and paints it green. `limited: true` rows are orange.
-- Share: a sweetalert2 dialog shows `https://caskdayshelper.com/?id1&id2`. On load, a `?`-query is parsed as ids, merged into chosen, and persisted. Toggling a beer rewrites history to `/` to drop stale query ids.
-- `regionShort` maps region names to abbreviations by prefix. Add new festival regions there.
-- `print.css` hides `.noprint` and shrinks `.printable` cells.
+```sh
+npx -y --registry=https://registry.npmjs.org -p typescript tsc --noEmit --allowJs --checkJs --target es2022 --module es2022 --moduleResolution bundler --strict --lib es2022,dom client/*.js
+```
+
+## Client architecture
+
+`app.js` owns a single `State` object (chosen ids, drank ids, mode, view, sort) and re-renders the whole table on every change. The DOM is a pure function of state; there is no incremental update.
+
+- `types.js`: enums (`Mode`, `View`, `Column`, `SortDirection`) and JSDoc typedefs. No logic.
+- `storage.js`: localStorage read/write of id sets as JSON arrays. Keys carry the year. Every call is try/catch guarded.
+- `share.js`: share URL is `origin + pathname + ?id&id&id`. Parsing drops non-positive and non-integer ids.
+- `sort.js`: pure sort with id as tiebreak. `id` and `abv` compare numerically, the rest by locale.
+- `regions.js`: province to abbreviation map, falls back to the full name.
+- `table.js`: builds `<table>` from the filtered, sorted list and current state. Rows get `.chosen` and `.drank` classes; the stylesheet only shows `.drank` when `body[data-mode="drinking"]`.
+
+Behaviours worth knowing:
+
+- A shared link merges its ids into chosen, saves, then `history.replaceState` strips the query so a reload doesn't re-apply it.
+- Unchoosing the last beer while in chosen-only view drops back to the full list, since an empty table has nothing to click.
+- Share copies via `navigator.clipboard` and falls back to `window.prompt` on plain http or denied permission.
+- On phones under 600px the style column is hidden.
+
+## Import script
+
+Parses the CSV export of the sheet's cask-list tab (gid pinned in the script). Finds the header row by its first cell, `Cask #`, and reads columns by name, so column order changes are safe but renames break it loudly. Beer rows are those whose first cell matches `#<n>`. Strips `#` from ids and `%` from ABV. Captures the `Last Updated:` cell for the page header. Refuses to write an empty list.
+
+2026 has no sessions and the off-cask Volo tap list (second tab) is intentionally excluded.
 
 ## Yearly update checklist
 
-Replace `client/list.js` with the new list in the same schema. Grep the old year across `README.md`, `client/index.html` (title and heading), and the two localStorage keys in `main.js`. Update `regionShort` if regions changed. `client/casks.json` is an old different-schema list referenced by nothing.
+Update the sheet id and gid in `scripts/import-list.mjs`, the year in `client/index.html` and `README.md`, and the two keys in `client/storage.js`. Run the import. Extend `regions.js` if new provinces appear. Check the sheet's columns still match the `Column` enum in the script.
 
-## Servers
+## History
 
-### Old scraper (on `feature_2018_update`, deleted from master)
-
-Java 8, Maven, Jersey 2 on Jetty 9.2, Jedis. Scrapes `festival.caskdays.com/oncask` with Jsoup, applies `config/corrections.txt` (`bad|Good` pairs) and `config/style_guesses.txt`, caches to `config/list.json` (delete it to force a re-scrape), and stores chosen lists in Redis under prefix `CD2015`. Endpoints: `GET /beers`, `POST /savelist`, `GET /getlist/{name}`. No tests.
-
-```sh
-cp config/server.properties.template config/server.properties
-cp config/log4j.properties.template config/log4j.properties
-mvn package
-java -jar target/caskdays-server-2017-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-```
-
-Run from the repo root; config paths are relative. Default port 7613, template sets 8081. `config/*.properties` are gitignored.
-
-### OAuth server (on `feature_oauth`)
-
-Java 11, Jersey on Jetty 9.4, Lettuce (async Redis), jjwt, async-http-client. Mounted at `/auth`; nginx proxies `/api/*` to port 9001 and strips the prefix. Flow: `/auth/{github,google,fb}` stores a random state in the Redis set `stateset` and redirects to the provider; the callback pops the state, exchanges the code, fetches the user id, signs a JWT with subject `<provider>-<id>`, and redirects to `/auth/isauthed/{jwt}`.
-
-```sh
-./run.sh      # mvn clean install && java -jar target/server-0.0.1-SNAPSHOT.jar
-./deploy.sh   # same build, then scp the jar to the production host
-```
-
-`config/server.properties` needs `port`, `jwt.key` (base64 HMAC key), `base` (public URL including `/api/`), and `oauth.<provider>.id` / `.secret` per provider. Redis via `redis.host`, `redis.port`, `redis.pw`. `.idea/` is committed on this branch; don't propagate that.
+`master` before this rewrite was a jQuery 2 / lodash 3 / Bootstrap 3 client with a hardcoded `list.js`. Older branches (`feature_2018_update`, `feature_oauth`, `feature_server_saves`, `feature_accounts`) carry Java backends that scraped the festival site or did OAuth. None are used. Don't resurrect them.
