@@ -1,0 +1,208 @@
+:root {
+	--bg: #fafafa;
+	--fg: #1a1a1a;
+	--muted: #666;
+	--border: #ddd;
+	--row-hover: #f0f0f0;
+	--chosen-bg: #fff4d6;
+	--drank-bg: #d8f5d8;
+	--button-bg: #2b6cb0;
+	--button-fg: #fff;
+	--mode-bg: #2f855a;
+	--toast-bg: #1a1a1a;
+	--toast-fg: #fff;
+	--gutter: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #121212;
+		--fg: #ececec;
+		--muted: #9a9a9a;
+		--border: #333;
+		--row-hover: #1e1e1e;
+		--chosen-bg: #3d3214;
+		--drank-bg: #163d1f;
+		--button-bg: #4a90d9;
+		--button-fg: #111;
+		--mode-bg: #48bb78;
+		--toast-bg: #ececec;
+		--toast-fg: #121212;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	font-size: 15px;
+	line-height: 1.3;
+}
+
+.header {
+	padding: var(--gutter);
+	text-align: center;
+}
+
+h1 {
+	margin: 0 0 4px;
+	font-size: 1.4rem;
+}
+
+.updated {
+	margin: 0 0 12px;
+	color: var(--muted);
+	font-size: 0.85rem;
+}
+
+.controls {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+
+button {
+	padding: 10px 14px;
+	border: 0;
+	border-radius: 6px;
+	background: var(--button-bg);
+	color: var(--button-fg);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+button.mode {
+	background: var(--mode-bg);
+}
+
+main {
+	padding: 0 var(--gutter) var(--gutter);
+}
+
+table.beers {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+thead th {
+	position: sticky;
+	top: 0;
+	padding: 8px 6px;
+	border-bottom: 2px solid var(--border);
+	background: var(--bg);
+	text-align: left;
+	white-space: nowrap;
+	cursor: pointer;
+	user-select: none;
+}
+
+tbody td {
+	padding: 10px 6px;
+	border-bottom: 1px solid var(--border);
+	vertical-align: top;
+}
+
+tbody tr {
+	cursor: pointer;
+}
+
+tbody tr:hover {
+	background: var(--row-hover);
+}
+
+tbody tr.chosen {
+	background: var(--chosen-bg);
+}
+
+/* drank only matters once you're drinking */
+body[data-mode="drinking"] tbody tr.drank {
+	background: var(--drank-bg);
+}
+
+td.star {
+	width: 1.5em;
+	text-align: center;
+}
+
+td[data-column="id"],
+td[data-column="abv"],
+td[data-column="region"] {
+	white-space: nowrap;
+}
+
+.toast {
+	position: fixed;
+	left: 50%;
+	bottom: 24px;
+	transform: translateX(-50%);
+	padding: 10px 16px;
+	border-radius: 6px;
+	background: var(--toast-bg);
+	color: var(--toast-fg);
+	font-weight: 600;
+}
+
+/* phones: drop the style column, it's the widest and least needed at a glance */
+@media (max-width: 600px) {
+	:root {
+		--gutter: 8px;
+	}
+
+	body {
+		font-size: 14px;
+	}
+
+	thead th,
+	tbody td {
+		padding-left: 4px;
+		padding-right: 4px;
+	}
+
+	td.star {
+		width: 1.2em;
+	}
+
+	/* long brewery and beer names set the table's minimum width; let them break as a last resort */
+	td[data-column="brewery"],
+	td[data-column="name"] {
+		overflow-wrap: anywhere;
+	}
+
+	th[data-column="style"],
+	td[data-column="style"] {
+		display: none;
+	}
+}
+
+@media print {
+	.no-print,
+	.toast {
+		display: none !important;
+	}
+
+	body {
+		background: #fff;
+		color: #000;
+		font-size: 11px;
+	}
+
+	thead th {
+		position: static;
+	}
+
+	tbody td {
+		padding: 3px 4px;
+	}
+
+	tbody tr.chosen,
+	body[data-mode="drinking"] tbody tr.drank {
+		background: none;
+	}
+}
