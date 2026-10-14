@@ -6,3 +6,5 @@ Serve `client/` as static files. To refresh the beer list from the organizers' G
 ```sh
 node scripts/import-list.mjs
 ```
+
+Hosted at https://reaperunreal.github.io/CaskDays2015/ via GitHub Pages. Every push to `master` redeploys `client/`.

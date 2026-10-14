@@ -27,6 +27,10 @@ Type check without installing anything into the repo. The corporate npm registry
 npx -y --registry=https://registry.npmjs.org -p typescript tsc --noEmit --allowJs --checkJs --target es2022 --module es2022 --moduleResolution bundler --strict --lib es2022,dom client/*.js
 ```
 
+## Hosting
+
+GitHub Pages at https://reaperunreal.github.io/CaskDays2015/. `.github/workflows/pages.yml` uploads `client/` as the Pages artifact on every push to `master`. No build step runs in CI. The share link derives from the page's own origin and path, so it works at the subpath.
+
 ## Client architecture
 
 `app.js` owns a single `State` object (chosen ids, drank ids, mode, view, sort) and re-renders the whole table on every change. The DOM is a pure function of state; there is no incremental update.
