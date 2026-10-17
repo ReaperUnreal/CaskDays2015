@@ -111,7 +111,7 @@ function parseCorrections(text) {
  * @returns {(text: string) => string}
  */
 function makeCorrector(corrections) {
-	return (text) => corrections.reduce((acc, { bad, good }) => acc.replaceAll(bad, good), text);
+	return (text) => corrections.reduce((acc, { bad, good }) => acc.replaceAll(bad, good), text).trim();
 }
 
 /**
